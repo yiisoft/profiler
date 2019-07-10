@@ -69,7 +69,7 @@ class Profiler implements ProfilerInterface
     /**
      * @return Target[] the profiling targets. Each array element represents a single [[Target|profiling target]] instance.
      */
-    public function getTargets()
+    public function getTargets(): array
     {
         if (!$this->_isTargetsInitialized) {
             foreach ($this->_targets as $name => $target) {
@@ -86,7 +86,7 @@ class Profiler implements ProfilerInterface
      * @param array|Target[] $targets the profiling targets. Each array element represents a single [[Target|profiling target]] instance
      * or the configuration for creating the profiling target instance.
      */
-    public function setTargets($targets)
+    public function setTargets(array $targets): void
     {
         $this->_targets = $targets;
         $this->_isTargetsInitialized = false;
@@ -98,7 +98,7 @@ class Profiler implements ProfilerInterface
      * @param string|null $name array key to be used to store target, if `null` is given target will be append
      * to the end of the array by natural integer key.
      */
-    public function addTarget($target, $name = null)
+    public function addTarget($target, ?string $name = null): void
     {
         if (!$target instanceof Target) {
             $this->_isTargetsInitialized = false;
@@ -113,7 +113,7 @@ class Profiler implements ProfilerInterface
     /**
      * {@inheritdoc}
      */
-    public function begin($token, array $context = [])
+    public function begin(string $token, array $context = []): void
     {
         if (!$this->enabled) {
             return;
@@ -136,7 +136,7 @@ class Profiler implements ProfilerInterface
     /**
      * {@inheritdoc}
      */
-    public function end($token, array $context = [])
+    public function end(string $token, array $context = []): void
     {
         if (!$this->enabled) {
             return;
@@ -175,7 +175,7 @@ class Profiler implements ProfilerInterface
     /**
      * {@inheritdoc}
      */
-    public function flush()
+    public function flush(): void
     {
         foreach ($this->_pendingMessages as $category => $categoryMessages) {
             foreach ($categoryMessages as $token => $messages) {
@@ -202,7 +202,7 @@ class Profiler implements ProfilerInterface
      * Dispatches the profiling messages to [[targets]].
      * @param array $messages the profiling messages.
      */
-    protected function dispatch($messages)
+    protected function dispatch(array $messages): void
     {
         foreach ($this->getTargets() as $target) {
             $target->collect($messages);

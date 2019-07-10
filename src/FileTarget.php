@@ -56,7 +56,7 @@ class FileTarget extends Target
     /**
      * {@inheritdoc}
      */
-    public function export(array $messages)
+    public function export(array $messages): void
     {
         $memoryPeakUsage = memory_get_peak_usage();
         $totalTime = microtime(true) - YII_BEGIN_TIME;
@@ -80,7 +80,7 @@ class FileTarget extends Target
      * Resolves value of [[filename]] processing path alias and placeholders.
      * @return string actual target filename.
      */
-    protected function resolveFilename()
+    protected function resolveFilename(): string
     {
         $filename = Yii::getAlias($this->filename);
 
@@ -103,7 +103,7 @@ class FileTarget extends Target
      * The message structure follows that in [[Profiler::$messages]].
      * @return string the formatted message.
      */
-    protected function formatMessage(array $message)
+    protected function formatMessage(array $message): string
     {
         return date('Y-m-d H:i:s', $message['beginTime']) . " [{$message['duration']} ms][{$message['memoryDiff']} B][{$message['category']}] {$message['token']}";
     }

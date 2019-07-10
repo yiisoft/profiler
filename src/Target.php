@@ -40,7 +40,7 @@ abstract class Target
      * @param array $messages profiling messages to be processed. See [[Profiler::$messages]] for the structure
      * of each message.
      */
-    public function collect(array $messages)
+    public function collect(array $messages): void
     {
         if (!$this->enabled) {
             return;
@@ -65,7 +65,7 @@ abstract class Target
      * The message structure follows that in [[Profiler::$messages]].
      * @return array the filtered messages.
      */
-    protected function filterMessages($messages)
+    protected function filterMessages(array $messages): array
     {
         foreach ($messages as $i => $message) {
             $matched = empty($this->categories);

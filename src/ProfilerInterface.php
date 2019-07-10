@@ -27,7 +27,7 @@ interface ProfilerInterface
      * @param array $context the context data of this profile block
      * @see endProfile()
      */
-    public function begin($token, array $context = []);
+    public function begin(string $token, array $context = []);
 
     /**
      * Marks the end of a code block for profiling.
@@ -36,7 +36,7 @@ interface ProfilerInterface
      * @param array $context the context data of this profile block
      * @see begin()
      */
-    public function end($token, array $context = []);
+    public function end(string $token, array $context = []);
 
     /**
      * Flushes profiling messages from memory to actual storage.

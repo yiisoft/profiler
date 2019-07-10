@@ -50,7 +50,7 @@ class LogTarget extends Target
         $this->logger = $logger;
     }
 
-    public function export(array $messages)
+    public function export(array $messages): void
     {
         $logger = $this->getLogger();
         foreach ($messages as $message) {
