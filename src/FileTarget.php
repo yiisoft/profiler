@@ -59,7 +59,8 @@ class FileTarget extends Target
     public function export(array $messages): void
     {
         $memoryPeakUsage = memory_get_peak_usage();
-        $totalTime = microtime(true) - YII_BEGIN_TIME;
+        // TODO: make sure it works with RoadRunner and alike servers
+        $totalTime = microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'];
         $text = "Total processing time: {$totalTime} ms; Peak memory: {$memoryPeakUsage} B. \n\n";
 
         $text .= implode("\n", array_map([$this, 'formatMessage'], $messages));
