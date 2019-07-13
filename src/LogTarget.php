@@ -11,10 +11,10 @@ use Psr\Log\LogLevel;
  *
  * ```php
  * return [
- *     'profiler' => [
+ *     Yiisoft\Profiler\Profiler::class => [
  *         'targets' => [
  *             [
- *                 '__class' => yii\profile\LogTarget::class,
+ *                 '__class' => Yiisoft\Profiler\LogTarget::class,
  *             ],
  *         ],
  *         // ...
@@ -26,36 +26,25 @@ use Psr\Log\LogLevel;
 class LogTarget extends Target
 {
     /**
-     * @var string log level to be used for messages export.
-     */
-    public $logLevel = LogLevel::DEBUG;
-
-    /**
      * @var LoggerInterface logger to be used for message export.
      */
     private $logger;
+    /**
+     * @var string log level to be used for messages export.
+     */
+    public $logLevel;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, string $logLevel = LogLevel::DEBUG)
     {
         $this->logger = $logger;
-    }
-
-    public function getLogger(): LoggerInterface
-    {
-        return $this->logger;
-    }
-
-    public function setLogger(LoggerInterface $logger): void
-    {
-        $this->logger = $logger;
+        $this->logLevel = $logLevel;
     }
 
     public function export(array $messages): void
     {
-        $logger = $this->getLogger();
         foreach ($messages as $message) {
             $message['time'] = $message['beginTime'];
-            $logger->log($this->logLevel, $message['token'], $message);
+            $this->logger->log($this->logLevel, $message['token'], $message);
         }
     }
 }
