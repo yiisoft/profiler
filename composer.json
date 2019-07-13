@@ -13,7 +13,8 @@
         "source": "https://github.com/yiisoft/profiler"
     },
     "require": {
-        "php": "^7.2"
+        "php": "^7.2",
+        "psr/log": "^1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.2"
