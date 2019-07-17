@@ -3,7 +3,7 @@ namespace Yiisoft\Profiler\Tests;
 
 use PHPUnit\Framework\TestCase;
 use yii\helpers\Yii;
-use yii\helpers\FileHelper;
+use Yiisoft\Files\FileHelper;
 use Yiisoft\Profiler\FileTarget;
 use Yiisoft\Profiler\Profiler;
 

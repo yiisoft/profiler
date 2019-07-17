@@ -2,7 +2,7 @@
 namespace Yiisoft\Profiler;
 
 use yii\helpers\Yii;
-use yii\helpers\FileHelper;
+use Yiisoft\Files\FileHelper;
 
 /**
  * FileTarget records profiling messages in a file specified via [[filename]].
@@ -71,7 +71,7 @@ class FileTarget extends Target
         } else {
             $filePath = dirname($filename);
             if (!is_dir($filePath)) {
-                FileHelper::createDirectory($filePath, $this->dirMode, true);
+                FileHelper::createDirectory($filePath, $this->dirMode);
             }
         }
         file_put_contents($filename, $text);
