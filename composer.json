@@ -2,7 +2,10 @@
     "name": "yiisoft/profiler",
     "type": "library",
     "description": "Profiler",
-    "keywords": ["profiler", "performance"],
+    "keywords": [
+        "profiler",
+        "performance"
+    ],
     "homepage": "http://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
@@ -34,5 +37,8 @@
         "branch-alias": {
             "dev-master": "3.0.x-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
