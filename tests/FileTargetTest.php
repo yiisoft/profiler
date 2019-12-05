@@ -14,10 +14,7 @@ class FileTargetTest extends TestCase
      */
     protected $testFilePath;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -25,10 +22,7 @@ class FileTargetTest extends TestCase
         $this->testFilePath = Yii::getAlias('@runtime/test-profile');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
@@ -37,7 +31,7 @@ class FileTargetTest extends TestCase
         }
     }
 
-    public function testExport()
+    public function testExport(): void
     {
         $profiler = new Profiler();
 
@@ -51,7 +45,7 @@ class FileTargetTest extends TestCase
         $profiler->end('test-export', ['category' => 'test-category']);
         $profiler->flush();
 
-        $this->assertTrue(file_exists($filename));
+        $this->assertFileExists($filename);
 
         $fileContent = file_get_contents($filename);
         $this->assertContains('[test-category] test-export', $fileContent);

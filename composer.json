@@ -15,6 +15,7 @@
         "irc": "irc://irc.freenode.net/yii",
         "source": "https://github.com/yiisoft/profiler"
     },
+    "minimum-stability": "dev",
     "require": {
         "php": "^7.4",
         "psr/log": "^1.1",
