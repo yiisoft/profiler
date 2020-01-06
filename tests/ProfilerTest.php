@@ -42,7 +42,7 @@ class ProfilerTest extends TestCase
     /**
      * @depends testSetupTarget
      *
-     * @covers Yiisoft\Profile\Profiler::addTarget()
+     * @covers Yiisoft\Profiler\Profiler::addTarget()
      */
     public function testAddTarget()
     {
