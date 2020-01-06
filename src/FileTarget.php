@@ -41,13 +41,6 @@ class FileTarget extends Target
     private string $filename = '@runtime/profiling/{date}-{time}.txt';
 
     /**
-     * @var int the permission to be set for newly created files.
-     * This value will be used by PHP chmod() function. No umask will be applied.
-     * If not set, the permission will be determined by the current environment.
-     */
-    private int $fileMode = 0755;
-
-    /**
      * @var int the permission to be set for newly created directories.
      * This value will be used by PHP chmod() function. No umask will be applied.
      * Defaults to 0775, meaning the directory is read-writable by owner and group,
