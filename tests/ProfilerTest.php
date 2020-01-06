@@ -11,8 +11,8 @@ use Yiisoft\Profiler\Target;
 class ProfilerTest extends TestCase
 {
     /**
-     * @covers \Yiisoft\Profiler\Profiler::setTargets()
-     * @covers \Yiisoft\Profiler\Profiler::getTargets()
+     * @covers Yiisoft\Profiler\Profiler::setTargets()
+     * @covers Yiisoft\Profiler\Profiler::getTargets()
      */
     public function testSetupTarget()
     {
@@ -42,7 +42,7 @@ class ProfilerTest extends TestCase
     /**
      * @depends testSetupTarget
      *
-     * @covers \Yiisoft\Profile\Profiler::addTarget()
+     * @covers Yiisoft\Profile\Profiler::addTarget()
      */
     public function testAddTarget()
     {
@@ -88,7 +88,7 @@ class ProfilerTest extends TestCase
     }
 
     /**
-     * @covers \Yiisoft\Profiler\Profiler::flush()
+     * @covers Yiisoft\Profiler\Profiler::flush()
      */
     public function testFlushWithDispatch()
     {

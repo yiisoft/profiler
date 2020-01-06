@@ -53,7 +53,7 @@ final class TargetTest extends TestCase
     /**
      * @dataProvider dataProviderFilterMessages
      *
-     * @covers \Yiisoft\Profile\Target::filterMessages()
+     * @covers Yiisoft\Profile\Target::filterMessages()
      *
      * @param array $messages
      * @param array $categories
