@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace Yiisoft\Profiler;
 
-use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Psr\Log\LoggerInterface;
 
 /**
  * LogTarget saves profiling messages as a log messages.
@@ -28,13 +30,14 @@ class LogTarget extends Target
     /**
      * @var LoggerInterface logger to be used for message export.
      */
-    private $logger;
+    private LoggerInterface $logger;
+
     /**
      * @var string log level to be used for messages export.
      */
-    private $logLevel;
+    private ?string $logLevel = null;
 
-    public function __construct(LoggerInterface $logger, string $logLevel = LogLevel::DEBUG)
+    public function __construct(LoggerInterface $logger, ?string $logLevel = LogLevel::DEBUG)
     {
         $this->logger = $logger;
         $this->logLevel = $logLevel;
@@ -44,7 +47,18 @@ class LogTarget extends Target
     {
         foreach ($messages as $message) {
             $message['time'] = $message['beginTime'];
+
             $this->logger->log($this->logLevel, $message['token'], $message);
         }
+    }
+
+    /**
+     * @return ?string logLevel
+     *
+     * {@see logLevel}
+     */
+    public function getLogLevel(): ?string
+    {
+        return $this->logLevel;
     }
 }

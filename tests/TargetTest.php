@@ -1,16 +1,17 @@
 <?php
+declare(strict_types=1);
+
 namespace Yiisoft\Profiler\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Yiisoft\Profiler\Target;
 
 /**
  * @group profile
  */
-class TargetTest extends TestCase
+final class TargetTest extends TestCase
 {
     /**
-     * Data provider for [[testFilterMessages()]]
+     * Data provider for {@see testFilterMessages()}
      * @return array test data
      */
     public function dataProviderFilterMessages()
@@ -52,7 +53,7 @@ class TargetTest extends TestCase
     /**
      * @dataProvider dataProviderFilterMessages
      *
-     * @covers \yii\profile\Target::filterMessages()
+     * @covers \Yiisoft\Profile\Target::filterMessages()
      *
      * @param array $messages
      * @param array $categories
@@ -63,8 +64,10 @@ class TargetTest extends TestCase
     {
         /* @var $target Target|\PHPUnit_Framework_MockObject_MockObject */
         $target = $this->getMockBuilder(Target::class)->getMockForAbstractClass();
+
         $target->categories = $categories;
         $target->except = $except;
+
         $this->assertEquals($expected, $this->invokeMethod($target, 'filterMessages', [$messages]));
     }
 
@@ -77,15 +80,21 @@ class TargetTest extends TestCase
         $target = $this->getMockBuilder(Target::class)
             ->setMethods(['export'])
             ->getMock();
+
         $target->expects($this->exactly(0))->method('export');
+
         $target->enabled = false;
+
         $target->collect([['category' => 'foo']]);
 
         $target = $this->getMockBuilder(Target::class)
             ->setMethods(['export'])
             ->getMock();
+
         $target->expects($this->exactly(1))->method('export');
+
         $target->enabled = true;
+
         $target->collect([['category' => 'foo']]);
     }
 }
