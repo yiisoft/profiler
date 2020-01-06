@@ -133,9 +133,9 @@ class Profiler implements ProfilerInterface
      */
     public function setMessages(array $value): void
     {
-        $this->message = $value;
+        $this->messages = $value;
 
-        $this->dispatch($this->message);
+        $this->dispatch($this->messages);
     }
 
     /**

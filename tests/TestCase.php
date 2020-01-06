@@ -10,14 +10,14 @@ use Yiisoft\Profiler\Tests\Logger\ArrayLogger;
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Aliases $aliases
+     * @var Factory $factory
      */
-    protected $aliases;
+    protected Factory $factory;
 
     /**
      * @var ArrayLogger $logger
      */
-    protected $logger;
+    protected ArrayLogger $logger;
 
     /**
      * setUp
@@ -58,9 +58,11 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $method = $reflection->getMethod($method);
         $method->setAccessible(true);
         $result = $method->invokeArgs($object, $args);
+
         if ($revoke) {
             $method->setAccessible(false);
         }
+
         return $result;
     }
 }

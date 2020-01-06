@@ -100,11 +100,11 @@ class ProfilerTest extends TestCase
 
         $message = ['anything'];
 
+        $profiler->setMessages($message);
+
         $profiler->expects($this->once())
             ->method('dispatch')
             ->with($this->equalTo($message));
-
-        $profiler->setMessages($message);
 
         $profiler->flush();
 
