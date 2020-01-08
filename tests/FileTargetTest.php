@@ -9,10 +9,7 @@ use Yiisoft\Profiler\Profiler;
 
 class FileTargetTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    protected $testFilePath;
+    protected string $testFilePath;
 
     protected function setUp(): void
     {

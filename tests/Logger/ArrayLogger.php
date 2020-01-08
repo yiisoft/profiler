@@ -9,7 +9,7 @@ class ArrayLogger extends AbstractLogger
 {
     private array $messages = [];
 
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = array()): void
     {
         $this->messages[$level][$message] = $context;
     }

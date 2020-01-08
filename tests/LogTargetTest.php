@@ -7,7 +7,7 @@ use Yiisoft\Profiler\LogTarget;
 
 class LogTargetTest extends TestCase
 {
-    public function testExport()
+    public function testExport(): void
     {
         $logLevel = 'test';
         $token = 'test-token';

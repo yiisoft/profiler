@@ -11,10 +11,10 @@ use Yiisoft\Profiler\Target;
 class ProfilerTest extends TestCase
 {
     /**
-     * @covers Yiisoft\Profiler\Profiler::setTargets()
-     * @covers Yiisoft\Profiler\Profiler::getTargets()
+     * @covers \Yiisoft\Profiler\Profiler::setTargets()
+     * @covers \Yiisoft\Profiler\Profiler::getTargets()
      */
-    public function testSetupTarget()
+    public function testSetupTarget(): void
     {
         $profiler = new Profiler($this->logger);
 
@@ -35,16 +35,16 @@ class ProfilerTest extends TestCase
 
         $target = $profiler->getTargets()[0];
 
-        $this->assertTrue($target instanceof LogTarget);
+        $this->assertInstanceOf(LogTarget::class, $target);
         $this->assertEquals('test', $target->getLogLevel());
     }
 
     /**
      * @depends testSetupTarget
      *
-     * @covers Yiisoft\Profiler\Profiler::addTarget()
+     * @covers \Yiisoft\Profiler\Profiler::addTarget()
      */
-    public function testAddTarget()
+    public function testAddTarget(): void
     {
         $profiler = new Profiler($this->logger);
 
@@ -68,7 +68,7 @@ class ProfilerTest extends TestCase
         $this->assertSame($namelessTarget, array_pop($targets));
     }
 
-    public function testEnabled()
+    public function testEnabled(): void
     {
         $profiler = new Profiler($this->logger);
 
@@ -88,9 +88,9 @@ class ProfilerTest extends TestCase
     }
 
     /**
-     * @covers Yiisoft\Profiler\Profiler::flush()
+     * @covers \Yiisoft\Profiler\Profiler::flush()
      */
-    public function testFlushWithDispatch()
+    public function testFlushWithDispatch(): void
     {
         /* @var $profiler Profiler|\PHPUnit_Framework_MockObject_MockObject */
         $profiler = $this->getMockBuilder(Profiler::class)
@@ -111,7 +111,7 @@ class ProfilerTest extends TestCase
         $this->assertEmpty($profiler->getMessages());
     }
 
-    public function testNestedMessages()
+    public function testNestedMessages(): void
     {
         $profiler = new Profiler($this->logger);
 
@@ -126,7 +126,7 @@ class ProfilerTest extends TestCase
     /**
      * @depends testNestedMessages
      */
-    public function testNestedLevel()
+    public function testNestedLevel(): void
     {
         $profiler = new Profiler($this->logger);
 
