@@ -35,7 +35,7 @@ class LogTarget extends Target
     /**
      * @var string log level to be used for messages export.
      */
-    private ?string $logLevel = null;
+    private ?string $logLevel;
 
     public function __construct(LoggerInterface $logger, ?string $logLevel = LogLevel::DEBUG)
     {
@@ -53,7 +53,7 @@ class LogTarget extends Target
     }
 
     /**
-     * @return ?string logLevel
+     * @return string|null log level
      *
      * {@see logLevel}
      */

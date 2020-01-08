@@ -3,27 +3,14 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler\Tests;
 
-use Psr\Log\LoggerInterface;
 use Yiisoft\Factory\Factory;
 use Yiisoft\Profiler\Tests\Logger\ArrayLogger;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var Factory $factory
-     */
     protected Factory $factory;
-
-    /**
-     * @var ArrayLogger $logger
-     */
     protected ArrayLogger $logger;
 
-    /**
-     * setUp
-     *
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -33,20 +20,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * tearDown
-     *
-     * @return void
-     */
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
-    /**
      * Invokes a inaccessible method.
      *
-     * @param $object
-     * @param $method
+     * @param object $object
+     * @param string $method
      * @param array $args
      * @param bool $revoke whether to make method inaccessible after execution
      *

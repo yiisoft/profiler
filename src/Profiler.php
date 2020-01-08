@@ -73,7 +73,7 @@ class Profiler implements ProfilerInterface
     }
 
     /**
-     * @return boolean the profile enabled.
+     * @return bool the profile enabled.
      *
      * {@see enabled}
      */
@@ -111,7 +111,7 @@ class Profiler implements ProfilerInterface
     /**
      * Set the profiler enabled or disabled.
      *
-     * @param boolean $value
+     * @param bool $value
      *
      * @return void
      *
@@ -177,7 +177,7 @@ class Profiler implements ProfilerInterface
             return;
         }
 
-        $category = isset($context['category']) ?: 'application';
+        $category = $context['category'] ?? 'application';
 
         $message = array_merge($context, [
             'token' => $token,
@@ -200,11 +200,11 @@ class Profiler implements ProfilerInterface
             return;
         }
 
-        $category = isset($context['category']) ?: 'application';
+        $category = $context['category'] ?? 'application';
 
         if (empty($this->pendingMessages[$category][$token])) {
             throw new \InvalidArgumentException(
-                'Unexpected ' . get_called_class() .
+                'Unexpected ' . static::class .
                 '::end() call for category "' .
                 $category .
                 '" token "' .

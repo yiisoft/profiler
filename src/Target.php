@@ -84,9 +84,9 @@ abstract class Target
             $matched = empty($this->categories);
 
             foreach ($this->categories as $category) {
-                if ($message['category'] === $category || !empty($category)
+                if ($message['category'] === $category || (!empty($category)
                     && substr_compare($category, '*', -1, 1) === 0
-                    && strpos($message['category'], rtrim($category, '*')) === 0) {
+                    && strpos($message['category'], rtrim($category, '*')) === 0)) {
                     $matched = true;
                     break;
                 }

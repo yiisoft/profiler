@@ -14,7 +14,7 @@ final class TargetTest extends TestCase
      * Data provider for {@see testFilterMessages()}
      * @return array test data
      */
-    public function dataProviderFilterMessages()
+    public function dataProviderFilterMessages(): array
     {
         return [
             [
@@ -60,7 +60,7 @@ final class TargetTest extends TestCase
      * @param array $except
      * @param array $expected
      */
-    public function testFilterMessages(array $messages, array $categories, array $except, array $expected)
+    public function testFilterMessages(array $messages, array $categories, array $except, array $expected): void
     {
         /* @var $target Target|\PHPUnit_Framework_MockObject_MockObject */
         $target = $this->getMockBuilder(Target::class)->getMockForAbstractClass();
@@ -74,7 +74,7 @@ final class TargetTest extends TestCase
     /**
      * @depends testFilterMessages
      */
-    public function testEnabled()
+    public function testEnabled(): void
     {
         /* @var $target Target|\PHPUnit_Framework_MockObject_MockObject */
         $target = $this->getMockBuilder(Target::class)
@@ -91,7 +91,7 @@ final class TargetTest extends TestCase
             ->setMethods(['export'])
             ->getMock();
 
-        $target->expects($this->exactly(1))->method('export');
+        $target->expects($this->once())->method('export');
 
         $target->enabled = true;
 

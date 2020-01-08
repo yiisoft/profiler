@@ -99,7 +99,7 @@ class FileTarget extends Target
     {
         $filename = $this->filename;
 
-        return preg_replace_callback('/{\\w+}/', function ($matches) {
+        return preg_replace_callback('/{\\w+}/', static function ($matches) {
             switch ($matches[0]) {
                 case '{ts}':
                     return time();
