@@ -3,19 +3,16 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler\Tests;
 
-use Yiisoft\Factory\Factory;
 use Yiisoft\Profiler\Tests\Logger\ArrayLogger;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
-    protected Factory $factory;
     protected ArrayLogger $logger;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->factory = new Factory();
         $this->logger = new ArrayLogger();
     }
 

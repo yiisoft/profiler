@@ -36,10 +36,9 @@ class FileTargetTest extends TestCase
 
         $filename = $this->testFilePath . DIRECTORY_SEPARATOR . 'test.txt';
 
-        $profiler->addTarget($this->factory->create([
-            '__class' => FileTarget::class,
-            'setFilename()' => [$filename],
-        ]));
+        $target = new FileTarget();
+        $target->setFilename($filename);
+        $profiler->addTarget($target);
 
         $profiler->begin('test-export', ['category' => 'test-category']);
         $profiler->end('test-export', ['category' => 'test-category']);
