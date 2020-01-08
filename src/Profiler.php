@@ -168,9 +168,6 @@ class Profiler implements ProfilerInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function begin(string $token, array $context = []): void
     {
         if (!$this->enabled) {
@@ -191,9 +188,6 @@ class Profiler implements ProfilerInterface
         $this->nestedLevel++;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function end(string $token, array $context = []): void
     {
         if (!$this->enabled) {
@@ -237,9 +231,6 @@ class Profiler implements ProfilerInterface
         $this->nestedLevel--;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flush(): void
     {
         foreach ($this->pendingMessages as $category => $categoryMessages) {

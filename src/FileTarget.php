@@ -48,9 +48,7 @@ class FileTarget extends Target
      */
     private int $dirMode = 0775;
 
-    /**
-     * {@inheritdoc}
-     */
+
     public function export(array $messages): void
     {
         $memoryPeakUsage = memory_get_peak_usage();
