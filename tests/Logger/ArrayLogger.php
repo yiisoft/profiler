@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Yiisoft\Profiler\Tests\Logger;
 
@@ -6,9 +7,9 @@ use Psr\Log\AbstractLogger;
 
 class ArrayLogger extends AbstractLogger
 {
-    private $messages = [];
+    private array $messages = [];
 
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = array()): void
     {
         $this->messages[$level][$message] = $context;
     }

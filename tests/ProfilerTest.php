@@ -1,26 +1,25 @@
 <?php
+declare(strict_types=1);
+
 namespace Yiisoft\Profiler\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Yiisoft\Profiler\LogTarget;
 use Yiisoft\Profiler\Profiler;
 use Yiisoft\Profiler\Target;
 
-/**
- * @group profile
- */
 class ProfilerTest extends TestCase
 {
     /**
-     * @covers \yii\profile\Profiler::setTargets()
-     * @covers \yii\profile\Profiler::getTargets()
+     * @covers \Yiisoft\Profiler\Profiler::setTargets()
+     * @covers \Yiisoft\Profiler\Profiler::getTargets()
      */
-    public function testSetupTarget()
+    public function testSetupTarget(): void
     {
-        $profiler = new Profiler();
+        $profiler = new Profiler($this->logger);
 
         $target = new LogTarget(new NullLogger());
+
         $profiler->setTargets([$target]);
 
         $this->assertEquals([$target], $profiler->getTargets());
@@ -29,23 +28,25 @@ class ProfilerTest extends TestCase
         $profiler->setTargets([
             [
                 '__class' => LogTarget::class,
-                '__construct()' => [new NullLogger()],
-                'logLevel' => 'test',
+                'logger' => new NullLogger(),
+                'level' => 'test'
             ],
         ]);
+
         $target = $profiler->getTargets()[0];
-        $this->assertTrue($target instanceof LogTarget);
-        $this->assertEquals('test', $target->logLevel);
+
+        $this->assertInstanceOf(LogTarget::class, $target);
+        $this->assertEquals('test', $target->getLogLevel());
     }
 
     /**
      * @depends testSetupTarget
      *
-     * @covers \yii\profile\Profiler::addTarget()
+     * @covers \Yiisoft\Profiler\Profiler::addTarget()
      */
-    public function testAddTarget()
+    public function testAddTarget(): void
     {
-        $profiler = new Profiler();
+        $profiler = new Profiler($this->logger);
 
         $target = $this->getMockBuilder(Target::class)->getMockForAbstractClass();
         $profiler->setTargets([$target]);
@@ -54,6 +55,7 @@ class ProfilerTest extends TestCase
         $profiler->addTarget($namedTarget, 'test-target');
 
         $targets = $profiler->getTargets();
+
         $this->assertCount(2, $targets);
         $this->assertTrue(isset($targets['test-target']));
         $this->assertSame($namedTarget, $targets['test-target']);
@@ -61,67 +63,72 @@ class ProfilerTest extends TestCase
         $namelessTarget = $this->getMockBuilder(Target::class)->getMockForAbstractClass();
         $profiler->addTarget($namelessTarget);
         $targets = $profiler->getTargets();
+
         $this->assertCount(3, $targets);
         $this->assertSame($namelessTarget, array_pop($targets));
     }
 
-    public function testEnabled()
+    public function testEnabled(): void
     {
-        $profiler = new Profiler();
+        $profiler = new Profiler($this->logger);
 
-        $profiler->enabled = false;
-
-        $profiler->begin('test');
-        $profiler->end('test');
-
-        $this->assertEmpty($profiler->messages);
-
-        $profiler->enabled = true;
+        $profiler->setEnabled(false);
 
         $profiler->begin('test');
         $profiler->end('test');
 
-        $this->assertCount(1, $profiler->messages);
+        $this->assertEmpty($profiler->getMessages());
+
+        $profiler->setEnabled(true);
+
+        $profiler->begin('test');
+        $profiler->end('test');
+
+        $this->assertCount(1, $profiler->getMessages());
     }
 
     /**
-     * @covers \yii\profile\Profiler::flush()
+     * @covers \Yiisoft\Profiler\Profiler::flush()
      */
-    public function testFlushWithDispatch()
+    public function testFlushWithDispatch(): void
     {
         /* @var $profiler Profiler|\PHPUnit_Framework_MockObject_MockObject */
         $profiler = $this->getMockBuilder(Profiler::class)
+            ->setConstructorArgs([$this->logger])
             ->setMethods(['dispatch'])
             ->getMock();
 
         $message = ['anything'];
+
+        $profiler->setMessages($message);
+
         $profiler->expects($this->once())
             ->method('dispatch')
             ->with($this->equalTo($message));
 
-        $profiler->messages = $message;
         $profiler->flush();
-        $this->assertEmpty($profiler->messages);
+
+        $this->assertEmpty($profiler->getMessages());
     }
 
-    public function testNestedMessages()
+    public function testNestedMessages(): void
     {
-        $profiler = new Profiler();
+        $profiler = new Profiler($this->logger);
 
         $profiler->begin('test');
         $profiler->begin('test');
         $profiler->end('test');
         $profiler->end('test');
 
-        $this->assertCount(2, $profiler->messages);
+        $this->assertCount(2, $profiler->getMessages());
     }
 
     /**
      * @depends testNestedMessages
      */
-    public function testNestedLevel()
+    public function testNestedLevel(): void
     {
-        $profiler = new Profiler();
+        $profiler = new Profiler($this->logger);
 
         $profiler->begin('outer');
         $profiler->begin('inner');
@@ -133,7 +140,8 @@ class ProfilerTest extends TestCase
         $outerMessage = null;
         $innerMessage = null;
         $notNestedMessage = null;
-        foreach ($profiler->messages as $message) {
+
+        foreach ($profiler->getmessages() as $message) {
             if ($message['token'] === 'outer') {
                 $outerMessage = $message;
                 continue;

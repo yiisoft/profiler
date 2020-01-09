@@ -1,25 +1,21 @@
 <?php
+declare(strict_types=1);
+
 namespace Yiisoft\Profiler\Tests;
 
-use PHPUnit\Framework\TestCase;
-use yii\helpers\Yii;
 use Yiisoft\Files\FileHelper;
 use Yiisoft\Profiler\FileTarget;
 use Yiisoft\Profiler\Profiler;
 
 class FileTargetTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    protected $testFilePath;
+    protected string $testFilePath;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->mockApplication();
-        $this->testFilePath = Yii::getAlias('@runtime/test-profile');
+        $this->testFilePath = 'tests/data';
     }
 
     protected function tearDown(): void
@@ -33,21 +29,22 @@ class FileTargetTest extends TestCase
 
     public function testExport(): void
     {
-        $profiler = new Profiler();
+        $profiler = new Profiler($this->logger);
 
         $filename = $this->testFilePath . DIRECTORY_SEPARATOR . 'test.txt';
-        $profiler->addTarget($this->factory->create([
-            '__class' => FileTarget::class,
-            'filename' => $filename,
-        ]));
+
+        $target = new FileTarget();
+        $target->setFilename($filename);
+        $profiler->addTarget($target);
 
         $profiler->begin('test-export', ['category' => 'test-category']);
         $profiler->end('test-export', ['category' => 'test-category']);
+
         $profiler->flush();
 
         $this->assertFileExists($filename);
 
         $fileContent = file_get_contents($filename);
-        $this->assertContains('[test-category] test-export', $fileContent);
+        $this->assertStringContainsString('[test-category] test-export', $fileContent);
     }
 }
