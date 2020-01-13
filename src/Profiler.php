@@ -168,7 +168,7 @@ class Profiler implements ProfilerInterface
         }
     }
 
-    public function begin(string $token, array $context = []): void
+    public function begin(?string $token, array $context = []): void
     {
         if (!$this->enabled) {
             return;
@@ -188,7 +188,7 @@ class Profiler implements ProfilerInterface
         $this->nestedLevel++;
     }
 
-    public function end(string $token, array $context = []): void
+    public function end(?string $token, array $context = []): void
     {
         if (!$this->enabled) {
             return;
@@ -207,6 +207,7 @@ class Profiler implements ProfilerInterface
         }
 
         $message = array_pop($this->pendingMessages[$category][$token]);
+
         if (empty($this->pendingMessages[$category][$token])) {
             unset($this->pendingMessages[$category][$token]);
 

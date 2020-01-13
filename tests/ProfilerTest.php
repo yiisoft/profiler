@@ -87,6 +87,18 @@ class ProfilerTest extends TestCase
         $this->assertCount(1, $profiler->getMessages());
     }
 
+    public function testBeginEndIsNull(): void
+    {
+        $profiler = new Profiler($this->logger);
+
+        $profiler->setEnabled(true);
+
+        $profiler->begin(null);
+        $profiler->end(null);
+
+        $this->assertCount(1, $profiler->getMessages());
+    }
+
     /**
      * @covers \Yiisoft\Profiler\Profiler::flush()
      */
