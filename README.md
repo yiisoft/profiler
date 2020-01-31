@@ -14,7 +14,7 @@ The package provides an ability to record performance profiles.
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/profiler/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/profiler/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/yiisoft/profiler/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/profiler/?branch=master)
 
-## Intallation
+## Installation
 
 The package could be installed via composer:
 
