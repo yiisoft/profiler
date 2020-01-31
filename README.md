@@ -19,7 +19,7 @@ The package provides an ability to record performance profiles.
 The package could be installed via composer:
 
 ```
-composer require yiisoft/profiler
+composer require --dev yiisoft/profiler
 ```
 
 ## General usage
