@@ -24,3 +24,45 @@ composer require --dev yiisoft/profiler
 
 ## General usage
 
+```php
+<?php
+require __DIR__ . '/vendor/autoload.php';
+
+use Psr\Log\NullLogger;
+use Yiisoft\Profiler\Profiler;
+use Yiisoft\Profiler\LogTarget;
+
+$logger = new NullLogger();
+
+$profiler = new Profiler($logger);
+
+$profiler->addTarget(new LogTarget($logger));
+
+$profiler->begin('test');
+//...some code
+$profiler->end('test');
+
+print_r($profiler->getMessages());
+```
+
+### Output
+
+```
+Array
+(
+    [0] => Array
+        (
+            [token] => test
+            [category] => application
+            [nestedLevel] => 0
+            [beginTime] => 1582902299.2965
+            [beginMemory] => 517640
+            [endTime] => 1582902299.2965
+            [endMemory] => 518392
+            [duration] => 1.215934753418E-5
+            [memoryDiff] => 752
+        )
+
+)
+
+```
