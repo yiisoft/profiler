@@ -66,6 +66,7 @@ class Profiler implements ProfilerInterface
 
     /**
      * Initializes the profiler by registering {@see flush()} as a shutdown function.
+     * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
     {

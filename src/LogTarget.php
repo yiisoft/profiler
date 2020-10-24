@@ -34,7 +34,7 @@ class LogTarget extends Target
     private LoggerInterface $logger;
 
     /**
-     * @var string log level to be used for messages export.
+     * @var ?string log level to be used for messages export.
      */
     private ?string $logLevel;
 
