@@ -22,7 +22,8 @@
         "yiisoft/files": "^3.0@dev"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.3",
+        "infection/infection": "^0.18",
+        "phpunit/phpunit": "^9.4",
         "vimeo/psalm": "^4.0"
     },
     "autoload": {
@@ -38,6 +39,9 @@
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"
+        },
+        "config-plugin": {
+            "common": "config/common.php"
         }
     },
     "config": {

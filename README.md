@@ -10,9 +10,13 @@ The package provides an ability to record performance profiles.
 
 [![Latest Stable Version](https://poser.pugx.org/yiisoft/profiler/v/stable.png)](https://packagist.org/packages/yiisoft/profiler)
 [![Total Downloads](https://poser.pugx.org/yiisoft/profiler/downloads.png)](https://packagist.org/packages/yiisoft/profiler)
-[![Build Status](https://travis-ci.com/yiisoft/profiler.svg?branch=master)](https://travis-ci.com/yiisoft/profiler)
+[![Build status](https://github.com/yiisoft/profiler/workflows/build/badge.svg)](https://github.com/yiisoft/profiler/actions?query=workflow%3Abuild)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/profiler/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/profiler/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/yiisoft/profiler/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/profiler/?branch=master)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyiisoft%2Fprofiler%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/yiisoft/profiler/master)
+[![static analysis](https://github.com/yiisoft/profiler/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/profiler/actions?query=workflow%3A%22static+analysis%22)
+[![type-coverage](https://shepherd.dev/github/yiisoft/profiler/coverage.svg)](https://shepherd.dev/github/yiisoft/profiler)
+
 
 ## Installation
 
@@ -67,7 +71,7 @@ Array
 
 ```
 
-### Unit testing
+## Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 
@@ -75,9 +79,17 @@ The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 ./vendor/bin/phpunit
 ```
 
-### Static analysis
+## Mutation testing
 
-The code is statically analyzed with [Psalm](https://psalm.dev/). To run static analysis:
+The package tests are checked with [Infection](https://infection.github.io/) mutation framework. To run it:
+
+```php
+./vendor/bin/infection
+```
+
+## Static analysis
+
+The code is statically analyzed with [Psalm](https://psalm.dev/docs/). To run static analysis:
 
 ```php
 ./vendor/bin/psalm
