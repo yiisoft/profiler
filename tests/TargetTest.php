@@ -13,6 +13,7 @@ final class TargetTest extends TestCase
 {
     /**
      * Data provider for {@see testFilterMessages()}
+     *
      * @return array test data
      */
     public function dataProviderFilterMessages(): array

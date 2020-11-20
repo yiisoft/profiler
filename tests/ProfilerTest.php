@@ -30,7 +30,7 @@ class ProfilerTest extends TestCase
             [
                 '__class' => LogTarget::class,
                 'logger' => new NullLogger(),
-                'level' => 'test'
+                'level' => 'test',
             ],
         ]);
 

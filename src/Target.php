@@ -48,6 +48,7 @@ abstract class Target
      *
      * This method will filter the given messages with {@see levels} and {@see categories}.
      * And if requested, it will also export the filtering result to specific medium (e.g. email).
+     *
      * @param array $messages profiling messages to be processed. See {@see Profiler::$messages} for the structure
      * of each message.
      */
@@ -68,6 +69,7 @@ abstract class Target
      * Exports profiling messages to a specific destination.
      *
      * Child classes must implement this method.
+     *
      * @param array $messages profiling messages to be exported.
      */
     abstract public function export(array $messages);
@@ -77,6 +79,7 @@ abstract class Target
      *
      * @param array $messages messages to be filtered.
      * The message structure follows that in {@see Profiler::$messages}.
+     *
      * @return array the filtered messages.
      */
     protected function filterMessages(array $messages): array

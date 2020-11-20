@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler;
 
-use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * Profiler provides profiling support. It stores profiling messages in the memory and sends them to different targets
@@ -63,9 +63,9 @@ class Profiler implements ProfilerInterface
      */
     private bool $isTargetsInitialized = false;
 
-
     /**
      * Initializes the profiler by registering {@see flush()} as a shutdown function.
+     *
      * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
@@ -114,10 +114,6 @@ class Profiler implements ProfilerInterface
      * Set the profiler enabled or disabled.
      *
      * @param bool $value
-     *
-     * @return void
-     *
-     * {@see enabled}
      */
     public function setEnabled(bool $value): void
     {
@@ -128,10 +124,6 @@ class Profiler implements ProfilerInterface
      * Set messages profiler.
      *
      * @param array $value
-     *
-     * @return void
-     *
-     * {@see messages}
      */
     public function setMessages(array $value): void
     {
@@ -153,7 +145,7 @@ class Profiler implements ProfilerInterface
     /**
      * Adds extra target to {@see targets}.
      *
-     * @param Target|array $target the log target instance or its DI compatible configuration.
+     * @param array|Target $target the log target instance or its DI compatible configuration.
      * @param string|null $name array key to be used to store target, if `null` is given target will be append
      * to the end of the array by natural integer key.
      */
