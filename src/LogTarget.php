@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler;
 
-use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * LogTarget saves profiling messages as a log messages.

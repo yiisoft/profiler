@@ -28,6 +28,7 @@ interface ProfilerInterface
      * Marks the end of a code block for profiling.
      *
      * This has to be matched with a previous call to {@see begin()} with the same category name.
+     *
      * @param string $token token for the code block
      * @param array $context the context data of this profile block
      *

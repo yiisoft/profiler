@@ -49,7 +49,6 @@ class FileTarget extends Target
      */
     private int $dirMode = 0775;
 
-
     public function export(array $messages): void
     {
         $memoryPeakUsage = memory_get_peak_usage();
@@ -79,10 +78,6 @@ class FileTarget extends Target
      * Set profiles filename
      *
      * @param string $value
-     *
-     * @return void
-     *
-     * {@see filename}
      */
     public function setFilename(string $value): void
     {
