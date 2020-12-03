@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler;
 
+use Yiisoft\Strings\WildcardPattern;
+
 /**
  * Target is the base class for all profiling target classes.
  *
@@ -88,9 +90,7 @@ abstract class Target
             $matched = empty($this->categories);
 
             foreach ($this->categories as $category) {
-                if ($message['category'] === $category || (!empty($category)
-                    && substr_compare($category, '*', -1, 1) === 0
-                    && strpos($message['category'], rtrim($category, '*')) === 0)) {
+                if ((new WildcardPattern($category))->match($message['category'])) {
                     $matched = true;
                     break;
                 }
@@ -98,9 +98,7 @@ abstract class Target
 
             if ($matched) {
                 foreach ($this->except as $category) {
-                    $prefix = rtrim($category, '*');
-                    if (($message['category'] === $category || $prefix !== $category)
-                        && strpos($message['category'], $prefix) === 0) {
+                    if ((new WildcardPattern($category))->match($message['category'])) {
                         $matched = false;
                         break;
                     }

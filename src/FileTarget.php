@@ -69,7 +69,7 @@ class FileTarget extends Target
         $filename = $this->resolveFilename();
 
         if (file_exists($filename)) {
-            unlink($filename);
+            FileHelper::unlink($filename);
         } else {
             $filePath = dirname($filename);
 

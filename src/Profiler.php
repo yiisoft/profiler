@@ -236,8 +236,12 @@ class Profiler implements ProfilerInterface
                 if (!empty($messages)) {
                     $this->logger->log(
                         LogLevel::WARNING,
-                        'Unclosed profiling entry detected: category "' . $category . '" token "' . $token . '"' . ' ' .
-                        __METHOD__
+                        sprintf(
+                            'Unclosed profiling entry detected: category "%s" token "%s" %s',
+                            $category,
+                            $token,
+                            __METHOD__
+                        )
                     );
                 }
             }
