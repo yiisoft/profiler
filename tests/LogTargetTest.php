@@ -48,7 +48,7 @@ class LogTargetTest extends TestCase
         $target->collect([$message]);
         $logMessages = $this->logger->getMessages();
 
-        $this->assertEquals($logMessages[$category][$token], $message);
+        $this->assertEquals($logMessages[$logLevel][$token], $message);
     }
 
     public function testCollectWithExceptCategory(): void
