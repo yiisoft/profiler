@@ -232,19 +232,7 @@ class Profiler implements ProfilerInterface
     public function flush(): void
     {
         foreach ($this->pendingMessages as $category => $categoryMessages) {
-            foreach ($categoryMessages as $token => $messages) {
-                if (!empty($messages)) {
-                    $this->logger->log(
-                        LogLevel::WARNING,
-                        sprintf(
-                            'Unclosed profiling entry detected: category "%s" token "%s" %s',
-                            $category,
-                            $token,
-                            __METHOD__
-                        )
-                    );
-                }
-            }
+            $this->logCategoryMessages($category, $categoryMessages);
         }
 
         $this->pendingMessages = [];
@@ -271,6 +259,23 @@ class Profiler implements ProfilerInterface
     {
         foreach ($this->getTargets() as $target) {
             $target->collect($messages);
+        }
+    }
+
+    private function logCategoryMessages(string $category, array $categoryMessages): void
+    {
+        foreach ($categoryMessages as $token => $messages) {
+            if (!empty($messages)) {
+                $this->logger->log(
+                    LogLevel::WARNING,
+                    sprintf(
+                        'Unclosed profiling entry detected: category "%s" token "%s" %s',
+                        $category,
+                        $token,
+                        __METHOD__
+                    )
+                );
+            }
         }
     }
 }
