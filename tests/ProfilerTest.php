@@ -26,13 +26,15 @@ class ProfilerTest extends TestCase
         $this->assertEquals([$target], $profiler->getTargets());
         $this->assertSame($target, $profiler->getTargets()[0]);
 
-        $profiler->setTargets([
+        $profiler->setTargets(
             [
-                '__class' => LogTarget::class,
-                'logger' => new NullLogger(),
-                'level' => 'test',
-            ],
-        ]);
+                [
+                    '__class' => LogTarget::class,
+                    'logger' => new NullLogger(),
+                    'level' => 'test',
+                ],
+            ]
+        );
 
         $target = $profiler->getTargets()[0];
 
@@ -43,7 +45,7 @@ class ProfilerTest extends TestCase
     /**
      * @depends testSetupTarget
      *
-     * @covers \Yiisoft\Profiler\Profiler::addTarget()
+     * @covers  \Yiisoft\Profiler\Profiler::addTarget()
      */
     public function testAddTarget(): void
     {
@@ -82,6 +84,8 @@ class ProfilerTest extends TestCase
 
         $profiler->setEnabled(true);
 
+        $this->assertTrue($profiler->getEnabled());
+
         $profiler->begin('test');
         $profiler->end('test');
 
@@ -109,6 +113,27 @@ class ProfilerTest extends TestCase
 
         $profiler->flush();
 
+        $this->assertEmpty($profiler->getMessages());
+    }
+
+    /**
+     * @covers \Yiisoft\Profiler\Profiler::flush()
+     */
+    public function testFlushWithLogCategoryMessages(): void
+    {
+        /* @var $profiler Profiler|\PHPUnit_Framework_MockObject_MockObject */
+        $profiler = $this->getMockBuilder(Profiler::class)
+            ->setConstructorArgs([$this->logger])
+            ->setMethods(['logCategoryMessages'])
+            ->getMock();
+
+        $profiler->expects($this->once())
+            ->method('logCategoryMessages')
+            ->with('application', $this->anything());
+
+
+        $profiler->begin('test');
+        $profiler->flush();
         $this->assertEmpty($profiler->getMessages());
     }
 
@@ -142,7 +167,7 @@ class ProfilerTest extends TestCase
         $innerMessage = null;
         $notNestedMessage = null;
 
-        foreach ($profiler->getmessages() as $message) {
+        foreach ($profiler->getMessages() as $message) {
             if ($message['token'] === 'outer') {
                 $outerMessage = $message;
                 continue;
@@ -160,5 +185,42 @@ class ProfilerTest extends TestCase
         $this->assertSame(0, $outerMessage['nestedLevel']);
         $this->assertSame(1, $innerMessage['nestedLevel']);
         $this->assertSame(0, $notNestedMessage['nestedLevel']);
+    }
+
+    public function testProfileEndWithoutBegin(): void
+    {
+        $profiler = new Profiler($this->logger);
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectErrorMessage(
+            'Unexpected ' . Profiler::class . '::end() call for category "application" token "test". A matching begin() is not found.'
+        );
+        $profiler->end('test');
+    }
+
+    public function testWrongTarget(): void
+    {
+        $profiler = new Profiler($this->logger);
+
+        $profiler->getTargets();
+
+        $profiler->addTarget(['__class' => \stdClass::class, 'level' => 'app', 'logger' => $this->logger]);
+
+        $property = new \ReflectionProperty($profiler, 'isTargetsInitialized');
+        $property->setAccessible(true);
+        self::assertFalse($property->getValue($profiler));
+
+        $this->expectException(\RuntimeException::class);
+        $profiler->getTargets();
+    }
+
+    public function testSetMessages(): void
+    {
+        $profiler = new Profiler($this->logger);
+
+        $profiler->setMessages(['something']);
+
+        $this->assertNotEmpty($profiler->getMessages());
+        $this->assertEquals(['something'], $profiler->getMessages());
     }
 }

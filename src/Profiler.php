@@ -103,6 +103,14 @@ class Profiler implements ProfilerInterface
                 if (!$target instanceof Target) {
                     $this->targets[$name] = new $target['__class']($target['logger'], $target['level']);
                 }
+
+                if (!$this->targets[$name] instanceof Target) {
+                    throw new \RuntimeException(
+                        'Target should be ' . Target::class . ' instance. "' . get_class(
+                            $this->targets[$name]
+                        ) . '" given.'
+                    );
+                }
             }
             $this->isTargetsInitialized = true;
         }
@@ -194,7 +202,7 @@ class Profiler implements ProfilerInterface
         $category = $context['category'] ?? 'application';
 
         if (empty($this->pendingMessages[$category][$token])) {
-            throw new \InvalidArgumentException(
+            throw new \RuntimeException(
                 sprintf(
                     'Unexpected %s::end() call for category "%s" token "%s". A matching begin() is not found.',
                     static::class,
@@ -262,7 +270,7 @@ class Profiler implements ProfilerInterface
         }
     }
 
-    private function logCategoryMessages(string $category, array $categoryMessages): void
+    protected function logCategoryMessages(string $category, array $categoryMessages): void
     {
         foreach ($categoryMessages as $token => $messages) {
             if (!empty($messages)) {
