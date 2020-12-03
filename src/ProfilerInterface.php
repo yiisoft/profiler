@@ -19,8 +19,6 @@ interface ProfilerInterface
      *
      * @param string $token token for the code block
      * @param array $context the context data of this profile block
-     *
-     * {@see endProfile()}
      */
     public function begin(string $token, array $context = []);
 

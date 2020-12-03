@@ -9,7 +9,7 @@ use Psr\Log\LogLevel;
 
 /**
  * Profiler provides profiling support. It stores profiling messages in the memory and sends them to different targets
- * according to {@see targets}.
+ * according to {@see Profiler::$targets}.
  *
  * For more details and usage information on Profiler, see the [guide article on profiling](guide:runtime-profiling)
  */
@@ -170,13 +170,16 @@ class Profiler implements ProfilerInterface
 
         $category = $context['category'] ?? 'application';
 
-        $message = array_merge($context, [
-            'token' => $token,
-            'category' => $category,
-            'nestedLevel' => $this->nestedLevel,
-            'beginTime' => microtime(true),
-            'beginMemory' => memory_get_usage(),
-        ]);
+        $message = array_merge(
+            $context,
+            [
+                'token' => $token,
+                'category' => $category,
+                'nestedLevel' => $this->nestedLevel,
+                'beginTime' => microtime(true),
+                'beginMemory' => memory_get_usage(),
+            ]
+        );
 
         $this->pendingMessages[$category][$token][] = $message;
         $this->nestedLevel++;
@@ -192,11 +195,12 @@ class Profiler implements ProfilerInterface
 
         if (empty($this->pendingMessages[$category][$token])) {
             throw new \InvalidArgumentException(
-                'Unexpected ' . static::class .
-                '::end() call for category "' .
-                $category .
-                '" token "' .
-                $token . '". A matching begin() is not found.'
+                sprintf(
+                    'Unexpected %s::end() call for category "%s" token "%s". A matching begin() is not found.',
+                    static::class,
+                    $category,
+                    $token
+                )
             );
         }
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler;
 
+use Yiisoft\Aliases\Aliases;
 use Yiisoft\Files\FileHelper;
 
 /**
@@ -48,6 +49,12 @@ class FileTarget extends Target
      * but read-only for other users.
      */
     private int $dirMode = 0775;
+    private Aliases $aliases;
+
+    public function __construct(Aliases $aliases)
+    {
+        $this->aliases = $aliases;
+    }
 
     public function export(array $messages): void
     {
@@ -91,19 +98,23 @@ class FileTarget extends Target
      */
     protected function resolveFilename(): string
     {
-        $filename = $this->filename;
+        $filename = $this->aliases->get($this->filename);
 
-        return preg_replace_callback('/{\\w+}/', static function ($matches) {
-            switch ($matches[0]) {
-                case '{ts}':
-                    return time();
-                case '{date}':
-                    return gmdate('ymd');
-                case '{time}':
-                    return gmdate('His');
-            }
-            return $matches[0];
-        }, $filename);
+        return preg_replace_callback(
+            '/{\\w+}/',
+            static function ($matches) {
+                switch ($matches[0]) {
+                    case '{ts}':
+                        return time();
+                    case '{date}':
+                        return gmdate('ymd');
+                    case '{time}':
+                        return gmdate('His');
+                }
+                return $matches[0];
+            },
+            $filename
+        );
     }
 
     /**
