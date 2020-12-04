@@ -211,6 +211,7 @@ class ProfilerTest extends TestCase
         self::assertFalse($property->getValue($profiler));
 
         $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Target should be ' . Target::class . ' instance. "' . \stdClass::class . '" given.');
         $profiler->getTargets();
     }
 

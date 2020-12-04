@@ -50,6 +50,31 @@ class FileTargetTest extends TestCase
         $this->assertStringContainsString('[test-category] test-export', $fileContent);
     }
 
+    public function testExportWithResolveFilename(): void
+    {
+        $profiler = new Profiler($this->logger);
+
+        $filename = $this->testFilePath . DIRECTORY_SEPARATOR . 'test-{date}.txt';
+
+        $target = new FileTarget(new Aliases());
+        $target->setFilename($filename);
+
+        $resolvedFilename = $this->invokeMethod($target, 'resolveFilename');
+
+        @file_put_contents($resolvedFilename, 'test');
+
+        $profiler->begin('test-export', ['category' => 'test-category']);
+        $profiler->end('test-export', ['category' => 'test-category']);
+
+        $target->export($profiler->getMessages());
+
+        $this->assertFileExists($resolvedFilename);
+        $this->assertEquals($this->testFilePath . DIRECTORY_SEPARATOR . 'test-' . gmdate('ymd') . '.txt', $resolvedFilename);
+
+        $fileContent = file_get_contents($resolvedFilename);
+        $this->assertStringContainsString('[test-category] test-export', $fileContent);
+    }
+
     public function testSetFilename(): void
     {
         $fileTarget = new FileTarget(new Aliases());
