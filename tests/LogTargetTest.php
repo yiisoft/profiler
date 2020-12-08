@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Profiler\Tests;
 
 use Yiisoft\Profiler\LogTarget;
+use Yiisoft\Profiler\Message;
 
 class LogTargetTest extends TestCase
 {
@@ -15,18 +16,19 @@ class LogTargetTest extends TestCase
 
         $target = new LogTarget($this->logger, $logLevel);
 
-        $message = [
+        $context = [
             'category' => $logLevel,
             'token' => $token,
             'beginTime' => 123,
             'endTime' => 321,
             'time' => 123,
         ];
+        $message = new Message($logLevel, $token, $context);
 
         $target->export([$message]);
         $logMessages = $this->logger->getMessages();
 
-        $this->assertEquals($logMessages[$logLevel][$token], $message);
+        $this->assertEquals($logMessages[$logLevel][$token], $message->context());
     }
 
     public function testCollect(): void
@@ -37,18 +39,19 @@ class LogTargetTest extends TestCase
 
         $target = new LogTarget($this->logger, $logLevel);
 
-        $message = [
+        $context = [
             'category' => $category,
             'token' => $token,
             'beginTime' => 123,
             'endTime' => 321,
             'time' => 123,
         ];
+        $message = new Message($category, $token, $context);
 
         $target->collect([$message]);
         $logMessages = $this->logger->getMessages();
 
-        $this->assertEquals($logMessages[$logLevel][$token], $message);
+        $this->assertEquals($logMessages[$logLevel][$token], $message->context());
     }
 
     public function testCollectWithExceptCategory(): void
@@ -59,13 +62,14 @@ class LogTargetTest extends TestCase
         $target = new LogTarget($this->logger, $logLevel);
         $target->except = ['test*'];
 
-        $message = [
+        $context = [
             'category' => $logLevel,
             'token' => $token,
             'beginTime' => 123,
             'endTime' => 321,
             'time' => 123,
         ];
+        $message = new Message($logLevel, $token, $context);
 
         $target->collect([$message]);
         $logMessages = $this->logger->getMessages();

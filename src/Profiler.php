@@ -13,7 +13,7 @@ use Psr\Log\LogLevel;
  *
  * For more details and usage information on Profiler, see the [guide article on profiling](guide:runtime-profiling)
  */
-class Profiler implements ProfilerInterface
+final class Profiler implements ProfilerInterface
 {
     /**
      * @var bool whether to profiler is enabled. Defaults to true.
@@ -53,24 +53,20 @@ class Profiler implements ProfilerInterface
     private int $nestedLevel = 0;
 
     /**
-     * @var array|Target[] the profiling targets. Each array element represents a single {@see Target|profiling target}
-     * instance or the configuration for creating the profiling target instance.
+     * @var array|Target[] the profiling targets. Each array element represents a single {@see Target} instance.
      */
     private array $targets = [];
-
-    /**
-     * @var bool whether {@see targets} have been initialized, e.g. ensured to be objects.
-     */
-    private bool $isTargetsInitialized = false;
 
     /**
      * Initializes the profiler by registering {@see flush()} as a shutdown function.
      *
      * @param LoggerInterface $logger
+     * @param array $targets
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, array $targets = [])
     {
         $this->logger = $logger;
+        $this->setTargets($targets);
         register_shutdown_function([$this, 'flush']);
     }
 
@@ -85,7 +81,7 @@ class Profiler implements ProfilerInterface
     }
 
     /**
-     * @return array the messages profiler.
+     * @return Message[] the messages profiler.
      */
     public function getMessages(): array
     {
@@ -98,23 +94,6 @@ class Profiler implements ProfilerInterface
      */
     public function getTargets(): array
     {
-        if (!$this->isTargetsInitialized) {
-            foreach ($this->targets as $name => $target) {
-                if (!$target instanceof Target) {
-                    $this->targets[$name] = new $target['__class']($target['logger'], $target['level']);
-                }
-
-                if (!$this->targets[$name] instanceof Target) {
-                    throw new \RuntimeException(
-                        'Target should be ' . Target::class . ' instance. "' . get_class(
-                            $this->targets[$name]
-                        ) . '" given.'
-                    );
-                }
-            }
-            $this->isTargetsInitialized = true;
-        }
-
         return $this->targets;
     }
 
@@ -131,38 +110,39 @@ class Profiler implements ProfilerInterface
     /**
      * Set messages profiler.
      *
-     * @param array $value
+     * @param Message[] $messages
      */
-    public function setMessages(array $value): void
+    public function setMessages(array $messages): void
     {
-        $this->messages = $value;
+        $this->messages = $messages;
 
         $this->dispatch($this->messages);
     }
 
     /**
-     * @param array|Target[] $targets the profiling targets. Each array element represents a single
-     * {@see Target|profiling target} instance or the configuration for creating the profiling target instance.
+     * @param Target[] $targets the profiling targets. Each array element represents a single {@see Target} instance.
      */
     public function setTargets(array $targets): void
     {
+        foreach ($targets as $name => $target) {
+            if (!$target instanceof Target) {
+                throw new \InvalidArgumentException(
+                    'Target should be \Yiisoft\Profiler\Target instance. "' . get_class($target) . '" given.'
+                );
+            }
+        }
         $this->targets = $targets;
-        $this->isTargetsInitialized = false;
     }
 
     /**
      * Adds extra target to {@see targets}.
      *
-     * @param array|Target $target the log target instance or its DI compatible configuration.
+     * @param Target $target the log target instance.
      * @param string|null $name array key to be used to store target, if `null` is given target will be append
      * to the end of the array by natural integer key.
      */
-    public function addTarget($target, ?string $name = null): void
+    public function addTarget(Target $target, ?string $name = null): void
     {
-        if (!$target instanceof Target) {
-            $this->isTargetsInitialized = false;
-        }
-
         if ($name === null) {
             $this->targets[] = $target;
         } else {
@@ -177,17 +157,19 @@ class Profiler implements ProfilerInterface
         }
 
         $category = $context['category'] ?? 'application';
-
-        $message = array_merge(
+        $context = array_merge(
             $context,
             [
                 'token' => $token,
                 'category' => $category,
                 'nestedLevel' => $this->nestedLevel,
+                'time' => microtime(true),
                 'beginTime' => microtime(true),
                 'beginMemory' => memory_get_usage(),
             ]
         );
+
+        $message = new Message($category, $token, $context);
 
         $this->pendingMessages[$category][$token][] = $message;
         $this->nestedLevel++;
@@ -205,13 +187,14 @@ class Profiler implements ProfilerInterface
             throw new \RuntimeException(
                 sprintf(
                     'Unexpected %s::end() call for category "%s" token "%s". A matching begin() is not found.',
-                    static::class,
+                    self::class,
                     $category,
                     $token
                 )
             );
         }
 
+        /** @var Message $message */
         $message = array_pop($this->pendingMessages[$category][$token]);
         if (empty($this->pendingMessages[$category][$token])) {
             unset($this->pendingMessages[$category][$token]);
@@ -221,8 +204,8 @@ class Profiler implements ProfilerInterface
             }
         }
 
-        $message = array_merge(
-            $message,
+        $context = array_merge(
+            $message->context(),
             $context,
             [
                 'endTime' => microtime(true),
@@ -230,10 +213,10 @@ class Profiler implements ProfilerInterface
             ]
         );
 
-        $message['duration'] = $message['endTime'] - $message['beginTime'];
-        $message['memoryDiff'] = $message['endMemory'] - $message['beginMemory'];
+        $context['duration'] = $context['endTime'] - $context['beginTime'];
+        $context['memoryDiff'] = $context['endMemory'] - $context['beginMemory'];
 
-        $this->messages[] = $message;
+        $this->messages[] = new Message($category, $message->message(), $context);
         $this->nestedLevel--;
     }
 
@@ -263,14 +246,14 @@ class Profiler implements ProfilerInterface
      *
      * @param array $messages the profiling messages.
      */
-    protected function dispatch(array $messages): void
+    private function dispatch(array $messages): void
     {
         foreach ($this->getTargets() as $target) {
             $target->collect($messages);
         }
     }
 
-    protected function logCategoryMessages(string $category, array $categoryMessages): void
+    private function logCategoryMessages(string $category, array $categoryMessages): void
     {
         foreach ($categoryMessages as $token => $messages) {
             if (!empty($messages)) {

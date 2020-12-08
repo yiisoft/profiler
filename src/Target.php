@@ -72,14 +72,14 @@ abstract class Target
      *
      * Child classes must implement this method.
      *
-     * @param array $messages profiling messages to be exported.
+     * @param Message[] $messages profiling messages to be exported.
      */
     abstract public function export(array $messages);
 
     /**
      * Filters the given messages according to their categories.
      *
-     * @param array $messages messages to be filtered.
+     * @param Message[] $messages messages to be filtered.
      * The message structure follows that in {@see Profiler::$messages}.
      *
      * @return array the filtered messages.
@@ -90,7 +90,7 @@ abstract class Target
             $matched = empty($this->categories);
 
             foreach ($this->categories as $category) {
-                if ((new WildcardPattern($category))->match($message['category'])) {
+                if ((new WildcardPattern($category))->match($message->level())) {
                     $matched = true;
                     break;
                 }
@@ -98,7 +98,7 @@ abstract class Target
 
             if ($matched) {
                 foreach ($this->except as $category) {
-                    if ((new WildcardPattern($category))->match($message['category'])) {
+                    if ((new WildcardPattern($category))->match($message->level())) {
                         $matched = false;
                         break;
                     }

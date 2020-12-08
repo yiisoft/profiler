@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler\Tests;
 
+use Yiisoft\Profiler\Message;
 use Yiisoft\Profiler\Target;
 
 /**
@@ -20,34 +21,34 @@ final class TargetTest extends TestCase
     {
         return [
             [
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
                 [],
                 [],
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
             ],
             [
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
                 ['foo'],
                 [],
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
             ],
             [
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
                 ['some'],
                 [],
                 [],
             ],
             [
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
                 [],
                 ['foo'],
                 [],
             ],
             [
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
                 [],
                 ['some'],
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
             ],
         ];
     }
@@ -87,7 +88,7 @@ final class TargetTest extends TestCase
 
         $target->enabled = false;
 
-        $target->collect([['category' => 'foo']]);
+        $target->collect([new Message('foo', 'test', ['category' => 'foo'])]);
 
         $target = $this->getMockBuilder(Target::class)
             ->setMethods(['export'])
@@ -97,6 +98,6 @@ final class TargetTest extends TestCase
 
         $target->enabled = true;
 
-        $target->collect([['category' => 'foo']]);
+        $target->collect([new Message('foo', 'test', ['category' => 'foo'])]);
     }
 }

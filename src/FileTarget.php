@@ -27,7 +27,7 @@ use Yiisoft\Files\FileHelper;
  * ];
  * ```
  */
-class FileTarget extends Target
+final class FileTarget extends Target
 {
     /**
      * @var string file path or [path alias](guide:concept-aliases). File name may contain the placeholders,
@@ -120,17 +120,17 @@ class FileTarget extends Target
     /**
      * Formats a profiling message for display as a string.
      *
-     * @param array $message the profiling message to be formatted.
+     * @param Message $message the profiling message to be formatted.
      * The message structure follows that in {@see Profiler::$messages}.
      *
      * @return string the formatted message.
      */
-    protected function formatMessage(array $message): string
+    protected function formatMessage(Message $message): string
     {
         return date(
             'Y-m-d H:i:s',
-            (int) $message['beginTime']
-        ) . " [{$message['duration']} ms][{$message['memoryDiff']} B][{$message['category']}] {$message['token']}" .
+            (int) $message->context('beginTime')
+        ) . " [{$message->context('duration')} ms][{$message->context('memoryDiff')} B][{$message->level()}] {$message->message()}" .
         __METHOD__;
     }
 }
