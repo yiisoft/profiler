@@ -15,6 +15,7 @@ class ProfilerMock implements \Yiisoft\Profiler\ProfilerInterface
     {
         $this->logger = $logger;
     }
+
     public function begin(string $token, array $context = []): void
     {
         // TODO: Implement begin() method.
