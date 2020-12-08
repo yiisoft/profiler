@@ -7,12 +7,6 @@ namespace Yiisoft\Profiler;
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LoggerTrait;
 use Psr\Log\LogLevel;
-use Yiisoft\VarDumper\VarDumper;
-
-use function is_scalar;
-use function is_object;
-use function method_exists;
-use function preg_replace_callback;
 
 /**
  * Message is a data object that stores log message data.
