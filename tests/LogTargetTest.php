@@ -60,7 +60,7 @@ class LogTargetTest extends TestCase
         $token = 'test-token';
 
         $target = new LogTarget($this->logger, $logLevel);
-        $target->exclude = ['test*'];
+        $target->exclude(['test*']);
 
         $context = [
             'category' => $logLevel,
@@ -75,12 +75,5 @@ class LogTargetTest extends TestCase
         $logMessages = $this->logger->getMessages();
 
         $this->assertEmpty($logMessages);
-    }
-
-    public function testGetLogLevel(): void
-    {
-        $target = new LogTarget($this->logger, 'test');
-
-        $this->assertEquals('test', $target->getLogLevel());
     }
 }

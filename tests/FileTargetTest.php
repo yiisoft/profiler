@@ -32,13 +32,11 @@ class FileTargetTest extends TestCase
 
     public function testExport(): void
     {
-        $profiler = new Profiler($this->logger);
 
         $filename = $this->testFilePath . DIRECTORY_SEPARATOR . 'test.txt';
 
-        $target = new FileTarget(new Aliases());
-        $target->setFilename($filename);
-        $profiler->addTarget($target);
+        $target = new FileTarget($filename);
+        $profiler = new Profiler($this->logger, [$target]);
 
         $profiler->begin('test-export', ['category' => 'test-category']);
         $profiler->end('test-export', ['category' => 'test-category']);
@@ -59,8 +57,7 @@ class FileTargetTest extends TestCase
             FileHelper::createDirectory($filePath);
         }
 
-        $target = new FileTarget(new Aliases());
-        $target->setFilename($filename);
+        $target = new FileTarget($filename);
 
         $testData = 'test';
         file_put_contents($filename, $testData);
@@ -86,8 +83,7 @@ class FileTargetTest extends TestCase
             FileHelper::createDirectory($filePath);
         }
 
-        $target = new FileTarget(new Aliases());
-        $target->setFilename($filename);
+        $target = new FileTarget($filename);
 
         $resolvedFilename = $this->invokeMethod($target, 'resolveFilename');
 
@@ -107,11 +103,4 @@ class FileTargetTest extends TestCase
         $this->assertStringContainsString('[test-category] test-export', $fileContent);
     }
 
-    public function testSetFilename(): void
-    {
-        $fileTarget = new FileTarget(new Aliases());
-        $clonedFileTarget = clone $fileTarget;
-        $clonedFileTarget->setFilename('tests/runtime/profile.text');
-        $this->assertNotSame($clonedFileTarget, $fileTarget);
-    }
 }

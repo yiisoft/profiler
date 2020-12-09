@@ -40,7 +40,7 @@ final class FileTarget extends Target
      * The directory containing the file will be automatically created if not existing.
      * If target file is already exist it will be overridden.
      */
-    private string $filename = '@runtime/profiling/{date}-{time}.txt';
+    private string $filename;
 
     /**
      * @var int the permission to be set for newly created directories.
@@ -49,11 +49,10 @@ final class FileTarget extends Target
      * but read-only for other users.
      */
     private int $dirMode = 0775;
-    private Aliases $aliases;
 
-    public function __construct(Aliases $aliases)
+    public function __construct(string $filename = '@runtime/profiling/{date}-{time}.txt')
     {
-        $this->aliases = $aliases;
+        $this->filename = $filename;
     }
 
     public function export(array $messages): void
@@ -82,24 +81,12 @@ final class FileTarget extends Target
     }
 
     /**
-     * Set profiles filename
-     *
-     * @param string $value
-     */
-    public function setFilename(string $value): void
-    {
-        $this->filename = $value;
-    }
-
-    /**
      * Resolves value of {@see filename} processing path alias and placeholders.
      *
      * @return string actual target filename.
      */
-    protected function resolveFilename(): string
+    private function resolveFilename(): string
     {
-        $filename = $this->aliases->get($this->filename);
-
         return preg_replace_callback(
             '/{\\w+}/',
             static function ($matches) {
@@ -113,7 +100,7 @@ final class FileTarget extends Target
                 }
                 return $matches[0];
             },
-            $filename
+            $this->filename
         );
     }
 

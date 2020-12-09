@@ -18,66 +18,27 @@ class ProfilerTest extends TestCase
      */
     public function testSetupTarget(): void
     {
-        $profiler = new Profiler($this->logger);
-
         $target = new LogTarget(new NullLogger());
-
-        $profiler->setTargets([$target]);
+        $profiler = new Profiler($this->logger, [$target]);
 
         $this->assertEquals([$target], $profiler->getTargets());
         $this->assertSame($target, $profiler->getTargets()[0]);
-
-        $profiler->setTargets([new LogTarget(new NullLogger(), 'test')]);
-
-        $target = $profiler->getTargets()[0];
-
-        $this->assertInstanceOf(LogTarget::class, $target);
-        $this->assertEquals('test', $target->getLogLevel());
-    }
-
-    /**
-     * @depends testSetupTarget
-     *
-     * @covers  \Yiisoft\Profiler\Profiler::addTarget()
-     */
-    public function testAddTarget(): void
-    {
-        $profiler = new Profiler($this->logger);
-
-        $target = $this->getMockBuilder(Target::class)->getMockForAbstractClass();
-        $profiler->setTargets([$target]);
-
-        $namedTarget = $this->getMockBuilder(Target::class)->getMockForAbstractClass();
-        $profiler->addTarget($namedTarget, 'test-target');
-
-        $targets = $profiler->getTargets();
-
-        $this->assertCount(2, $targets);
-        $this->assertTrue(isset($targets['test-target']));
-        $this->assertSame($namedTarget, $targets['test-target']);
-
-        $namelessTarget = $this->getMockBuilder(Target::class)->getMockForAbstractClass();
-        $profiler->addTarget($namelessTarget);
-        $targets = $profiler->getTargets();
-
-        $this->assertCount(3, $targets);
-        $this->assertSame($namelessTarget, array_pop($targets));
     }
 
     public function testEnabled(): void
     {
         $profiler = new Profiler($this->logger);
 
-        $profiler->setEnabled(false);
+        $profiler->disable();
 
         $profiler->begin('test');
         $profiler->end('test');
 
         $this->assertEmpty($profiler->getMessages());
 
-        $profiler->setEnabled(true);
+        $profiler->enable();
 
-        $this->assertTrue($profiler->getEnabled());
+        $this->assertTrue($profiler->isEnabled());
 
         $profiler->begin('test');
         $profiler->end('test');
@@ -94,9 +55,9 @@ class ProfilerTest extends TestCase
     {
         $profiler = new Profiler($this->logger);
 
-        $messages = [new Message('test', 'anything')];
 
-        $profiler->setMessages($messages);
+        $profiler->begin('anything', ['category' => 'test']);
+        $profiler->end('anything', ['category' => 'test']);
 
         $profiler->flush();
 
@@ -187,23 +148,10 @@ class ProfilerTest extends TestCase
 
     public function testWrongTarget(): void
     {
-        $profiler = new Profiler($this->logger);
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(
             'Target should be \Yiisoft\Profiler\Target instance. "' . \stdClass::class . '" given.'
         );
-        $profiler->setTargets([new \stdClass()]);
-    }
-
-    public function testSetMessages(): void
-    {
-        $profiler = new Profiler($this->logger, [new LogTarget($this->logger)]);
-        $message = new Message('test', 'something');
-
-        $profiler->setMessages([$message]);
-
-        $this->assertNotEmpty($profiler->getMessages());
-        $this->assertNotEmpty($this->logger->getMessages());
-        $this->assertSame([$message], $profiler->getMessages());
+        $profiler = new Profiler($this->logger, [new \stdClass()]);
     }
 }

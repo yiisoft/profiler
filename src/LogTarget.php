@@ -53,14 +53,4 @@ final class LogTarget extends Target
             $this->logger->log($this->logLevel, $message->message(), $message->context());
         }
     }
-
-    /**
-     * @return string|null log level
-     *
-     * {@see logLevel}
-     */
-    public function getLogLevel(): ?string
-    {
-        return $this->logLevel;
-    }
 }

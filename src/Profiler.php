@@ -70,12 +70,24 @@ final class Profiler implements ProfilerInterface
         register_shutdown_function([$this, 'flush']);
     }
 
+    public function enable(): self
+    {
+        $this->enabled = true;
+        return $this;
+    }
+
+    public function disable(): self
+    {
+        $this->enabled = false;
+        return $this;
+    }
+
     /**
      * @return bool the profile enabled.
      *
      * {@see enabled}
      */
-    public function getEnabled(): bool
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
@@ -98,31 +110,9 @@ final class Profiler implements ProfilerInterface
     }
 
     /**
-     * Set the profiler enabled or disabled.
-     *
-     * @param bool $value
-     */
-    public function setEnabled(bool $value): void
-    {
-        $this->enabled = $value;
-    }
-
-    /**
-     * Set messages profiler.
-     *
-     * @param Message[] $messages
-     */
-    public function setMessages(array $messages): void
-    {
-        $this->messages = $messages;
-
-        $this->dispatch($this->messages);
-    }
-
-    /**
      * @param Target[] $targets the profiling targets. Each array element represents a single {@see Target} instance.
      */
-    public function setTargets(array $targets): void
+    private function setTargets(array $targets): void
     {
         foreach ($targets as $name => $target) {
             if (!$target instanceof Target) {
@@ -132,22 +122,6 @@ final class Profiler implements ProfilerInterface
             }
         }
         $this->targets = $targets;
-    }
-
-    /**
-     * Adds extra target to {@see targets}.
-     *
-     * @param Target $target the log target instance.
-     * @param string|null $name array key to be used to store target, if `null` is given target will be append
-     * to the end of the array by natural integer key.
-     */
-    public function addTarget(Target $target, ?string $name = null): void
-    {
-        if ($name === null) {
-            $this->targets[] = $target;
-        } else {
-            $this->targets[$name] = $target;
-        }
     }
 
     public function begin(string $token, array $context = []): void
@@ -256,7 +230,6 @@ final class Profiler implements ProfilerInterface
     /**
      * @param string $category
      * @param array $categoryMessages
-     * @codeCoverageIgnore
      */
     private function logCategoryMessages(string $category, array $categoryMessages): void
     {
