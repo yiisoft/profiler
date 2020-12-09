@@ -19,7 +19,6 @@
     "require": {
         "php": "^7.4|^8.0",
         "psr/log": "^1.1",
-        "yiisoft/aliases": "^1.1.1",
         "yiisoft/files": "^3.0@dev",
         "yiisoft/strings": "^1.1.0"
     },
