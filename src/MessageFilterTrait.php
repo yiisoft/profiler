@@ -42,30 +42,32 @@ trait MessageFilterTrait
     protected function filterMessages(array $messages): array
     {
         foreach ($messages as $i => $message) {
-            $matched = empty($this->include);
-
-            if (!$matched) {
-                foreach ($this->include as $category) {
-                    if ((new WildcardPattern($category))->match($message->level())) {
-                        $matched = true;
-                        break;
-                    }
-                }
-            }
-
-            if ($matched) {
-                foreach ($this->exclude as $category) {
-                    if ((new WildcardPattern($category))->match($message->level())) {
-                        $matched = false;
-                        break;
-                    }
-                }
-            }
-
-            if (!$matched) {
+            if (!$this->isCategoryMatched($message->level())) {
                 unset($messages[$i]);
             }
         }
         return $messages;
+    }
+
+    private function isCategoryMatched($category): bool
+    {
+        $matched = empty($this->include);
+
+        foreach ($this->include as $pattern) {
+            if ((new WildcardPattern($pattern))->match($category)) {
+                $matched = true;
+                break;
+            }
+        }
+
+        if ($matched) {
+            foreach ($this->exclude as $pattern) {
+                if ((new WildcardPattern($pattern))->match($category)) {
+                    $matched = false;
+                    break;
+                }
+            }
+        }
+        return $matched;
     }
 }

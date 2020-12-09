@@ -57,6 +57,7 @@ final class TargetTest extends TestCase
      * @dataProvider dataProviderFilterMessages
      *
      * @covers \Yiisoft\Profiler\Target::filterMessages()
+     * @covers \Yiisoft\Profiler\Target::isCategoryMatched()
      *
      * @param array $messages
      * @param array $categories
