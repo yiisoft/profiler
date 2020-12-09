@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler\Tests;
 
-use Yiisoft\Aliases\Aliases;
 use Yiisoft\Files\FileHelper;
 use Yiisoft\Profiler\FileTarget;
 use Yiisoft\Profiler\Message;
@@ -32,7 +31,6 @@ class FileTargetTest extends TestCase
 
     public function testExport(): void
     {
-
         $filename = $this->testFilePath . DIRECTORY_SEPARATOR . 'test.txt';
 
         $target = new FileTarget($filename);
@@ -102,5 +100,4 @@ class FileTargetTest extends TestCase
         $fileContent = file_get_contents($resolvedFilename);
         $this->assertStringContainsString('[test-category] test-export', $fileContent);
     }
-
 }
