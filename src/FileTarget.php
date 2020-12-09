@@ -127,10 +127,8 @@ final class FileTarget extends Target
      */
     private function formatMessage(Message $message): string
     {
-        return date(
-            'Y-m-d H:i:s',
-            (int) $message->context('beginTime')
-        ) . " [{$message->context('duration')} ms][{$message->context('memoryDiff')} B][{$message->level()}] {$message->message()}" .
-        __METHOD__;
+        return date('Y-m-d H:i:s', (int)$message->context('beginTime'))
+            . " [{$message->context('duration')} ms][{$message->context('memoryDiff')} B][{$message->level()}] {$message->message()}"
+            . __METHOD__;
     }
 }
