@@ -9,7 +9,6 @@ use Yiisoft\Profiler\LogTarget;
 use Yiisoft\Profiler\Message;
 use Yiisoft\Profiler\Profiler;
 use Yiisoft\Profiler\Target;
-use Yiisoft\Profiler\Tests\Mock\ProfilerMock;
 
 class ProfilerTest extends TestCase
 {
@@ -88,18 +87,36 @@ class ProfilerTest extends TestCase
 
     /**
      * @covers \Yiisoft\Profiler\Profiler::flush()
+     * @covers \Yiisoft\Profiler\Profiler::dispatch()
+     * @covers \Yiisoft\Profiler\Profiler::logCategoryMessages()
      */
     public function testFlushWithDispatch(): void
     {
-        /* @var $profiler Profiler|\PHPUnit_Framework_MockObject_MockObject */
-        $profiler = $this->getMockBuilder(ProfilerMock::class)
-            ->setConstructorArgs([$this->logger])
-            ->setMethods(['dispatch'])
-            ->getMock();
+        $profiler = new Profiler($this->logger);
 
         $messages = [new Message('test', 'anything')];
 
         $profiler->setMessages($messages);
+
+        $profiler->flush();
+
+        $this->assertEmpty($profiler->getMessages());
+    }
+
+    public function testFlushWithEmptyMessages(): void
+    {
+        $profiler = new Profiler($this->logger);
+
+        $profiler->flush();
+
+        $this->assertEmpty($profiler->getMessages());
+    }
+
+    public function testBeginWithoutEnd(): void
+    {
+        $profiler = new Profiler($this->logger);
+
+        $profiler->begin('test');
 
         $profiler->flush();
 
@@ -180,12 +197,13 @@ class ProfilerTest extends TestCase
 
     public function testSetMessages(): void
     {
-        $profiler = new Profiler($this->logger);
+        $profiler = new Profiler($this->logger, [new LogTarget($this->logger)]);
         $message = new Message('test', 'something');
 
         $profiler->setMessages([$message]);
 
         $this->assertNotEmpty($profiler->getMessages());
+        $this->assertNotEmpty($this->logger->getMessages());
         $this->assertSame([$message], $profiler->getMessages());
     }
 }

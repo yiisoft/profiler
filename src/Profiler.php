@@ -22,10 +22,10 @@ final class Profiler implements ProfilerInterface
     private bool $enabled = true;
 
     /**
-     * @var array[] complete profiling messages.
+     * @var Message[] complete profiling messages.
      * Each message has a following keys:
      *
-     * - token: string, profiling token.
+     * - message: string, profiling token.
      * - category: string, message category.
      * - nestedLevel: int, profiling message nested level.
      * - beginTime: float, profiling begin timestamp obtained by microtime(true).
@@ -248,11 +248,16 @@ final class Profiler implements ProfilerInterface
      */
     private function dispatch(array $messages): void
     {
-        foreach ($this->getTargets() as $target) {
+        foreach ($this->targets as $target) {
             $target->collect($messages);
         }
     }
 
+    /**
+     * @param string $category
+     * @param array $categoryMessages
+     * @codeCoverageIgnore
+     */
     private function logCategoryMessages(string $category, array $categoryMessages): void
     {
         foreach ($categoryMessages as $token => $messages) {
