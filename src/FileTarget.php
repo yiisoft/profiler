@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler;
 
-use Yiisoft\Aliases\Aliases;
 use Yiisoft\Files\FileHelper;
 
 /**
