@@ -8,7 +8,6 @@ use Psr\Log\NullLogger;
 use Yiisoft\Profiler\LogTarget;
 use Yiisoft\Profiler\Message;
 use Yiisoft\Profiler\Profiler;
-use Yiisoft\Profiler\Target;
 
 class ProfilerTest extends TestCase
 {
