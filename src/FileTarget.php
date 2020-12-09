@@ -125,7 +125,7 @@ final class FileTarget extends Target
      *
      * @return string the formatted message.
      */
-    protected function formatMessage(Message $message): string
+    private function formatMessage(Message $message): string
     {
         return date(
             'Y-m-d H:i:s',
