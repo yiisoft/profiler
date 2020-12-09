@@ -19,9 +19,6 @@ class FileTargetTest extends TestCase
         parent::setUp();
 
         $this->testFilePath = 'tests/data';
-        if (!is_dir($this->testFilePath)) {
-            FileHelper::createDirectory($this->testFilePath);
-        }
     }
 
     protected function tearDown(): void
@@ -57,6 +54,10 @@ class FileTargetTest extends TestCase
     public function testExportWithExistFile(): void
     {
         $filename = $this->testFilePath . DIRECTORY_SEPARATOR . 'test.txt';
+        $filePath = dirname($filename);
+        if (!is_dir($filePath)) {
+            FileHelper::createDirectory($filePath);
+        }
 
         $target = new FileTarget(new Aliases());
         $target->setFilename($filename);
@@ -80,13 +81,17 @@ class FileTargetTest extends TestCase
         $profiler = new Profiler($this->logger);
 
         $filename = $this->testFilePath . DIRECTORY_SEPARATOR . 'test-{date}-{time}-{ts}-{test}.txt';
+        $filePath = dirname($filename);
+        if (!is_dir($filePath)) {
+            FileHelper::createDirectory($filePath);
+        }
 
         $target = new FileTarget(new Aliases());
         $target->setFilename($filename);
 
         $resolvedFilename = $this->invokeMethod($target, 'resolveFilename');
 
-        @file_put_contents($resolvedFilename, 'test');
+        file_put_contents($resolvedFilename, 'test');
 
         $profiler->begin('test-export', ['category' => 'test-category']);
         $profiler->end('test-export', ['category' => 'test-category']);
@@ -96,7 +101,7 @@ class FileTargetTest extends TestCase
         $this->assertFileExists($resolvedFilename);
         $expectedFilename = $this->testFilePath . DIRECTORY_SEPARATOR . 'test-' . gmdate('ymd') . '-'
             . gmdate('His') . '-' . time() . '-{test}.txt';
-        $this->assertStringMatchesFormat($expectedFilename, $resolvedFilename);
+        $this->assertEquals($expectedFilename, $resolvedFilename);
 
         $fileContent = file_get_contents($resolvedFilename);
         $this->assertStringContainsString('[test-category] test-export', $fileContent);
