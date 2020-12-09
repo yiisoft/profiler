@@ -68,8 +68,8 @@ final class TargetTest extends TestCase
         /* @var $target Target|\PHPUnit_Framework_MockObject_MockObject */
         $target = $this->getMockBuilder(Target::class)->getMockForAbstractClass();
 
-        $target->categories = $categories;
-        $target->except = $except;
+        $target->include = $categories;
+        $target->exclude = $except;
 
         $this->assertEquals($expected, $this->invokeMethod($target, 'filterMessages', [$messages]));
     }
