@@ -140,7 +140,7 @@ class ProfilerTest extends TestCase
 
         $this->expectException(\RuntimeException::class);
         $this->expectErrorMessage(
-            'Unexpected ' . Profiler::class . '::end() call for category "application" token "test". A matching begin() is not found.'
+            'Unexpected ' . Profiler::class . '::end() call for category "application" token "test". A matching begin() was not found.'
         );
         $profiler->end('test');
     }
@@ -149,7 +149,7 @@ class ProfilerTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Target should be \Yiisoft\Profiler\Target instance. "' . \stdClass::class . '" given.'
+            'Target should be an instance of \Yiisoft\Profiler\Target, "' . \stdClass::class . '" given.'
         );
         $profiler = new Profiler($this->logger, [new \stdClass()]);
     }
