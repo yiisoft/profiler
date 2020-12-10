@@ -6,6 +6,7 @@ namespace Yiisoft\Profiler;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use function get_class;
 
 /**
  * Profiler provides profiling support. It stores profiling messages in the memory and sends them to different targets
@@ -117,7 +118,7 @@ final class Profiler implements ProfilerInterface
         foreach ($targets as $name => $target) {
             if (!$target instanceof Target) {
                 throw new \InvalidArgumentException(
-                    'Target should be \Yiisoft\Profiler\Target instance. "' . get_class($target) . '" given.'
+                    'Target should be an instance of \Yiisoft\Profiler\Target, "' . get_class($target) . '" given.'
                 );
             }
         }
@@ -160,7 +161,7 @@ final class Profiler implements ProfilerInterface
         if (empty($this->pendingMessages[$category][$token])) {
             throw new \RuntimeException(
                 sprintf(
-                    'Unexpected %s::end() call for category "%s" token "%s". A matching begin() is not found.',
+                    'Unexpected %s::end() call for category "%s" token "%s". A matching begin() was not found.',
                     self::class,
                     $category,
                     $token

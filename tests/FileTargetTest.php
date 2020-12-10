@@ -8,6 +8,7 @@ use Yiisoft\Files\FileHelper;
 use Yiisoft\Profiler\FileTarget;
 use Yiisoft\Profiler\Message;
 use Yiisoft\Profiler\Profiler;
+use function dirname;
 
 class FileTargetTest extends TestCase
 {
