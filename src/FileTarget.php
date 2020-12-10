@@ -26,7 +26,7 @@ use Yiisoft\Files\FileHelper;
  * ];
  * ```
  */
-class FileTarget extends Target
+final class FileTarget extends Target
 {
     /**
      * @var string file path or [path alias](guide:concept-aliases). File name may contain the placeholders,
@@ -39,7 +39,7 @@ class FileTarget extends Target
      * The directory containing the file will be automatically created if not existing.
      * If target file is already exist it will be overridden.
      */
-    private string $filename = '@runtime/profiling/{date}-{time}.txt';
+    private string $filename;
 
     /**
      * @var int the permission to be set for newly created directories.
@@ -48,6 +48,11 @@ class FileTarget extends Target
      * but read-only for other users.
      */
     private int $dirMode = 0775;
+
+    public function __construct(string $filename = '@runtime/profiling/{date}-{time}.txt')
+    {
+        $this->filename = $filename;
+    }
 
     public function export(array $messages): void
     {
@@ -62,7 +67,7 @@ class FileTarget extends Target
         $filename = $this->resolveFilename();
 
         if (file_exists($filename)) {
-            unlink($filename);
+            FileHelper::unlink($filename);
         } else {
             $filePath = dirname($filename);
 
@@ -75,51 +80,41 @@ class FileTarget extends Target
     }
 
     /**
-     * Set profiles filename
-     *
-     * @param string $value
-     */
-    public function setFilename(string $value): void
-    {
-        $this->filename = $value;
-    }
-
-    /**
      * Resolves value of {@see filename} processing path alias and placeholders.
      *
      * @return string actual target filename.
      */
-    protected function resolveFilename(): string
+    private function resolveFilename(): string
     {
-        $filename = $this->filename;
-
-        return preg_replace_callback('/{\\w+}/', static function ($matches) {
-            switch ($matches[0]) {
-                case '{ts}':
-                    return time();
-                case '{date}':
-                    return gmdate('ymd');
-                case '{time}':
-                    return gmdate('His');
-            }
-            return $matches[0];
-        }, $filename);
+        return preg_replace_callback(
+            '/{\\w+}/',
+            static function ($matches) {
+                switch ($matches[0]) {
+                    case '{ts}':
+                        return time();
+                    case '{date}':
+                        return gmdate('ymd');
+                    case '{time}':
+                        return gmdate('His');
+                }
+                return $matches[0];
+            },
+            $this->filename
+        );
     }
 
     /**
      * Formats a profiling message for display as a string.
      *
-     * @param array $message the profiling message to be formatted.
+     * @param Message $message the profiling message to be formatted.
      * The message structure follows that in {@see Profiler::$messages}.
      *
      * @return string the formatted message.
      */
-    protected function formatMessage(array $message): string
+    private function formatMessage(Message $message): string
     {
-        return date(
-            'Y-m-d H:i:s',
-            (int) $message['beginTime']
-        ) . " [{$message['duration']} ms][{$message['memoryDiff']} B][{$message['category']}] {$message['token']}" .
-        __METHOD__;
+        return date('Y-m-d H:i:s', (int)$message->context('beginTime'))
+            . " [{$message->context('duration')} ms][{$message->context('memoryDiff')} B][{$message->level()}] {$message->message()}"
+            . __METHOD__;
     }
 }

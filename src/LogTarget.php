@@ -26,7 +26,7 @@ use Psr\Log\LogLevel;
  * ];
  * ```
  */
-class LogTarget extends Target
+final class LogTarget extends Target
 {
     /**
      * @var LoggerInterface logger to be used for message export.
@@ -44,22 +44,13 @@ class LogTarget extends Target
         $this->logLevel = $logLevel;
     }
 
+    /**
+     * @param Message[] $messages
+     */
     public function export(array $messages): void
     {
         foreach ($messages as $message) {
-            $message['time'] = $message['beginTime'];
-
-            $this->logger->log($this->logLevel, $message['token'], $message);
+            $this->logger->log($this->logLevel, $message->message(), $message->context());
         }
-    }
-
-    /**
-     * @return string|null log level
-     *
-     * {@see logLevel}
-     */
-    public function getLogLevel(): ?string
-    {
-        return $this->logLevel;
     }
 }

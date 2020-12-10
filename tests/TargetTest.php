@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler\Tests;
 
+use Yiisoft\Profiler\Message;
 use Yiisoft\Profiler\Target;
 
 /**
@@ -20,34 +21,34 @@ final class TargetTest extends TestCase
     {
         return [
             [
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
                 [],
                 [],
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
             ],
             [
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
                 ['foo'],
                 [],
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
             ],
             [
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
                 ['some'],
                 [],
                 [],
             ],
             [
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
                 [],
                 ['foo'],
                 [],
             ],
             [
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
                 [],
                 ['some'],
-                [['category' => 'foo']],
+                [new Message('foo', 'test', ['category' => 'foo'])],
             ],
         ];
     }
@@ -56,6 +57,9 @@ final class TargetTest extends TestCase
      * @dataProvider dataProviderFilterMessages
      *
      * @covers \Yiisoft\Profiler\Target::filterMessages()
+     * @covers \Yiisoft\Profiler\Target::isCategoryMatched()
+     * @covers \Yiisoft\Profiler\Target::include()
+     * @covers \Yiisoft\Profiler\Target::exclude()
      *
      * @param array $messages
      * @param array $categories
@@ -67,36 +71,80 @@ final class TargetTest extends TestCase
         /* @var $target Target|\PHPUnit_Framework_MockObject_MockObject */
         $target = $this->getMockBuilder(Target::class)->getMockForAbstractClass();
 
-        $target->categories = $categories;
-        $target->except = $except;
+        $target->include($categories)->exclude($except);
 
         $this->assertEquals($expected, $this->invokeMethod($target, 'filterMessages', [$messages]));
     }
 
-    /**
-     * @depends testFilterMessages
-     */
+    public function testInclude(): void
+    {
+        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
+        $target = $this->getMockBuilder(Target::class)->setMethods(['include'])->getMockForAbstractClass();
+
+        $target->expects($this->once())->method('include')->willReturnSelf();
+
+        $this->assertEquals($target, $target->include(['test']));
+    }
+
+    public function testExclude(): void
+    {
+        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
+        $target = $this->getMockBuilder(Target::class)->setMethods(['exclude'])->getMockForAbstractClass();
+
+        $target->expects($this->once())->method('exclude')->willReturnSelf();
+
+        $this->assertEquals($target, $target->exclude(['test']));
+    }
+
+    public function testEnable(): void
+    {
+        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
+        $target = $this->getMockBuilder(Target::class)->setMethods(['enable'])->getMockForAbstractClass();
+
+        $target->expects($this->once())->method('enable')->willReturnSelf();
+
+        $this->assertEquals($target, $target->enable());
+    }
+
+    public function testDisable(): void
+    {
+        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
+        $target = $this->getMockBuilder(Target::class)->setMethods(['disable'])->getMockForAbstractClass();
+
+        $target->expects($this->once())->method('disable')->willReturnSelf();
+
+        $this->assertEquals($target, $target->disable());
+    }
+
     public function testEnabled(): void
     {
-        /* @var $target Target|\PHPUnit_Framework_MockObject_MockObject */
-        $target = $this->getMockBuilder(Target::class)
-            ->setMethods(['export'])
-            ->getMock();
-
-        $target->expects($this->exactly(0))->method('export');
-
-        $target->enabled = false;
-
-        $target->collect([['category' => 'foo']]);
-
+        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
         $target = $this->getMockBuilder(Target::class)
             ->setMethods(['export'])
             ->getMock();
 
         $target->expects($this->once())->method('export');
 
-        $target->enabled = true;
+        $target->enable();
 
-        $target->collect([['category' => 'foo']]);
+        $target->collect([new Message('foo', 'test', ['category' => 'foo'])]);
+
+        $this->assertTrue($target->isEnabled());
+    }
+
+    public function testDisabled(): void
+    {
+        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
+        $target = $this->getMockBuilder(Target::class)
+            ->setMethods(['export'])
+            ->getMock();
+
+        $target->expects($this->exactly(0))->method('export');
+
+        $target->disable();
+
+        $target->collect([new Message('foo', 'test', ['category' => 'foo'])]);
+
+        $this->assertFalse($target->isEnabled());
     }
 }
