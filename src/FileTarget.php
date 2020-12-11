@@ -88,7 +88,7 @@ final class FileTarget extends Target
     {
         return preg_replace_callback(
             '/{\\w+}/',
-            static function ($matches) {
+            static function (array $matches) {
                 switch ($matches[0]) {
                     case '{ts}':
                         return time();

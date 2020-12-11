@@ -103,7 +103,7 @@ abstract class Target
      *
      * @param Message[] $messages profiling messages to be exported.
      */
-    abstract public function export(array $messages);
+    abstract public function export(array $messages): void;
 
     /**
      * Filters the given messages according to their categories.
@@ -123,7 +123,7 @@ abstract class Target
         return $messages;
     }
 
-    private function isCategoryMatched($category): bool
+    private function isCategoryMatched(string $category): bool
     {
         $matched = empty($this->include);
 
