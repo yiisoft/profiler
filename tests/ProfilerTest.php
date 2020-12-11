@@ -151,6 +151,6 @@ class ProfilerTest extends TestCase
         $this->expectExceptionMessage(
             'Target should be an instance of \Yiisoft\Profiler\Target, "' . \stdClass::class . '" given.'
         );
-        $profiler = new Profiler($this->logger, [new \stdClass()]);
+        new Profiler($this->logger, [new \stdClass()]);
     }
 }

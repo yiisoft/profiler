@@ -116,6 +116,7 @@ final class Profiler implements ProfilerInterface
     private function setTargets(array $targets): void
     {
         foreach ($targets as $name => $target) {
+            /** @psalm-suppress DocblockTypeContradiction */
             if (!$target instanceof Target) {
                 throw new \InvalidArgumentException(
                     'Target should be an instance of \Yiisoft\Profiler\Target, "' . get_class($target) . '" given.'
