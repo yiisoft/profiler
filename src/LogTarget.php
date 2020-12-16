@@ -14,11 +14,9 @@ use Psr\Log\LogLevel;
  *
  * ```php
  * return [
- *     Yiisoft\Profiler\Profiler::class => [
+ *     'yiisoft/profiler' => [
  *         'targets' => [
- *             [
- *                 '__class' => Yiisoft\Profiler\LogTarget::class,
- *             ],
+ *             Yiisoft\Profiler\LogTarget::class,
  *         ],
  *         // ...
  *     ],

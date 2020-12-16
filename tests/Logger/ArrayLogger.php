@@ -6,7 +6,7 @@ namespace Yiisoft\Profiler\Tests\Logger;
 
 use Psr\Log\AbstractLogger;
 
-class ArrayLogger extends AbstractLogger
+final class ArrayLogger extends AbstractLogger
 {
     private array $messages = [];
 

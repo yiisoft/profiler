@@ -10,7 +10,7 @@ use Yiisoft\Strings\WildcardPattern;
  * Target is the base class for all profiling target classes.
  *
  * A profile target object will filter the messages stored by {@see Profiler} according
- * to its {@see include} and {@see exclude} properties.
+ * to its {@see Target::include} and {@see Target::exclude} properties.
  *
  * For more details and usage information on Target,
  * see the [guide article on profiling & targets](guide:runtime-profiling).
@@ -48,7 +48,7 @@ abstract class Target
     /**
      * Processes the given log messages.
      *
-     * This method will filter the given messages with {@see levels} and {@see categories}.
+     * This method will filter the given messages with {@see include} and {@see exclude}.
      * And if requested, it will also export the filtering result to specific medium (e.g. email).
      *
      * @param array $messages profiling messages to be processed. See {@see Profiler::$messages} for the structure

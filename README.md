@@ -37,10 +37,9 @@ use Yiisoft\Profiler\Profiler;
 use Yiisoft\Profiler\LogTarget;
 
 $logger = new NullLogger();
+$target = new LogTarget($logger);
 
-$profiler = new Profiler($logger);
-
-$profiler->addTarget(new LogTarget($logger));
+$profiler = new Profiler($logger, [$target]);
 
 $profiler->begin('test');
 //...some code

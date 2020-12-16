@@ -9,7 +9,7 @@ use Yiisoft\Profiler\LogTarget;
 use Yiisoft\Profiler\Message;
 use Yiisoft\Profiler\Profiler;
 
-class ProfilerTest extends TestCase
+final class ProfilerTest extends TestCase
 {
     /**
      * @covers \Yiisoft\Profiler\Profiler::setTargets()

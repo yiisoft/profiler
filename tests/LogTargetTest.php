@@ -7,7 +7,7 @@ namespace Yiisoft\Profiler\Tests;
 use Yiisoft\Profiler\LogTarget;
 use Yiisoft\Profiler\Message;
 
-class LogTargetTest extends TestCase
+final class LogTargetTest extends TestCase
 {
     public function testExport(): void
     {
