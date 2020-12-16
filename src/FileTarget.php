@@ -13,11 +13,11 @@ use Yiisoft\Files\FileHelper;
  *
  * ```php
  * return [
- *     'profiler' => [
+ *     'yiisoft/profiler' => [
  *         'targets' => [
  *             [
  *                 '__class' => Yiisoft\Profile\FileTarget::class,
- *                 //'filename' => '@runtime/profiling/{date}-{time}.txt',
+ *                 '__construct()' => ['filename' => '@runtime/profiling/{date}-{time}.txt'],
  *             ],
  *         ],
  *         // ...

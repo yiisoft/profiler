@@ -10,7 +10,7 @@ use Yiisoft\Profiler\Message;
 use Yiisoft\Profiler\Profiler;
 use function dirname;
 
-class FileTargetTest extends TestCase
+final class FileTargetTest extends TestCase
 {
     protected string $testFilePath;
 
