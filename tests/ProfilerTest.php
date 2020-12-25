@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Profiler\Tests;
 
 use Psr\Log\NullLogger;
-use Yiisoft\Profiler\LogTarget;
+use Yiisoft\Profiler\Target\LogTarget;
 use Yiisoft\Profiler\Message;
 use Yiisoft\Profiler\Profiler;
 
@@ -149,7 +149,7 @@ final class ProfilerTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Target should be an instance of \Yiisoft\Profiler\Target, "' . \stdClass::class . '" given.'
+            'Target should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, "' . \stdClass::class . '" given.'
         );
         new Profiler($this->logger, [new \stdClass()]);
     }

@@ -6,6 +6,8 @@ namespace Yiisoft\Profiler;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Yiisoft\Profiler\Target\AbstractTarget;
+
 use function get_class;
 
 /**
@@ -54,7 +56,7 @@ final class Profiler implements ProfilerInterface
     private int $nestedLevel = 0;
 
     /**
-     * @var array|Target[] the profiling targets. Each array element represents a single {@see Target} instance.
+     * @var array|AbstractTarget[] the profiling targets. Each array element represents a single {@see Target} instance.
      */
     private array $targets = [];
 
@@ -102,7 +104,7 @@ final class Profiler implements ProfilerInterface
     }
 
     /**
-     * @return Target[] the profiling targets. Each array element represents a single {@see Target|profiling target}
+     * @return AbstractTarget[] the profiling targets. Each array element represents a single {@see AbstractTarget|profiling target}
      * instance.
      */
     public function getTargets(): array
@@ -111,15 +113,15 @@ final class Profiler implements ProfilerInterface
     }
 
     /**
-     * @param Target[] $targets the profiling targets. Each array element represents a single {@see Target} instance.
+     * @param AbstractTarget[] $targets the profiling targets. Each array element represents a single {@see AbstractTarget} instance.
      */
     private function setTargets(array $targets): void
     {
         foreach ($targets as $name => $target) {
             /** @psalm-suppress DocblockTypeContradiction */
-            if (!$target instanceof Target) {
+            if (!$target instanceof AbstractTarget) {
                 throw new \InvalidArgumentException(
-                    'Target should be an instance of \Yiisoft\Profiler\Target, "' . get_class($target) . '" given.'
+                    'Target should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, "' . get_class($target) . '" given.'
                 );
             }
         }

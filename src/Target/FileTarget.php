@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Profiler;
+namespace Yiisoft\Profiler\Target;
 
 use Yiisoft\Files\FileHelper;
+use Yiisoft\Profiler\Message;
 
 /**
  * FileTarget records profiling messages in a file specified via {@see filename}.
@@ -26,7 +27,7 @@ use Yiisoft\Files\FileHelper;
  * ];
  * ```
  */
-final class FileTarget extends Target
+final class FileTarget extends AbstractTarget
 {
     /**
      * @var string file path or [path alias](guide:concept-aliases). File name may contain the placeholders,

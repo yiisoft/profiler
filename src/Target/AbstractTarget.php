@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Profiler;
+namespace Yiisoft\Profiler\Target;
 
 use Yiisoft\Strings\WildcardPattern;
 
@@ -15,7 +15,7 @@ use Yiisoft\Strings\WildcardPattern;
  * For more details and usage information on Target,
  * see the [guide article on profiling & targets](guide:runtime-profiling).
  */
-abstract class Target
+abstract class AbstractTarget
 {
     /**
      * @var array list of message categories that this target is interested in. Defaults to empty, meaning all

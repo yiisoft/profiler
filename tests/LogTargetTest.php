@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler\Tests;
 
-use Yiisoft\Profiler\LogTarget;
+use Yiisoft\Profiler\Target\LogTarget;
 use Yiisoft\Profiler\Message;
 
 final class LogTargetTest extends TestCase
