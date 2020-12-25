@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Profiler\Tests;
 
 use Yiisoft\Files\FileHelper;
-use Yiisoft\Profiler\FileTarget;
+use Yiisoft\Profiler\Target\FileTarget;
 use Yiisoft\Profiler\Message;
 use Yiisoft\Profiler\Profiler;
 use function dirname;

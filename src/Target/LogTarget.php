@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Profiler;
+namespace Yiisoft\Profiler\Target;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Yiisoft\Profiler\Message;
 
 /**
  * LogTarget saves profiling messages as a log messages.
@@ -24,7 +25,7 @@ use Psr\Log\LogLevel;
  * ];
  * ```
  */
-final class LogTarget extends Target
+final class LogTarget extends AbstractTarget
 {
     /**
      * @var LoggerInterface logger to be used for message export.

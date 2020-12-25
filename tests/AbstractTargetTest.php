@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Yiisoft\Profiler\Tests;
 
 use Yiisoft\Profiler\Message;
-use Yiisoft\Profiler\Target;
+use Yiisoft\Profiler\Target\AbstractTarget;
 
 /**
  * @group profile
  */
-final class TargetTest extends TestCase
+final class AbstractTargetTest extends TestCase
 {
     /**
      * Data provider for {@see testFilterMessages()}
@@ -56,10 +56,10 @@ final class TargetTest extends TestCase
     /**
      * @dataProvider dataProviderFilterMessages
      *
-     * @covers \Yiisoft\Profiler\Target::filterMessages()
-     * @covers \Yiisoft\Profiler\Target::isCategoryMatched()
-     * @covers \Yiisoft\Profiler\Target::include()
-     * @covers \Yiisoft\Profiler\Target::exclude()
+     * @covers \Yiisoft\Profiler\Target\AbstractTarget::filterMessages()
+     * @covers \Yiisoft\Profiler\Target\AbstractTarget::isCategoryMatched()
+     * @covers \Yiisoft\Profiler\Target\AbstractTarget::include()
+     * @covers \Yiisoft\Profiler\Target\AbstractTarget::exclude()
      *
      * @param array $messages
      * @param array $categories
@@ -68,8 +68,8 @@ final class TargetTest extends TestCase
      */
     public function testFilterMessages(array $messages, array $categories, array $except, array $expected): void
     {
-        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(Target::class)->getMockForAbstractClass();
+        /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
+        $target = $this->getMockBuilder(AbstractTarget::class)->getMockForAbstractClass();
 
         $target->include($categories)->exclude($except);
 
@@ -78,8 +78,8 @@ final class TargetTest extends TestCase
 
     public function testInclude(): void
     {
-        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(Target::class)->onlyMethods(['include'])->getMockForAbstractClass();
+        /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
+        $target = $this->getMockBuilder(AbstractTarget::class)->onlyMethods(['include'])->getMockForAbstractClass();
 
         $target->expects($this->once())->method('include')->willReturnSelf();
 
@@ -88,8 +88,8 @@ final class TargetTest extends TestCase
 
     public function testExclude(): void
     {
-        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(Target::class)->onlyMethods(['exclude'])->getMockForAbstractClass();
+        /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
+        $target = $this->getMockBuilder(AbstractTarget::class)->onlyMethods(['exclude'])->getMockForAbstractClass();
 
         $target->expects($this->once())->method('exclude')->willReturnSelf();
 
@@ -98,8 +98,8 @@ final class TargetTest extends TestCase
 
     public function testEnable(): void
     {
-        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(Target::class)->onlyMethods(['enable'])->getMockForAbstractClass();
+        /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
+        $target = $this->getMockBuilder(AbstractTarget::class)->onlyMethods(['enable'])->getMockForAbstractClass();
 
         $target->expects($this->once())->method('enable')->willReturnSelf();
 
@@ -108,8 +108,8 @@ final class TargetTest extends TestCase
 
     public function testDisable(): void
     {
-        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(Target::class)->onlyMethods(['disable'])->getMockForAbstractClass();
+        /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
+        $target = $this->getMockBuilder(AbstractTarget::class)->onlyMethods(['disable'])->getMockForAbstractClass();
 
         $target->expects($this->once())->method('disable')->willReturnSelf();
 
@@ -118,8 +118,8 @@ final class TargetTest extends TestCase
 
     public function testEnabled(): void
     {
-        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(Target::class)
+        /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
+        $target = $this->getMockBuilder(AbstractTarget::class)
             ->onlyMethods(['export'])
             ->getMock();
 
@@ -134,8 +134,8 @@ final class TargetTest extends TestCase
 
     public function testDisabled(): void
     {
-        /* @var $target Target|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(Target::class)
+        /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
+        $target = $this->getMockBuilder(AbstractTarget::class)
             ->onlyMethods(['export'])
             ->getMock();
 

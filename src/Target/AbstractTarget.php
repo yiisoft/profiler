@@ -2,20 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Profiler;
+namespace Yiisoft\Profiler\Target;
 
+use Yiisoft\Profiler\Message;
 use Yiisoft\Strings\WildcardPattern;
 
 /**
  * Target is the base class for all profiling target classes.
  *
  * A profile target object will filter the messages stored by {@see Profiler} according
- * to its {@see Target::include} and {@see Target::exclude} properties.
+ * to its {@see AbstractTarget::include} and {@see AbstractTarget::exclude} properties.
  *
  * For more details and usage information on Target,
  * see the [guide article on profiling & targets](guide:runtime-profiling).
  */
-abstract class Target
+abstract class AbstractTarget
 {
     /**
      * @var array list of message categories that this target is interested in. Defaults to empty, meaning all
