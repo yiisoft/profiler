@@ -48,11 +48,12 @@ final class FileTarget extends AbstractTarget
      * Defaults to 0775, meaning the directory is read-writable by owner and group,
      * but read-only for other users.
      */
-    private int $dirMode = 0775;
+    private int $dirMode;
 
-    public function __construct(string $filename = '@runtime/profiling/{date}-{time}.txt')
+    public function __construct(string $filename = '@runtime/profiling/{date}-{time}.txt', int $dirMode = 0775)
     {
         $this->filename = $filename;
+        $this->dirMode = $dirMode;
     }
 
     public function export(array $messages): void
@@ -72,8 +73,8 @@ final class FileTarget extends AbstractTarget
         } else {
             $filePath = dirname($filename);
 
-            if (!is_dir($filePath)) {
-                FileHelper::createDirectory($filePath, $this->dirMode);
+            if (!is_dir($filePath) && !FileHelper::createDirectory($filePath, $this->dirMode)) {
+                throw new \RuntimeException(sprintf('Unable to create directory %s', $filePath));
             }
         }
 

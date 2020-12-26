@@ -41,6 +41,12 @@
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"
+        },
+        "config-plugin": {
+            "common": "config/common.php",
+            "events-console": "config/events-console.php",
+            "events-web": "config/events-web.php",
+            "params": "config/params.php"
         }
     },
     "config": {
