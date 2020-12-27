@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Psr\Log\LogLevel;
 use Yiisoft\Profiler\Target\FileTarget;
 use Yiisoft\Profiler\Target\LogTarget;
 
@@ -15,13 +16,15 @@ return [
             'log' => [
                 'include' => [],
                 'exclude' => [],
-                //'level' => LogLevel::DEBUG,
+                'enabled' => true,
+                'level' => LogLevel::DEBUG,
             ],
             'file' => [
                 'include' => [],
                 'exclude' => [],
-                //'filename' => null,
-                //'dirMode' => null,
+                'enabled' => true,
+                'filename' => '@runtime/profiling/{date}-{time}.txt',
+                'dirMode' => 0775,
             ],
         ],
     ],

@@ -16,12 +16,19 @@ use Yiisoft\Profiler\Message;
  * return [
  *     'yiisoft/profiler' => [
  *         'targets' => [
- *             [
- *                 '__class' => Yiisoft\Profile\FileTarget::class,
- *                 '__construct()' => ['filename' => '@runtime/profiling/{date}-{time}.txt'],
- *             ],
+ *             'file' => Yiisoft\Profile\Target\FileTarget::class,
+ *             //...
  *         ],
- *         // ...
+ *         'targets.params' => [
+ *             'log' => [
+ *                 'enabled' => true,
+ *                 'filename' => '@runtime/profiling/{date}-{time}.txt',
+ *                 'dirMode' => 0775,
+ *                 'exclude' => [],
+ *                 'include' => [],
+ *             ],
+ *             // ...
+ *         ],
  *     ],
  *     // ...
  * ];
@@ -50,7 +57,7 @@ final class FileTarget extends AbstractTarget
      */
     private int $dirMode;
 
-    public function __construct(string $filename = '@runtime/profiling/{date}-{time}.txt', int $dirMode = 0775)
+    public function __construct(string $filename, int $dirMode = 0775)
     {
         $this->filename = $filename;
         $this->dirMode = $dirMode;
@@ -116,7 +123,6 @@ final class FileTarget extends AbstractTarget
     private function formatMessage(Message $message): string
     {
         return date('Y-m-d H:i:s', (int)$message->context('beginTime'))
-            . " [{$message->context('duration')} ms][{$message->context('memoryDiff')} B][{$message->level()}] {$message->message()}"
-            . __METHOD__;
+            . " [{$message->context('duration')} ms][{$message->context('memoryDiff')} B][{$message->level()}] {$message->message()}";
     }
 }
