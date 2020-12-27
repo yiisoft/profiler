@@ -73,8 +73,8 @@ final class FileTarget extends AbstractTarget
         } else {
             $filePath = dirname($filename);
 
-            if (!is_dir($filePath) && !FileHelper::createDirectory($filePath, $this->dirMode)) {
-                throw new \RuntimeException(sprintf('Unable to create directory %s', $filePath));
+            if (!is_dir($filePath)) {
+                FileHelper::createDirectory($filePath, $this->dirMode);
             }
         }
 
