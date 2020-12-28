@@ -16,12 +16,15 @@ use Yiisoft\Profiler\Message;
  * return [
  *     'yiisoft/profiler' => [
  *         'targets' => [
- *             [
- *                 '__class' => Yiisoft\Profile\FileTarget::class,
- *                 '__construct()' => ['filename' => '@runtime/profiling/{date}-{time}.txt'],
+ *             FileTarget::class => [
+ *                 'enabled' => true,
+ *                 'filename' => '@runtime/profiling/{date}-{time}.txt',
+ *                 'directoryMode' => 0775,
+ *                 'exclude' => [],
+ *                 'include' => [],
  *             ],
+ *             // ...
  *         ],
- *         // ...
  *     ],
  *     // ...
  * ];
@@ -48,11 +51,12 @@ final class FileTarget extends AbstractTarget
      * Defaults to 0775, meaning the directory is read-writable by owner and group,
      * but read-only for other users.
      */
-    private int $dirMode = 0775;
+    private int $directoryMode;
 
-    public function __construct(string $filename = '@runtime/profiling/{date}-{time}.txt')
+    public function __construct(string $filename, int $directoryMode = 0775)
     {
         $this->filename = $filename;
+        $this->directoryMode = $directoryMode;
     }
 
     public function export(array $messages): void
@@ -73,7 +77,7 @@ final class FileTarget extends AbstractTarget
             $filePath = dirname($filename);
 
             if (!is_dir($filePath)) {
-                FileHelper::createDirectory($filePath, $this->dirMode);
+                FileHelper::createDirectory($filePath, $this->directoryMode);
             }
         }
 
@@ -115,7 +119,6 @@ final class FileTarget extends AbstractTarget
     private function formatMessage(Message $message): string
     {
         return date('Y-m-d H:i:s', (int)$message->context('beginTime'))
-            . " [{$message->context('duration')} ms][{$message->context('memoryDiff')} B][{$message->level()}] {$message->message()}"
-            . __METHOD__;
+            . " [{$message->context('duration')} ms][{$message->context('memoryDiff')} B][{$message->level()}] {$message->message()}";
     }
 }

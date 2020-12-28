@@ -17,9 +17,14 @@ use Yiisoft\Profiler\Message;
  * return [
  *     'yiisoft/profiler' => [
  *         'targets' => [
- *             Yiisoft\Profiler\LogTarget::class,
+ *             LogTarget::class => [
+ *                 'enabled' => true,
+ *                 'level' => LogLevel::INFO,
+ *                 'exclude' => [],
+ *                 'include' => [],
+ *             ],
+ *             // ...
  *         ],
- *         // ...
  *     ],
  *     // ...
  * ];
@@ -33,11 +38,11 @@ final class LogTarget extends AbstractTarget
     private LoggerInterface $logger;
 
     /**
-     * @var ?string log level to be used for messages export.
+     * @var string log level to be used for messages export.
      */
-    private ?string $logLevel;
+    private string $logLevel;
 
-    public function __construct(LoggerInterface $logger, ?string $logLevel = LogLevel::DEBUG)
+    public function __construct(LoggerInterface $logger, string $logLevel = LogLevel::DEBUG)
     {
         $this->logger = $logger;
         $this->logLevel = $logLevel;
