@@ -7,7 +7,6 @@ use Psr\Log\LoggerInterface;
 use Yiisoft\Aliases\Aliases;
 use Yiisoft\Profiler\Profiler;
 use Yiisoft\Profiler\ProfilerInterface;
-use Yiisoft\Profiler\Target\AbstractTarget;
 use Yiisoft\Profiler\Target\FileTarget;
 use Yiisoft\Profiler\Target\LogTarget;
 
@@ -17,18 +16,14 @@ use Yiisoft\Profiler\Target\LogTarget;
 return [
     ProfilerInterface::class => static function (ContainerInterface $container, LoggerInterface $logger) use ($params) {
         $params = $params['yiisoft/profiler'];
-        $targets = $params['targets'];
-        foreach ($targets as $name => $target) {
-            if (!($target instanceof AbstractTarget)) {
-                $target = $container->get($target);
-            }
-
-            $targets[$name] = $target;
+        $targets = array_keys($params['targets']);
+        foreach ($targets as $target) {
+            $targets[] = $container->get($target);
         }
         return new Profiler($logger, $targets);
     },
     LogTarget::class => static function (LoggerInterface $logger) use ($params) {
-        $params = $params['yiisoft/profiler']['targets.params']['log'];
+        $params = $params['yiisoft/profiler']['targets'][LogTarget::class];
         $target = new LogTarget($logger, $params['level']);
 
         if ((bool)$params['enabled']) {
@@ -39,8 +34,8 @@ return [
         return $target->include($params['include'])->exclude($params['exclude']);
     },
     FileTarget::class => static function (Aliases $aliases) use ($params) {
-        $params = $params['yiisoft/profiler']['targets.params']['file'];
-        $target = new FileTarget($aliases->get($params['filename']), $params['dirMode']);
+        $params = $params['yiisoft/profiler']['targets'][FileTarget::class];
+        $target = new FileTarget($aliases->get($params['filename']), $params['directoryMode']);
 
         if ((bool)$params['enabled']) {
             $target = $target->enable();

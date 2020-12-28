@@ -17,11 +17,7 @@ use Yiisoft\Profiler\Message;
  * return [
  *     'yiisoft/profiler' => [
  *         'targets' => [
- *             'log' => Yiisoft\Profiler\Target\LogTarget::class,
- *             // ...
- *         ],
- *         'targets.params' => [
- *             'log' => [
+ *             LogTarget::class => [
  *                 'enabled' => true,
  *                 'level' => LogLevel::INFO,
  *                 'exclude' => [],

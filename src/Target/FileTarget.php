@@ -16,14 +16,10 @@ use Yiisoft\Profiler\Message;
  * return [
  *     'yiisoft/profiler' => [
  *         'targets' => [
- *             'file' => Yiisoft\Profile\Target\FileTarget::class,
- *             //...
- *         ],
- *         'targets.params' => [
- *             'log' => [
+ *             FileTarget::class => [
  *                 'enabled' => true,
  *                 'filename' => '@runtime/profiling/{date}-{time}.txt',
- *                 'dirMode' => 0775,
+ *                 'directoryMode' => 0775,
  *                 'exclude' => [],
  *                 'include' => [],
  *             ],
@@ -55,12 +51,12 @@ final class FileTarget extends AbstractTarget
      * Defaults to 0775, meaning the directory is read-writable by owner and group,
      * but read-only for other users.
      */
-    private int $dirMode;
+    private int $directoryMode;
 
-    public function __construct(string $filename, int $dirMode = 0775)
+    public function __construct(string $filename, int $directoryMode = 0775)
     {
         $this->filename = $filename;
-        $this->dirMode = $dirMode;
+        $this->directoryMode = $directoryMode;
     }
 
     public function export(array $messages): void
@@ -81,7 +77,7 @@ final class FileTarget extends AbstractTarget
             $filePath = dirname($filename);
 
             if (!is_dir($filePath)) {
-                FileHelper::createDirectory($filePath, $this->dirMode);
+                FileHelper::createDirectory($filePath, $this->directoryMode);
             }
         }
 

@@ -9,22 +9,18 @@ use Yiisoft\Profiler\Target\LogTarget;
 return [
     'yiisoft/profiler' => [
         'targets' => [
-            'log' => LogTarget::class,
-            'file' => FileTarget::class,
-        ],
-        'targets.params' => [
-            'log' => [
+            LogTarget::class => [
                 'include' => [],
                 'exclude' => [],
                 'enabled' => true,
                 'level' => LogLevel::DEBUG,
             ],
-            'file' => [
+            FileTarget::class => [
                 'include' => [],
                 'exclude' => [],
                 'enabled' => true,
                 'filename' => '@runtime/profiling/{date}-{time}.txt',
-                'dirMode' => 0775,
+                'directoryMode' => 0775,
             ],
         ],
     ],
