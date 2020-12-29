@@ -16,8 +16,8 @@ use Yiisoft\Profiler\Target\LogTarget;
 return [
     ProfilerInterface::class => static function (ContainerInterface $container, LoggerInterface $logger) use ($params) {
         $params = $params['yiisoft/profiler'];
-        $targets = array_keys($params['targets']);
-        foreach ($targets as $target) {
+        $targets = [];
+        foreach ($params['targets'] as $target => $targetParams) {
             $targets[] = $container->get($target);
         }
         return new Profiler($logger, $targets);
