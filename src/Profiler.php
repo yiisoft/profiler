@@ -119,9 +119,14 @@ final class Profiler implements ProfilerInterface
     {
         foreach ($targets as $name => $target) {
             /** @psalm-suppress DocblockTypeContradiction */
-            if (!$target instanceof AbstractTarget) {
+            if (!($target instanceof AbstractTarget)) {
+                if (is_object($target)) {
+                    $type = get_class($target);
+                } else {
+                    $type = gettype($target);
+                }
                 throw new \InvalidArgumentException(
-                    'Target should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, "' . get_class($target) . '" given.'
+                    'Target should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, "' . $type . '" given.'
                 );
             }
         }
