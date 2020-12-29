@@ -153,4 +153,13 @@ final class ProfilerTest extends TestCase
         );
         new Profiler($this->logger, [new \stdClass()]);
     }
+
+    public function testWrongTargetWithStringValue(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Target should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, "string" given.'
+        );
+        new Profiler($this->logger, [\stdClass::class]);
+    }
 }
