@@ -18,7 +18,7 @@ return [
             FileTarget::class => [
                 'include' => [],
                 'exclude' => [],
-                'enabled' => true,
+                'enabled' => false,
                 'filename' => '@runtime/profiling/{date}-{time}.txt',
                 'directoryMode' => 0775,
             ],

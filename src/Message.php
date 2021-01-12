@@ -47,7 +47,7 @@ final class Message
      * @see LoggerTrait::log()
      * @see LogLevel
      */
-    public function __construct($level, string $message, array $context = [])
+    public function __construct(string $level, string $message, array $context = [])
     {
         $this->level = $level;
         $this->message = $message;
