@@ -14,17 +14,17 @@ use Yiisoft\Profiler\Target\LogTarget;
  * @var array $params
  */
 return [
-    ProfilerInterface::class => static function (ContainerInterface $container, LoggerInterface $logger) use ($params) {
+    ProfilerInterface::class => static function (ContainerInterface $container) use ($params) {
         $params = $params['yiisoft/profiler'];
         $targets = [];
         foreach ($params['targets'] as $target => $targetParams) {
             $targets[] = $container->get($target);
         }
-        return new Profiler($logger, $targets);
+        return new Profiler($container->get(LoggerInterface::class), $targets);
     },
-    LogTarget::class => static function (LoggerInterface $logger) use ($params) {
+    LogTarget::class => static function (ContainerInterface $container) use ($params) {
         $params = $params['yiisoft/profiler']['targets'][LogTarget::class];
-        $target = new LogTarget($logger, $params['level']);
+        $target = new LogTarget($container->get(LoggerInterface::class), $params['level']);
 
         if ((bool)$params['enabled']) {
             $target = $target->enable();
