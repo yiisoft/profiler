@@ -53,7 +53,7 @@ final class FileTargetTest extends TestCase
         $filename = $this->testFilePath . DIRECTORY_SEPARATOR . 'test.txt';
         $filePath = dirname($filename);
         if (!is_dir($filePath)) {
-            FileHelper::createDirectory($filePath);
+            FileHelper::ensureDirectory($filePath);
         }
 
         $target = new FileTarget($filename);
@@ -79,7 +79,7 @@ final class FileTargetTest extends TestCase
         $filename = $this->testFilePath . DIRECTORY_SEPARATOR . 'test-{date}-{time}-{ts}-{test}.txt';
         $filePath = dirname($filename);
         if (!is_dir($filePath)) {
-            FileHelper::createDirectory($filePath);
+            FileHelper::ensureDirectory($filePath);
         }
 
         $target = new FileTarget($filename);

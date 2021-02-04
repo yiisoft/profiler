@@ -77,7 +77,7 @@ final class FileTarget extends AbstractTarget
             $filePath = dirname($filename);
 
             if (!is_dir($filePath)) {
-                FileHelper::createDirectory($filePath, $this->directoryMode);
+                FileHelper::ensureDirectory($filePath, $this->directoryMode);
             }
         }
 
