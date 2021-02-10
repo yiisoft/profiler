@@ -19,7 +19,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "psr/log": "^1.1",
-        "yiisoft/files": "^3.0@dev",
+        "yiisoft/files": "^1.0",
         "yiisoft/strings": "^2.0"
     },
     "require-dev": {
