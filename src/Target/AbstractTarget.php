@@ -23,8 +23,10 @@ abstract class AbstractTarget
      * categories.
      *
      * You can use an asterisk at the end of a category so that the category may be used to
-     * match those categories sharing the same common prefix. For example, 'Yiisoft\Db\*' will match
+     * match those categories sharing the same common prefix. For example, 'Yiisoft\Db\**' will match
      * categories starting with 'Yiisoft\Db\', such as `Yiisoft\Db\Connection`.
+     *
+     * @see WildcardPattern
      */
     private array $include = [];
 
@@ -34,10 +36,10 @@ abstract class AbstractTarget
      *
      * If this property is not empty, then any category listed here will be excluded from {@see include}.
      * You can use an asterisk at the end of a category so that the category can be used to
-     * match those categories sharing the same common prefix. For example, 'Yiisoft\Db\*' will match
+     * match those categories sharing the same common prefix. For example, 'Yiisoft\Db\**' will match
      * categories starting with 'Yiisoft\Db\', such as `Yiisoft\Db\Connection`.
      *
-     * {@see include}
+     * @see WildcardPattern
      */
     private array $exclude = [];
 
