@@ -35,6 +35,13 @@ interface ProfilerInterface
     public function end(string $token, array $context = []): void;
 
     /**
+     * @param string $token
+     *
+     * @return Message[]
+     */
+    public function findMessages(string $token): array;
+
+    /**
      * Flushes profiling messages from memory to actual storage.
      */
     public function flush(): void;
