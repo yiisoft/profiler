@@ -203,6 +203,16 @@ final class Profiler implements ProfilerInterface
         $this->nestedLevel--;
     }
 
+    public function findMessages(string $token): array
+    {
+        $messages = $this->messages;
+        $messages = array_filter($messages, static function (Message $message) use ($token) {
+            return $message->message() === $token;
+        });
+
+        return $messages;
+    }
+
     public function flush(): void
     {
         foreach ($this->pendingMessages as $category => $categoryMessages) {
