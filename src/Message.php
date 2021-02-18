@@ -55,7 +55,7 @@ final class Message
     }
 
     /**
-     * Gets a log message level.
+     * Gets a message level.
      *
      * @return string Log message level.
      */
