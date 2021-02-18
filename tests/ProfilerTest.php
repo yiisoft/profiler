@@ -115,15 +115,15 @@ final class ProfilerTest extends TestCase
         $notNestedMessage = null;
 
         foreach ($profiler->getMessages() as $message) {
-            if ($message->message() === 'outer') {
+            if ($message->token() === 'outer') {
                 $outerMessage = $message;
                 continue;
             }
-            if ($message->message() === 'inner') {
+            if ($message->token() === 'inner') {
                 $innerMessage = $message;
                 continue;
             }
-            if ($message->message() === 'not-nested') {
+            if ($message->token() === 'not-nested') {
                 $notNestedMessage = $message;
                 continue;
             }

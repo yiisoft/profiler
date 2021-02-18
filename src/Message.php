@@ -9,24 +9,24 @@ use Psr\Log\LoggerTrait;
 use Psr\Log\LogLevel;
 
 /**
- * Message is a data object that stores log message data.
+ * Message is a data object that stores profile message data.
  */
 final class Message
 {
     /**
-     * @var string Log message level.
+     * @var string Message level.
      *
      * @see LogLevel See constants for valid level names.
      */
     private string $level;
 
     /**
-     * @var string Log message.
+     * @var string Message token.
      */
-    private string $message;
+    private string $token;
 
     /**
-     * @var array Log message context.
+     * @var array Message context.
      *
      * Message context has a following keys:
      *
@@ -38,19 +38,19 @@ final class Message
     private array $context;
 
     /**
-     * @param mixed $level Log message level.
-     * @param mixed $message Log message.
-     * @param array $context Log message context.
+     * @param string $level Message level.
+     * @param string $token Message token.
+     * @param array $context Message context.
      *
      * @throws InvalidArgumentException for invalid log message level.
      *
      * @see LoggerTrait::log()
      * @see LogLevel
      */
-    public function __construct(string $level, string $message, array $context = [])
+    public function __construct(string $level, string $token, array $context = [])
     {
         $this->level = $level;
-        $this->message = $message;
+        $this->token = $token;
         $this->context = $context;
     }
 
@@ -65,13 +65,13 @@ final class Message
     }
 
     /**
-     * Gets a log message.
+     * Gets a message token.
      *
-     * @return string Log message.
+     * @return string Message token.
      */
-    public function message(): string
+    public function token(): string
     {
-        return $this->message;
+        return $this->token;
     }
 
     /**
