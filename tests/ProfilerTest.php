@@ -96,6 +96,21 @@ final class ProfilerTest extends TestCase
         $this->assertContainsOnlyInstancesOf(Message::class, $profiler->getMessages());
     }
 
+    public function testFindMessages(): void
+    {
+        $profiler = new Profiler($this->logger);
+
+        $profiler->begin('test');
+        $profiler->end('test');
+        $profiler->begin('test');
+        $profiler->end('test');
+        $profiler->begin('another test');
+        $profiler->end('another test');
+
+        $this->assertCount(2, $profiler->findMessages('test'));
+        $this->assertContainsOnlyInstancesOf(Message::class, $profiler->findMessages('test'));
+    }
+
     /**
      * @depends testNestedMessages
      */
