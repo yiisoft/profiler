@@ -35,9 +35,11 @@ interface ProfilerInterface
     public function end(string $token, array $context = []): void;
 
     /**
+     * Find messages with a given token.
+     *
      * @param string $token
      *
-     * @return Message[]
+     * @return Message[] the messages profiler.
      */
     public function findMessages(string $token): array;
 

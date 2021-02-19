@@ -54,7 +54,7 @@ final class LogTarget extends AbstractTarget
     public function export(array $messages): void
     {
         foreach ($messages as $message) {
-            $this->logger->log($this->logLevel, $message->message(), $message->context());
+            $this->logger->log($this->logLevel, $message->token(), $message->context());
         }
     }
 }

@@ -199,7 +199,7 @@ final class Profiler implements ProfilerInterface
         $context['duration'] = $context['endTime'] - $context['beginTime'];
         $context['memoryDiff'] = $context['endMemory'] - $context['beginMemory'];
 
-        $this->messages[] = new Message($category, $message->message(), $context);
+        $this->messages[] = new Message($category, $message->token(), $context);
         $this->nestedLevel--;
     }
 
@@ -207,7 +207,7 @@ final class Profiler implements ProfilerInterface
     {
         $messages = $this->messages;
         $messages = array_filter($messages, static function (Message $message) use ($token) {
-            return $message->message() === $token;
+            return $message->token() === $token;
         });
 
         return $messages;
