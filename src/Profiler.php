@@ -13,8 +13,6 @@ use function get_class;
 /**
  * Profiler provides profiling support. It stores profiling messages in the memory and sends them to different targets
  * according to {@see Profiler::$targets}.
- *
- * For more details and usage information on Profiler, see the [guide article on profiling](guide:runtime-profiling)
  */
 final class Profiler implements ProfilerInterface
 {
@@ -96,6 +94,8 @@ final class Profiler implements ProfilerInterface
     }
 
     /**
+     * Returns profiler messages.
+     *
      * @return Message[] the messages profiler.
      */
     public function getMessages(): array
