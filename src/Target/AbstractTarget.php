@@ -79,6 +79,7 @@ abstract class AbstractTarget
      * categories starting with 'Yiisoft\Db\', such as `Yiisoft\Db\Connection`.
      *
      * @see WildcardPattern
+     *
      * @return static
      */
     public function include(array $include): self
