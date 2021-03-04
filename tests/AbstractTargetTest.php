@@ -71,7 +71,7 @@ final class AbstractTargetTest extends TestCase
         /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
         $target = $this->getMockBuilder(AbstractTarget::class)->getMockForAbstractClass();
 
-        $target->include($categories)->exclude($except);
+        $target = $target->include($categories)->exclude($except);
 
         $this->assertEquals($expected, $this->invokeMethod($target, 'filterMessages', [$messages]));
     }
@@ -125,7 +125,7 @@ final class AbstractTargetTest extends TestCase
 
         $target->expects($this->once())->method('export');
 
-        $target->enable();
+        $target = $target->enable();
 
         $target->collect([new Message('foo', 'test', ['category' => 'foo'])]);
 
@@ -141,7 +141,7 @@ final class AbstractTargetTest extends TestCase
 
         $target->expects($this->exactly(0))->method('export');
 
-        $target->disable();
+        $target = $target->disable();
 
         $target->collect([new Message('foo', 'test', ['category' => 'foo'])]);
 

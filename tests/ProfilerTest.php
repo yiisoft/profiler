@@ -28,14 +28,14 @@ final class ProfilerTest extends TestCase
     {
         $profiler = new Profiler($this->logger);
 
-        $profiler->disable();
+        $profiler = $profiler->disable();
 
         $profiler->begin('test');
         $profiler->end('test');
 
         $this->assertEmpty($profiler->getMessages());
 
-        $profiler->enable();
+        $profiler = $profiler->enable();
 
         $this->assertTrue($profiler->isEnabled());
 
