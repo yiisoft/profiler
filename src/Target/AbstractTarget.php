@@ -11,7 +11,7 @@ use Yiisoft\Strings\WildcardPattern;
  * Target is the base class for all profiling target classes.
  *
  * A profile target object will filter the messages stored by {@see Profiler} according
- * to its {@see AbstractTarget::include} and {@see AbstractTarget::exclude} properties.
+ * to its {@see AbstractTarget::include()} and {@see AbstractTarget::exclude()}.
  *
  * For more details and usage information on Target,
  * see the [guide article on profiling & targets](guide:runtime-profiling).
@@ -19,7 +19,7 @@ use Yiisoft\Strings\WildcardPattern;
 abstract class AbstractTarget
 {
     /**
-     * @var array list of message categories that this target is interested in. Defaults to empty, meaning all
+     * @var array List of message categories that this target is interested in. Defaults to empty, meaning all
      * categories.
      *
      * You can use an asterisk at the end of a category so that the category may be used to
@@ -31,10 +31,10 @@ abstract class AbstractTarget
     private array $include = [];
 
     /**
-     * @var array list of message categories that this target is NOT interested in. Defaults to empty, meaning no
+     * @var array List of message categories that this target is NOT interested in. Defaults to empty, meaning no
      * uninteresting messages.
      *
-     * If this property is not empty, then any category listed here will be excluded from {@see include}.
+     * If this property is not empty, then any category listed here will be excluded from {@see include()}.
      * You can use an asterisk at the end of a category so that the category can be used to
      * match those categories sharing the same common prefix. For example, 'Yiisoft\Db\**' will match
      * categories starting with 'Yiisoft\Db\', such as `Yiisoft\Db\Connection`.
@@ -44,7 +44,7 @@ abstract class AbstractTarget
     private array $exclude = [];
 
     /**
-     * @var bool whether to enable this log target. Defaults to true.
+     * @var bool Whether to enable this log target. Defaults to true.
      */
     private bool $enabled = true;
 
@@ -54,7 +54,7 @@ abstract class AbstractTarget
      * This method will filter the given messages with {@see include} and {@see exclude}.
      * And if requested, it will also export the filtering result to specific medium (e.g. email).
      *
-     * @param array $messages profiling messages to be processed. See {@see Profiler::$messages} for the structure
+     * @param array $messages Profiling messages to be processed. See {@see Profiler::$messages} for the structure
      * of each message.
      */
     public function collect(array $messages): void
@@ -70,6 +70,17 @@ abstract class AbstractTarget
         }
     }
 
+    /**
+     * @param array $include List of message categories that this target is interested in. Defaults to empty, meaning all
+     * categories.
+     *
+     * You can use an asterisk at the end of a category so that the category may be used to
+     * match those categories sharing the same common prefix. For example, 'Yiisoft\Db\**' will match
+     * categories starting with 'Yiisoft\Db\', such as `Yiisoft\Db\Connection`.
+     *
+     * @see WildcardPattern
+     * @return static
+     */
     public function include(array $include): self
     {
         $this->include = $include;

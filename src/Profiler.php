@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler;
 
+use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use RuntimeException;
 use Yiisoft\Profiler\Target\AbstractTarget;
 
 use function get_class;
+use function is_object;
 
 /**
  * Profiler provides profiling support. It stores profiling messages in the memory and sends them to different targets
@@ -120,13 +123,9 @@ final class Profiler implements ProfilerInterface
         foreach ($targets as $name => $target) {
             /** @psalm-suppress DocblockTypeContradiction */
             if (!($target instanceof AbstractTarget)) {
-                if (is_object($target)) {
-                    $type = get_class($target);
-                } else {
-                    $type = gettype($target);
-                }
-                throw new \InvalidArgumentException(
-                    'Target should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, "' . $type . '" given.'
+                $type = is_object($target) ? get_class($target) : gettype($target);
+                throw new InvalidArgumentException(
+                    "Target \"$name\" should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, \"$type\" given."
                 );
             }
         }
@@ -167,7 +166,7 @@ final class Profiler implements ProfilerInterface
         $category = $context['category'] ?? 'application';
 
         if (empty($this->pendingMessages[$category][$token])) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 sprintf(
                     'Unexpected %s::end() call for category "%s" token "%s". A matching begin() was not found.',
                     self::class,
@@ -206,11 +205,9 @@ final class Profiler implements ProfilerInterface
     public function findMessages(string $token): array
     {
         $messages = $this->messages;
-        $messages = array_filter($messages, static function (Message $message) use ($token) {
+        return array_filter($messages, static function (Message $message) use ($token) {
             return $message->token() === $token;
         });
-
-        return $messages;
     }
 
     public function flush(): void
