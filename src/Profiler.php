@@ -74,6 +74,11 @@ final class Profiler implements ProfilerInterface
         register_shutdown_function([$this, 'flush']);
     }
 
+    /**
+     * Enable profiler.
+     *
+     * @return $this
+     */
     public function enable(): self
     {
         $new = clone $this;
@@ -81,6 +86,11 @@ final class Profiler implements ProfilerInterface
         return $new;
     }
 
+    /**
+     * Disable profiler.
+     *
+     * @return $this
+     */
     public function disable(): self
     {
         $new = clone $this;
@@ -89,7 +99,7 @@ final class Profiler implements ProfilerInterface
     }
 
     /**
-     * @return bool the profile enabled.
+     * @return bool the profiler enabled.
      *
      * {@see enabled}
      */

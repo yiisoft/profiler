@@ -9,7 +9,7 @@ use Yiisoft\Profiler\Message;
 use function dirname;
 
 /**
- * FileTarget records profiling messages in a file specified via {@see filename}.
+ * FileTarget records profiling messages in a file specified via {@see FileTarget::$filename}.
  *
  * Application configuration example:
  *
@@ -21,6 +21,7 @@ use function dirname;
  *                 'enabled' => true,
  *                 'filename' => '@runtime/profiling/{date}-{time}.txt',
  *                 'directoryMode' => 0775,
+ *                 'requestBeginTime' => microtime(true),
  *                 'exclude' => [],
  *                 'include' => [],
  *             ],

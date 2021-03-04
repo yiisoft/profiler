@@ -6,8 +6,6 @@ namespace Yiisoft\Profiler;
 
 /**
  * ProfilerInterface describes a profiler instance.
- *
- * For more details and usage information on Profiler, see the [guide article on profiling](guide:runtime-profiling)
  */
 interface ProfilerInterface
 {

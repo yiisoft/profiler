@@ -51,7 +51,7 @@ abstract class AbstractTarget
     /**
      * Processes the given log messages.
      *
-     * This method will filter the given messages with {@see include} and {@see exclude}.
+     * This method will filter the given messages with {@see include()} and {@see exclude()}.
      * And if requested, it will also export the filtering result to specific medium (e.g. email).
      *
      * @param array $messages Profiling messages to be processed. See {@see Profiler::$messages} for the structure
@@ -80,7 +80,7 @@ abstract class AbstractTarget
      *
      * @see WildcardPattern
      *
-     * @return static
+     * @return $this
      */
     public function include(array $include): self
     {
@@ -89,6 +89,17 @@ abstract class AbstractTarget
         return $new;
     }
 
+    /**
+     * @param array $exclude List of message categories that this target is NOT interested in. Defaults to empty, meaning no
+     * uninteresting messages.
+     *
+     * If this property is not empty, then any category listed here will be excluded from {@see include()}.
+     * You can use an asterisk at the end of a category so that the category can be used to
+     * match those categories sharing the same common prefix. For example, 'Yiisoft\Db\**' will match
+     * categories starting with 'Yiisoft\Db\', such as `Yiisoft\Db\Connection`.
+     *
+     * @return $this
+     */
     public function exclude(array $exclude): self
     {
         $new = clone $this;
@@ -96,6 +107,11 @@ abstract class AbstractTarget
         return $new;
     }
 
+    /**
+     * Enable target.
+     *
+     * @return $this
+     */
     public function enable(): self
     {
         $new = clone $this;
@@ -103,6 +119,11 @@ abstract class AbstractTarget
         return $new;
     }
 
+    /**
+     * Disable target.
+     *
+     * @return $this
+     */
     public function disable(): self
     {
         $new = clone $this;
@@ -110,6 +131,9 @@ abstract class AbstractTarget
         return $new;
     }
 
+    /**
+     * Returns target is enabled.
+     */
     public function isEnabled(): bool
     {
         return $this->enabled;
