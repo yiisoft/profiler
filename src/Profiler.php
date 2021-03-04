@@ -76,14 +76,16 @@ final class Profiler implements ProfilerInterface
 
     public function enable(): self
     {
-        $this->enabled = true;
-        return $this;
+        $new = clone $this;
+        $new->enabled = true;
+        return $new;
     }
 
     public function disable(): self
     {
-        $this->enabled = false;
-        return $this;
+        $new = clone $this;
+        $new->enabled = false;
+        return $new;
     }
 
     /**

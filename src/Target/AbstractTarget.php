@@ -84,26 +84,30 @@ abstract class AbstractTarget
      */
     public function include(array $include): self
     {
-        $this->include = $include;
-        return $this;
+        $new = clone $this;
+        $new->include = $include;
+        return $new;
     }
 
     public function exclude(array $exclude): self
     {
-        $this->exclude = $exclude;
-        return $this;
+        $new = clone $this;
+        $new->exclude = $exclude;
+        return $new;
     }
 
     public function enable(): self
     {
-        $this->enabled = true;
-        return $this;
+        $new = clone $this;
+        $new->enabled = true;
+        return $new;
     }
 
     public function disable(): self
     {
-        $this->enabled = false;
-        return $this;
+        $new = clone $this;
+        $new->enabled = false;
+        return $new;
     }
 
     public function isEnabled(): bool
