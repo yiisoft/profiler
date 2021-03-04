@@ -34,7 +34,7 @@ final class FileTargetTest extends TestCase
     {
         $filename = $this->testFilePath . DIRECTORY_SEPARATOR . 'test.txt';
 
-        $target = new FileTarget($filename);
+        $target = new FileTarget($filename, microtime(true));
         $profiler = new Profiler($this->logger, [$target]);
 
         $profiler->begin('test-export', ['category' => 'test-category']);
@@ -56,7 +56,7 @@ final class FileTargetTest extends TestCase
             FileHelper::ensureDirectory($filePath);
         }
 
-        $target = new FileTarget($filename);
+        $target = new FileTarget($filename, microtime(true));
 
         $testData = 'test';
         file_put_contents($filename, $testData);
@@ -82,7 +82,7 @@ final class FileTargetTest extends TestCase
             FileHelper::ensureDirectory($filePath);
         }
 
-        $target = new FileTarget($filename);
+        $target = new FileTarget($filename, microtime(true));
 
         $resolvedFilename = $this->invokeMethod($target, 'resolveFilename');
 

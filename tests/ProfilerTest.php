@@ -164,7 +164,7 @@ final class ProfilerTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Target should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, "' . \stdClass::class . '" given.'
+            'Target "0" should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, "' . \stdClass::class . '" given.'
         );
         new Profiler($this->logger, [new \stdClass()]);
     }
@@ -173,7 +173,7 @@ final class ProfilerTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Target should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, "string" given.'
+            'Target "0" should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, "string" given.'
         );
         new Profiler($this->logger, [\stdClass::class]);
     }
