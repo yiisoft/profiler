@@ -60,7 +60,7 @@ final class LogTargetTest extends TestCase
         $token = 'test-token';
 
         $target = new LogTarget($this->logger, $logLevel);
-        $target->exclude(['test*']);
+        $target = $target->exclude(['test*']);
 
         $context = [
             'category' => $logLevel,
