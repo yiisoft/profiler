@@ -57,7 +57,7 @@ final class Profiler implements ProfilerInterface
     private int $nestedLevel = 0;
 
     /**
-     * @var TargetInterface[]|array Profiling targets. Each array element represents
+     * @var array|TargetInterface[] Profiling targets. Each array element represents
      * a single {@see TargetInterface} instance.
      */
     private array $targets = [];
