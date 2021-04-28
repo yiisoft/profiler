@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler\Tests;
 
+use InvalidArgumentException;
 use Psr\Log\NullLogger;
+use RuntimeException;
+use stdClass;
 use Yiisoft\Profiler\Target\LogTarget;
 use Yiisoft\Profiler\Message;
 use Yiisoft\Profiler\Profiler;
@@ -28,7 +31,7 @@ final class ProfilerTest extends TestCase
     {
         $profiler = new Profiler($this->logger);
 
-        $profiler = $profiler->disable();
+        $profiler = $profiler->enable(false);
 
         $profiler->begin('test');
         $profiler->end('test');
@@ -153,7 +156,7 @@ final class ProfilerTest extends TestCase
     {
         $profiler = new Profiler($this->logger);
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectErrorMessage(
             'Unexpected ' . Profiler::class . '::end() call for category "application" token "test". A matching begin() was not found.'
         );
@@ -162,19 +165,19 @@ final class ProfilerTest extends TestCase
 
     public function testWrongTarget(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Target "0" should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, "' . \stdClass::class . '" given.'
+            'Target "0" should be an instance of \Yiisoft\Profiler\Target\TargetInterface, "' . stdClass::class . '" given.'
         );
-        new Profiler($this->logger, [new \stdClass()]);
+        new Profiler($this->logger, [new stdClass()]);
     }
 
     public function testWrongTargetWithStringValue(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Target "0" should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, "string" given.'
+            'Target "0" should be an instance of \Yiisoft\Profiler\Target\TargetInterface, "string" given.'
         );
-        new Profiler($this->logger, [\stdClass::class]);
+        new Profiler($this->logger, [stdClass::class]);
     }
 }

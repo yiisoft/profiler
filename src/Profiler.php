@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use RuntimeException;
-use Yiisoft\Profiler\Target\AbstractTarget;
+use Yiisoft\Profiler\Target\TargetInterface;
 
 use function get_class;
 use function is_object;
@@ -20,13 +20,13 @@ use function is_object;
 final class Profiler implements ProfilerInterface
 {
     /**
-     * @var bool whether to profiler is enabled. Defaults to true.
+     * @var bool Whether to profiler is enabled. Defaults to true.
      * You may use this field to disable writing of the profiling messages and thus save the memory usage.
      */
     private bool $enabled = true;
 
     /**
-     * @var Message[] complete profiling messages.
+     * @var Message[] Complete profiling messages.
      * Each message has a following keys:
      *
      * - message: string, profiling token.
@@ -42,30 +42,31 @@ final class Profiler implements ProfilerInterface
     private array $messages = [];
 
     /**
-     * @var LoggerInterface logger to be used for message export.
+     * @var LoggerInterface Logger to be used for message export.
      */
     private LoggerInterface $logger;
 
     /**
-     * @var array pending profiling messages, e.g. the ones which have begun but not ended yet.
+     * @var array Pending profiling messages, e.g. the ones which have begun but not ended yet.
      */
     private array $pendingMessages = [];
 
     /**
-     * @var int current profiling messages nested level.
+     * @var int Current profiling messages nested level.
      */
     private int $nestedLevel = 0;
 
     /**
-     * @var AbstractTarget[]|array the profiling targets. Each array element represents a single {@see Target} instance.
+     * @var TargetInterface[]|array Profiling targets. Each array element represents
+     * a single {@see TargetInterface} instance.
      */
     private array $targets = [];
 
     /**
      * Initializes the profiler by registering {@see flush()} as a shutdown function.
      *
-     * @param LoggerInterface $logger
-     * @param array $targets
+     * @param LoggerInterface $logger Logger to use.
+     * @param array $targets Profiling targets to use.
      */
     public function __construct(LoggerInterface $logger, array $targets = [])
     {
@@ -75,33 +76,21 @@ final class Profiler implements ProfilerInterface
     }
 
     /**
-     * Enable profiler.
+     * Enable or disable profiler.
      *
      * @return $this
      */
-    public function enable(): self
+    public function enable(bool $value = true): self
     {
         $new = clone $this;
-        $new->enabled = true;
+        $new->enabled = $value;
         return $new;
     }
 
     /**
-     * Disable profiler.
+     * @return bool If profiler is enabled.
      *
-     * @return $this
-     */
-    public function disable(): self
-    {
-        $new = clone $this;
-        $new->enabled = false;
-        return $new;
-    }
-
-    /**
-     * @return bool the profiler enabled.
-     *
-     * {@see enabled}
+     * {@see enable}
      */
     public function isEnabled(): bool
     {
@@ -111,7 +100,7 @@ final class Profiler implements ProfilerInterface
     /**
      * Returns profiler messages.
      *
-     * @return Message[] the messages profiler.
+     * @return Message[] The profiler messages.
      */
     public function getMessages(): array
     {
@@ -119,8 +108,8 @@ final class Profiler implements ProfilerInterface
     }
 
     /**
-     * @return AbstractTarget[] the profiling targets. Each array element represents a single {@see AbstractTarget|profiling target}
-     * instance.
+     * @return TargetInterface[] Profiling targets. Each array element represents
+     * a single {@see TargetInterface|profiling target} instance.
      */
     public function getTargets(): array
     {
@@ -128,16 +117,17 @@ final class Profiler implements ProfilerInterface
     }
 
     /**
-     * @param AbstractTarget[] $targets the profiling targets. Each array element represents a single {@see AbstractTarget} instance.
+     * @param TargetInterface[] $targets Profiling targets. Each array element represents
+     * a single {@see TargetInterface} instance.
      */
     private function setTargets(array $targets): void
     {
         foreach ($targets as $name => $target) {
             /** @psalm-suppress DocblockTypeContradiction */
-            if (!($target instanceof AbstractTarget)) {
+            if (!($target instanceof TargetInterface)) {
                 $type = is_object($target) ? get_class($target) : gettype($target);
                 throw new InvalidArgumentException(
-                    "Target \"$name\" should be an instance of \Yiisoft\Profiler\Target\AbstractTarget, \"$type\" given."
+                    "Target \"$name\" should be an instance of \Yiisoft\Profiler\Target\TargetInterface, \"$type\" given."
                 );
             }
         }
@@ -237,7 +227,7 @@ final class Profiler implements ProfilerInterface
 
         $messages = $this->messages;
 
-        // new messages could appear while the existing ones are being handled by targets
+        // New messages could appear while the existing ones are being handled by targets.
         $this->messages = [];
 
         $this->dispatch($messages);
@@ -246,7 +236,7 @@ final class Profiler implements ProfilerInterface
     /**
      * Dispatches the profiling messages to {@see targets}.
      *
-     * @param array $messages the profiling messages.
+     * @param array $messages The profiling messages.
      */
     private function dispatch(array $messages): void
     {

@@ -6,7 +6,6 @@ namespace Yiisoft\Profiler\Target;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use Yiisoft\Profiler\Message;
 
 /**
  * LogTarget saves profiling messages as a log messages.
@@ -33,12 +32,12 @@ use Yiisoft\Profiler\Message;
 final class LogTarget extends AbstractTarget
 {
     /**
-     * @var LoggerInterface logger to be used for message export.
+     * @var LoggerInterface Logger to be used for message export.
      */
     private LoggerInterface $logger;
 
     /**
-     * @var string log level to be used for messages export.
+     * @var string Log level to be used for messages export.
      */
     private string $logLevel;
 
@@ -48,9 +47,6 @@ final class LogTarget extends AbstractTarget
         $this->logLevel = $logLevel;
     }
 
-    /**
-     * @param Message[] $messages
-     */
     public function export(array $messages): void
     {
         foreach ($messages as $message) {
