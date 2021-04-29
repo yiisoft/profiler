@@ -13,10 +13,10 @@ interface ProfilerInterface
      * Marks the beginning of a code block for profiling.
      *
      * This has to be matched with a call to {@see end()} with the same category name.
-     * The begin- and end- calls must also be properly nested. For example,
+     * The begin- and end- calls must also be properly nested.
      *
-     * @param string $token token for the code block
-     * @param array $context the context data of this profile block
+     * @param string $token Token for the code block.
+     * @param array $context The context data of this profile block.
      */
     public function begin(string $token, array $context = []): void;
 
@@ -25,8 +25,8 @@ interface ProfilerInterface
      *
      * This has to be matched with a previous call to {@see begin()} with the same category name.
      *
-     * @param string $token token for the code block
-     * @param array $context the context data of this profile block
+     * @param string $token Token for the code block.
+     * @param array $context The context data of this profile block.
      *
      * {@see begin()}
      */
@@ -35,9 +35,9 @@ interface ProfilerInterface
     /**
      * Find messages with a given token.
      *
-     * @param string $token
+     * @param string $token Code block token.
      *
-     * @return Message[] the messages profiler.
+     * @return Message[] The messages profiler.
      */
     public function findMessages(string $token): array;
 

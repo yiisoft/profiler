@@ -16,7 +16,7 @@ use Yiisoft\Strings\WildcardPattern;
  * For more details and usage information on Target,
  * see the [guide article on profiling & targets](guide:runtime-profiling).
  */
-abstract class AbstractTarget
+abstract class AbstractTarget implements TargetInterface
 {
     /**
      * @var array List of message categories that this target is interested in. Defaults to empty, meaning all
@@ -108,26 +108,14 @@ abstract class AbstractTarget
     }
 
     /**
-     * Enable target.
+     * Enable or disable target.
      *
      * @return $this
      */
-    public function enable(): self
+    public function enable(bool $value = true): self
     {
         $new = clone $this;
-        $new->enabled = true;
-        return $new;
-    }
-
-    /**
-     * Disable target.
-     *
-     * @return $this
-     */
-    public function disable(): self
-    {
-        $new = clone $this;
-        $new->enabled = false;
+        $new->enabled = $value;
         return $new;
     }
 
@@ -144,17 +132,17 @@ abstract class AbstractTarget
      *
      * Child classes must implement this method.
      *
-     * @param Message[] $messages profiling messages to be exported.
+     * @param Message[] $messages Profiling messages to be exported.
      */
     abstract public function export(array $messages): void;
 
     /**
      * Filters the given messages according to their categories.
      *
-     * @param Message[] $messages messages to be filtered.
+     * @param Message[] $messages Messages to be filtered.
      * The message structure follows that in {@see Profiler::$messages}.
      *
-     * @return array the filtered messages.
+     * @return array The filtered messages.
      */
     protected function filterMessages(array $messages): array
     {

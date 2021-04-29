@@ -112,7 +112,7 @@ final class FileTarget extends AbstractTarget
     /**
      * Resolves value of {@see filename} processing path alias and placeholders.
      *
-     * @return string actual target filename.
+     * @return string Actual target filename.
      */
     private function resolveFilename(): string
     {
@@ -136,10 +136,10 @@ final class FileTarget extends AbstractTarget
     /**
      * Formats a profiling message for display as a string.
      *
-     * @param Message $message the profiling message to be formatted.
+     * @param Message $message Profiling message to be formatted.
      * The message structure follows that in {@see Profiler::$messages}.
      *
-     * @return string the formatted message.
+     * @return string Formatted message.
      */
     private function formatMessage(Message $message): string
     {
