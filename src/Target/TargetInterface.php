@@ -20,4 +20,11 @@ interface TargetInterface
      * of each message.
      */
     public function collect(array $messages): void;
+
+    /**
+     * Enable or disable target.
+     *
+     * @param bool $value
+     */
+    public function enable(bool $value = true): void;
 }
