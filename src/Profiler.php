@@ -27,6 +27,7 @@ final class Profiler implements ProfilerInterface
 
     /**
      * @var Message[] Complete profiling messages.
+     *
      * @see TargetInterface::collect()
      */
     private array $messages = [];
