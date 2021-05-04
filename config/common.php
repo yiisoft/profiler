@@ -25,10 +25,11 @@ return [
     LogTarget::class => [
         'definition' => static function (LoggerInterface $logger) use ($params) {
             $params = $params['yiisoft/profiler']['targets'][LogTarget::class];
-            return (new LogTarget($logger, $params['level']))
-                ->enable((bool)$params['enabled'])
+            $target = (new LogTarget($logger, $params['level']))
                 ->include($params['include'])
                 ->exclude($params['exclude']);
+            $target->enable((bool)$params['enabled']);
+            return $target;
         },
         'reset' => function () use ($params) {
             $this->enable((bool)$params['enabled']);
@@ -37,10 +38,12 @@ return [
     FileTarget::class => [
         'definition' => static function (Aliases $aliases) use ($params) {
             $params = $params['yiisoft/profiler']['targets'][FileTarget::class];
-            return (new FileTarget($aliases->get($params['filename']), $params['requestBeginTime'], $params['directoryMode']))
-                ->enable((bool)$params['enabled'])
+            $target = (new FileTarget($aliases->get($params['filename']), $params['requestBeginTime'], $params['directoryMode']))
                 ->include($params['include'])
                 ->exclude($params['exclude']);
+
+            $target->enable((bool)$params['enabled']);
+            return $target;
         },
         'reset' => function () use ($params) {
             $this->enable((bool)$params['enabled']);
