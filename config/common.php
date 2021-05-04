@@ -34,7 +34,7 @@ return [
         },
         'reset' => function () use ($params) {
             $this->enable((bool)$params['enabled']);
-        }
+        },
     ],
     FileTarget::class => [
         'definition' => static function (Aliases $aliases) use ($params) {
@@ -46,6 +46,6 @@ return [
         },
         'reset' => function () use ($params) {
             $this->enable((bool)$params['enabled']);
-        }
+        },
     ],
 ];
