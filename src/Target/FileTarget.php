@@ -10,27 +10,6 @@ use function dirname;
 
 /**
  * FileTarget records profiling messages in a file specified via {@see FileTarget::$filename}.
- *
- * Application configuration example:
- *
- * ```php
- * return [
- *     'yiisoft/profiler' => [
- *         'targets' => [
- *             FileTarget::class => [
- *                 'enabled' => true,
- *                 'filename' => '@runtime/profiling/{date}-{time}.txt',
- *                 'directoryMode' => 0775,
- *                 'requestBeginTime' => microtime(true),
- *                 'exclude' => [],
- *                 'include' => [],
- *             ],
- *             // ...
- *         ],
- *     ],
- *     // ...
- * ];
- * ```
  */
 final class FileTarget extends AbstractTarget
 {
@@ -90,7 +69,7 @@ final class FileTarget extends AbstractTarget
         $memoryPeakUsage = memory_get_peak_usage();
 
         $totalTime = microtime(true) - $this->requestBeginTime;
-        $text = "Total processing time: {$totalTime} ms; Peak memory: {$memoryPeakUsage} B. \n\n";
+        $text = "Total processing time: $totalTime ms; Peak memory: $memoryPeakUsage B. \n\n";
 
         $text .= implode("\n", array_map([$this, 'formatMessage'], $messages));
 

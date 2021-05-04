@@ -12,9 +12,6 @@ use Yiisoft\Strings\WildcardPattern;
  *
  * A profile target object will filter the messages stored by {@see Profiler} according
  * to its {@see AbstractTarget::include()} and {@see AbstractTarget::exclude()}.
- *
- * For more details and usage information on Target,
- * see the [guide article on profiling & targets](guide:runtime-profiling).
  */
 abstract class AbstractTarget implements TargetInterface
 {
@@ -49,13 +46,10 @@ abstract class AbstractTarget implements TargetInterface
     private bool $enabled = true;
 
     /**
-     * Processes the given log messages.
+     * {@inheritdoc}
      *
      * This method will filter the given messages with {@see include()} and {@see exclude()}.
      * And if requested, it will also export the filtering result to specific medium (e.g. email).
-     *
-     * @param array $messages Profiling messages to be processed. See {@see Profiler::$messages} for the structure
-     * of each message.
      */
     public function collect(array $messages): void
     {
@@ -136,7 +130,7 @@ abstract class AbstractTarget implements TargetInterface
      * Filters the given messages according to their categories.
      *
      * @param Message[] $messages Messages to be filtered.
-     * The message structure follows that in {@see Profiler::$messages}.
+     * The message structure follows that in {@see TargetInterface::collect()}.
      *
      * @return array The filtered messages.
      */

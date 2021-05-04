@@ -27,17 +27,7 @@ final class Profiler implements ProfilerInterface
 
     /**
      * @var Message[] Complete profiling messages.
-     * Each message has a following keys:
-     *
-     * - message: string, profiling token.
-     * - category: string, message category.
-     * - nestedLevel: int, profiling message nested level.
-     * - beginTime: float, profiling begin timestamp obtained by microtime(true).
-     * - endTime: float, profiling end timestamp obtained by microtime(true).
-     * - duration: float, profiling block duration in milliseconds.
-     * - beginMemory: int, memory usage at the beginning of profile block in bytes, obtained by `memory_get_usage()`.
-     * - endMemory: int, memory usage at the end of profile block in bytes, obtained by `memory_get_usage()`.
-     * - memoryDiff: int, a diff between 'endMemory' and 'beginMemory'.
+     * @see TargetInterface::collect()
      */
     private array $messages = [];
 
@@ -109,7 +99,7 @@ final class Profiler implements ProfilerInterface
 
     /**
      * @return TargetInterface[] Profiling targets. Each array element represents
-     * a single {@see TargetInterface|profiling target} instance.
+     * a single {@see TargetInterface profiling target} instance.
      */
     public function getTargets(): array
     {
@@ -234,7 +224,7 @@ final class Profiler implements ProfilerInterface
     }
 
     /**
-     * Dispatches the profiling messages to {@see targets}.
+     * Dispatches the profiling messages to targets.
      *
      * @param array $messages The profiling messages.
      */

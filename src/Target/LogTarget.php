@@ -9,25 +9,6 @@ use Psr\Log\LogLevel;
 
 /**
  * LogTarget saves profiling messages as a log messages.
- *
- * Application configuration example:
- *
- * ```php
- * return [
- *     'yiisoft/profiler' => [
- *         'targets' => [
- *             LogTarget::class => [
- *                 'enabled' => true,
- *                 'level' => LogLevel::INFO,
- *                 'exclude' => [],
- *                 'include' => [],
- *             ],
- *             // ...
- *         ],
- *     ],
- *     // ...
- * ];
- * ```
  */
 final class LogTarget extends AbstractTarget
 {
