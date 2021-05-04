@@ -109,14 +109,10 @@ abstract class AbstractTarget implements TargetInterface
 
     /**
      * Enable or disable target.
-     *
-     * @return $this
      */
-    public function enable(bool $value = true): self
+    public function enable(bool $value = true): void
     {
-        $new = clone $this;
-        $new->enabled = $value;
-        return $new;
+        $this->enabled = $value;
     }
 
     /**

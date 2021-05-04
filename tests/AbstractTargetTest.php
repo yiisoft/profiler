@@ -101,9 +101,9 @@ final class AbstractTargetTest extends TestCase
         /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
         $target = $this->getMockBuilder(AbstractTarget::class)->onlyMethods(['enable'])->getMockForAbstractClass();
 
-        $target->expects($this->once())->method('enable')->willReturnSelf();
+        $target->expects($this->once())->method('enable');
 
-        $this->assertEquals($target, $target->enable());
+        $target->enable();
     }
 
     public function testEnabled(): void
@@ -115,7 +115,7 @@ final class AbstractTargetTest extends TestCase
 
         $target->expects($this->once())->method('export');
 
-        $target = $target->enable();
+        $target->enable();
 
         $target->collect([new Message('foo', 'test', ['category' => 'foo'])]);
 
@@ -131,7 +131,7 @@ final class AbstractTargetTest extends TestCase
 
         $target->expects($this->exactly(0))->method('export');
 
-        $target = $target->enable(false);
+        $target->enable(false);
 
         $target->collect([new Message('foo', 'test', ['category' => 'foo'])]);
 
