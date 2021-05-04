@@ -6,7 +6,7 @@
         "profiler",
         "performance"
     ],
-    "homepage": "http://www.yiiframework.com/",
+    "homepage": "https://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
         "issues": "https://github.com/yiisoft/profiler/issues?state=open",
@@ -15,7 +15,6 @@
         "irc": "irc://irc.freenode.net/yii",
         "source": "https://github.com/yiisoft/profiler"
     },
-    "minimum-stability": "dev",
     "require": {
         "php": "^7.4|^8.0",
         "psr/log": "^1.1",
@@ -39,9 +38,6 @@
         }
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "3.0.x-dev"
-        },
         "config-plugin-options": {
             "source-directory": "config"
         },
@@ -54,7 +50,6 @@
     "config": {
         "sort-packages": true
     },
-    "prefer-stable": true,
     "scripts": {
         "test": "phpunit --testdox --no-interaction",
         "test-watch": "phpunit-watcher watch"
