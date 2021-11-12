@@ -1,6 +1,6 @@
 # Profiler Change Log
 
-## 1.0.1 under development
+## 1.0.1 November 12, 2021
 
 - Chg #41: Replace usage of `yiisoft/yii-web` to `yiisoft/yii-http` in event config (devanych)
 
