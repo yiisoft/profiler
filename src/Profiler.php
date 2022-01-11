@@ -192,6 +192,14 @@ final class Profiler implements ProfilerInterface
             }
         }
 
+        if (array_key_exists('beginTime', $context)) {
+            throw new InvalidArgumentException('Forbidden to override begin time in context.');
+        }
+
+        if (array_key_exists('beginMemory', $context)) {
+            throw new InvalidArgumentException('Forbidden to override begin time in context.');
+        }
+
         $context = array_merge(
             $message->context(),
             $context,
@@ -200,14 +208,17 @@ final class Profiler implements ProfilerInterface
                 'endMemory' => memory_get_usage(),
             ]
         );
+        /**
+         * @psalm-var array&array{
+         *       beginTime: float,
+         *       endTime: float,
+         *       beginMemory: int,
+         *       endMemory: int,
+         *     } $context
+         */
 
-        $context['duration'] = !array_key_exists('beginTime', $context) || !is_float($context['beginTime'])
-            ? null
-            : $context['endTime'] - $context['beginTime'];
-
-        $context['memoryDiff'] = !array_key_exists('beginMemory', $context) || !is_int($context['beginMemory'])
-            ? null
-            : $context['endMemory'] - $context['beginMemory'];
+        $context['duration'] = $context['endTime'] - $context['beginTime'];
+        $context['memoryDiff'] = $context['endMemory'] - $context['beginMemory'];
 
         $this->messages[] = new Message($category, $message->token(), $context);
         $this->nestedLevel--;
