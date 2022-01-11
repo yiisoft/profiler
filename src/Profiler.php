@@ -108,8 +108,7 @@ final class Profiler implements ProfilerInterface
     }
 
     /**
-     * @param TargetInterface[] $targets Profiling targets. Each array element represents
-     * a single {@see TargetInterface} instance.
+     * @param array $targets Profiling targets. Each array element represents a single {@see TargetInterface} instance.
      */
     private function setTargets(array $targets): void
     {

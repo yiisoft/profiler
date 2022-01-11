@@ -100,7 +100,7 @@ final class FileTarget extends AbstractTarget
             static function (array $matches) {
                 switch ($matches[0]) {
                     case '{ts}':
-                        return time();
+                        return (string) time();
                     case '{date}':
                         return gmdate('ymd');
                     case '{time}':
