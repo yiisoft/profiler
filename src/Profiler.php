@@ -130,8 +130,8 @@ final class Profiler implements ProfilerInterface
                 );
             }
         }
-        /** @var TargetInterface[] $targets */
 
+        /** @var TargetInterface[] $targets */
         $this->targets = $targets;
     }
 
