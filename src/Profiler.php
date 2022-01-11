@@ -13,8 +13,6 @@ use Yiisoft\Profiler\Target\TargetInterface;
 use function array_key_exists;
 use function get_class;
 use function gettype;
-use function is_float;
-use function is_int;
 use function is_object;
 use function is_string;
 
