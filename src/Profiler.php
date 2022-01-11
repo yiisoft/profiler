@@ -193,11 +193,11 @@ final class Profiler implements ProfilerInterface
         }
 
         if (array_key_exists('beginTime', $context)) {
-            throw new InvalidArgumentException('Forbidden to override begin time in context.');
+            throw new InvalidArgumentException('Forbidden to override "beginTime" in context.');
         }
 
         if (array_key_exists('beginMemory', $context)) {
-            throw new InvalidArgumentException('Forbidden to override begin time in context.');
+            throw new InvalidArgumentException('Forbidden to override "beginMemory" in context.');
         }
 
         $context = array_merge(

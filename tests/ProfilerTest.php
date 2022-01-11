@@ -163,6 +163,41 @@ final class ProfilerTest extends TestCase
         $profiler->end('test');
     }
 
+    public function testOverrideBeginTime(): void
+    {
+        $profiler = new Profiler($this->logger);
+        $profiler->begin('test');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectErrorMessage(
+            'Forbidden to override "beginTime" in context.'
+        );
+        $profiler->end('test', ['beginTime' => 42.15]);
+    }
+
+    public function testOverrideBeginMemory(): void
+    {
+        $profiler = new Profiler($this->logger);
+        $profiler->begin('test');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectErrorMessage(
+            'Forbidden to override "beginMemory" in context.'
+        );
+        $profiler->end('test', ['beginMemory' => 42]);
+    }
+
+    public function testNonStringCategory(): void
+    {
+        $profiler = new Profiler($this->logger);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectErrorMessage(
+            'Category should be a string, "integer" given.'
+        );
+        $profiler->end('begin', ['category' => 42]);
+    }
+
     public function testWrongTarget(): void
     {
         $this->expectException(InvalidArgumentException::class);
