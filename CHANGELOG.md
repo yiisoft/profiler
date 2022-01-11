@@ -1,9 +1,9 @@
 # Profiler Change Log
 
-
 ## 1.0.2 under development
 
-- no changes in this release.
+- Chg #42: Forbidden pass context with "beginMemory" or "beginTime" keys to `Profiler::end()` (vjik)
+- Bug #42: Checking that category of message is a string (vjik)
 
 ## 1.0.1 November 12, 2021
 
