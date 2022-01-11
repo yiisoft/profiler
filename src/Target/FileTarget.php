@@ -6,6 +6,7 @@ namespace Yiisoft\Profiler\Target;
 
 use Yiisoft\Files\FileHelper;
 use Yiisoft\Profiler\Message;
+
 use function dirname;
 
 /**

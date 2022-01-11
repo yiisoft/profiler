@@ -7,6 +7,8 @@ namespace Yiisoft\Profiler\Target;
 use Yiisoft\Profiler\Message;
 use Yiisoft\Strings\WildcardPattern;
 
+use function count;
+
 /**
  * Target is the base class for all profiling target classes.
  *
@@ -16,7 +18,7 @@ use Yiisoft\Strings\WildcardPattern;
 abstract class AbstractTarget implements TargetInterface
 {
     /**
-     * @var array List of message categories that this target is interested in. Defaults to empty, meaning all
+     * @var string[] List of message categories that this target is interested in. Defaults to empty, meaning all
      * categories.
      *
      * You can use an asterisk at the end of a category so that the category may be used to
@@ -28,7 +30,7 @@ abstract class AbstractTarget implements TargetInterface
     private array $include = [];
 
     /**
-     * @var array List of message categories that this target is NOT interested in. Defaults to empty, meaning no
+     * @var string[] List of message categories that this target is NOT interested in. Defaults to empty, meaning no
      * uninteresting messages.
      *
      * If this property is not empty, then any category listed here will be excluded from {@see include()}.
@@ -65,7 +67,7 @@ abstract class AbstractTarget implements TargetInterface
     }
 
     /**
-     * @param array $include List of message categories that this target is interested in. Defaults to empty, meaning all
+     * @param string[] $include List of message categories that this target is interested in. Defaults to empty, meaning all
      * categories.
      *
      * You can use an asterisk at the end of a category so that the category may be used to
@@ -84,7 +86,7 @@ abstract class AbstractTarget implements TargetInterface
     }
 
     /**
-     * @param array $exclude List of message categories that this target is NOT interested in. Defaults to empty, meaning no
+     * @param string[] $exclude List of message categories that this target is NOT interested in. Defaults to empty, meaning no
      * uninteresting messages.
      *
      * If this property is not empty, then any category listed here will be excluded from {@see include()}.
@@ -132,7 +134,7 @@ abstract class AbstractTarget implements TargetInterface
      * @param Message[] $messages Messages to be filtered.
      * The message structure follows that in {@see TargetInterface::collect()}.
      *
-     * @return array The filtered messages.
+     * @return Message[] The filtered messages.
      */
     protected function filterMessages(array $messages): array
     {

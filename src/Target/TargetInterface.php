@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler\Target;
 
+use Yiisoft\Profiler\Message;
+
 /**
  * Target interface defines a profiling target.
  *
@@ -16,15 +18,15 @@ interface TargetInterface
     /**
      * Processes the given log messages.
      *
-     * @param array $messages Profiling messages to be processed.
+     * @param Message[] $messages Profiling messages to be processed.
      *
      * Each message has the following keys:
      *
      * - message: string, profiling token.
      * - category: string, message category.
      * - nestedLevel: int, profiling message nested level.
-     * - beginTime: float, profiling begin timestamp obtained by microtime(true).
-     * - endTime: float, profiling end timestamp obtained by microtime(true).
+     * - beginTime: float, profiling begin timestamp obtained by `microtime(true)`.
+     * - endTime: float, profiling end timestamp obtained by `microtime(true)`.
      * - duration: float, profiling block duration in milliseconds.
      * - beginMemory: int, memory usage at the beginning of profile block in bytes, obtained by `memory_get_usage()`.
      * - endMemory: int, memory usage at the end of profile block in bytes, obtained by `memory_get_usage()`.
