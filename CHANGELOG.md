@@ -2,8 +2,8 @@
 
 ## 1.0.2 under development
 
-- Chg #42: Forbidden pass context with "beginMemory" or "beginTime" keys to `Profiler::end()` (vjik)
-- Bug #42: Checking that category of message is a string (vjik)
+- Bug #42: Forbid passing context with "beginMemory" or "beginTime" keys to `Profiler::end()` (vjik)
+- Bug #42: Check that category of message is a string (vjik)
 
 ## 1.0.1 November 12, 2021
 

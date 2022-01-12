@@ -170,7 +170,7 @@ final class ProfilerTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectErrorMessage(
-            'Forbidden to override "beginTime" in context.'
+            'It is forbidden to override "beginTime" in context.'
         );
         $profiler->end('test', ['beginTime' => 42.15]);
     }
@@ -182,7 +182,7 @@ final class ProfilerTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectErrorMessage(
-            'Forbidden to override "beginMemory" in context.'
+            'It is forbidden to override "beginMemory" in context.'
         );
         $profiler->end('test', ['beginMemory' => 42]);
     }

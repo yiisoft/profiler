@@ -105,7 +105,7 @@ final class Profiler implements ProfilerInterface
 
     /**
      * @return TargetInterface[] Profiling targets. Each array element represents
-     * a single {@see TargetInterface} profiling target instance.
+     * a single {@see TargetInterface profiling target} instance.
      */
     public function getTargets(): array
     {
@@ -191,11 +191,11 @@ final class Profiler implements ProfilerInterface
         }
 
         if (array_key_exists('beginTime', $context)) {
-            throw new InvalidArgumentException('Forbidden to override "beginTime" in context.');
+            throw new InvalidArgumentException('It is forbidden to override "beginTime" in context.');
         }
 
         if (array_key_exists('beginMemory', $context)) {
-            throw new InvalidArgumentException('Forbidden to override "beginMemory" in context.');
+            throw new InvalidArgumentException('It is forbidden to override "beginMemory" in context.');
         }
 
         $context = array_merge(
