@@ -163,11 +163,46 @@ final class ProfilerTest extends TestCase
         $profiler->end('test');
     }
 
+    public function testOverrideBeginTime(): void
+    {
+        $profiler = new Profiler($this->logger);
+        $profiler->begin('test');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectErrorMessage(
+            'It is forbidden to override "beginTime" in context.'
+        );
+        $profiler->end('test', ['beginTime' => 42.15]);
+    }
+
+    public function testOverrideBeginMemory(): void
+    {
+        $profiler = new Profiler($this->logger);
+        $profiler->begin('test');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectErrorMessage(
+            'It is forbidden to override "beginMemory" in context.'
+        );
+        $profiler->end('test', ['beginMemory' => 42]);
+    }
+
+    public function testNonStringCategory(): void
+    {
+        $profiler = new Profiler($this->logger);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectErrorMessage(
+            'Category should be a string, "integer" given.'
+        );
+        $profiler->end('begin', ['category' => 42]);
+    }
+
     public function testWrongTarget(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Target "0" should be an instance of \Yiisoft\Profiler\Target\TargetInterface, "' . stdClass::class . '" given.'
+            'Target "0" should be an instance of Yiisoft\Profiler\Target\TargetInterface, "' . stdClass::class . '" given.'
         );
         new Profiler($this->logger, [new stdClass()]);
     }
@@ -176,7 +211,7 @@ final class ProfilerTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            'Target "0" should be an instance of \Yiisoft\Profiler\Target\TargetInterface, "string" given.'
+            'Target "0" should be an instance of Yiisoft\Profiler\Target\TargetInterface, "string" given.'
         );
         new Profiler($this->logger, [stdClass::class]);
     }

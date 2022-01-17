@@ -10,8 +10,11 @@ use Psr\Log\LogLevel;
 use RuntimeException;
 use Yiisoft\Profiler\Target\TargetInterface;
 
+use function array_key_exists;
 use function get_class;
+use function gettype;
 use function is_object;
+use function is_string;
 
 /**
  * Profiler provides profiling support. It stores profiling messages in the memory and sends them to different targets
@@ -39,6 +42,8 @@ final class Profiler implements ProfilerInterface
 
     /**
      * @var array Pending profiling messages, e.g. the ones which have begun but not ended yet.
+     *
+     * @psalm-var array<string,array<string,list<Message>>>
      */
     private array $pendingMessages = [];
 
@@ -48,7 +53,7 @@ final class Profiler implements ProfilerInterface
     private int $nestedLevel = 0;
 
     /**
-     * @var array|TargetInterface[] Profiling targets. Each array element represents
+     * @var TargetInterface[] Profiling targets. Each array element represents
      * a single {@see TargetInterface} instance.
      */
     private array $targets = [];
@@ -108,20 +113,25 @@ final class Profiler implements ProfilerInterface
     }
 
     /**
-     * @param TargetInterface[] $targets Profiling targets. Each array element represents
+     * @param array $targets Profiling targets. Each array element represents
      * a single {@see TargetInterface} instance.
      */
     private function setTargets(array $targets): void
     {
         foreach ($targets as $name => $target) {
-            /** @psalm-suppress DocblockTypeContradiction */
             if (!($target instanceof TargetInterface)) {
-                $type = is_object($target) ? get_class($target) : gettype($target);
                 throw new InvalidArgumentException(
-                    "Target \"$name\" should be an instance of \Yiisoft\Profiler\Target\TargetInterface, \"$type\" given."
+                    sprintf(
+                        'Target "%s" should be an instance of %s, "%s" given.',
+                        $name,
+                        TargetInterface::class,
+                        $this->getDebugType($target)
+                    )
                 );
             }
         }
+
+        /** @var TargetInterface[] $targets */
         $this->targets = $targets;
     }
 
@@ -131,7 +141,8 @@ final class Profiler implements ProfilerInterface
             return;
         }
 
-        $category = $context['category'] ?? 'application';
+        $category = $this->getCategoryFromContext($context);
+
         $context = array_merge(
             $context,
             [
@@ -156,7 +167,7 @@ final class Profiler implements ProfilerInterface
             return;
         }
 
-        $category = $context['category'] ?? 'application';
+        $category = $this->getCategoryFromContext($context);
 
         if (empty($this->pendingMessages[$category][$token])) {
             throw new RuntimeException(
@@ -169,14 +180,22 @@ final class Profiler implements ProfilerInterface
             );
         }
 
-        /** @var Message $message */
         $message = array_pop($this->pendingMessages[$category][$token]);
+        /** @psalm-suppress DocblockTypeContradiction See {@link https://github.com/vimeo/psalm/issues/7376} */
         if (empty($this->pendingMessages[$category][$token])) {
             unset($this->pendingMessages[$category][$token]);
 
             if (empty($this->pendingMessages[$category])) {
                 unset($this->pendingMessages[$category]);
             }
+        }
+
+        if (array_key_exists('beginTime', $context)) {
+            throw new InvalidArgumentException('It is forbidden to override "beginTime" in context.');
+        }
+
+        if (array_key_exists('beginMemory', $context)) {
+            throw new InvalidArgumentException('It is forbidden to override "beginMemory" in context.');
         }
 
         $context = array_merge(
@@ -187,6 +206,14 @@ final class Profiler implements ProfilerInterface
                 'endMemory' => memory_get_usage(),
             ]
         );
+        /**
+         * @psalm-var array&array{
+         *       beginTime: float,
+         *       endTime: float,
+         *       beginMemory: int,
+         *       endMemory: int,
+         *     } $context
+         */
 
         $context['duration'] = $context['endTime'] - $context['beginTime'];
         $context['memoryDiff'] = $context['endMemory'] - $context['beginMemory'];
@@ -227,7 +254,7 @@ final class Profiler implements ProfilerInterface
     /**
      * Dispatches the profiling messages to targets.
      *
-     * @param array $messages The profiling messages.
+     * @param Message[] $messages The profiling messages.
      */
     private function dispatch(array $messages): void
     {
@@ -239,6 +266,8 @@ final class Profiler implements ProfilerInterface
     /**
      * @param string $category
      * @param array $categoryMessages
+     *
+     * @psalm-param array<string,list<Message>> $categoryMessages
      */
     private function logCategoryMessages(string $category, array $categoryMessages): void
     {
@@ -255,5 +284,32 @@ final class Profiler implements ProfilerInterface
                 );
             }
         }
+    }
+
+    private function getCategoryFromContext(array $context): string
+    {
+        if (!array_key_exists('category', $context)) {
+            return 'application';
+        }
+
+        $category = $context['category'];
+        if (!is_string($category)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Category should be a string, "%s" given.',
+                    $this->getDebugType($category)
+                )
+            );
+        }
+
+        return $category;
+    }
+
+    /**
+     * @param mixed $variable
+     */
+    private function getDebugType($variable): string
+    {
+        return is_object($variable) ? get_class($variable) : gettype($variable);
     }
 }

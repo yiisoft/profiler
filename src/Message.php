@@ -83,6 +83,8 @@ final class Message
      * @param mixed $default If the context parameter does not exist, the `$default` will be returned.
      *
      * @return mixed The context parameter value.
+     *
+     * @psalm-return ($name is null ? array : mixed|null)
      */
     public function context(string $name = null, $default = null)
     {
@@ -90,6 +92,7 @@ final class Message
             return $this->context;
         }
 
+        /** @psalm-suppress MixedReturnStatement */
         return $this->context[$name] ?? $default;
     }
 }

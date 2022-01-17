@@ -6,6 +6,7 @@ namespace Yiisoft\Profiler\Target;
 
 use Yiisoft\Files\FileHelper;
 use Yiisoft\Profiler\Message;
+
 use function dirname;
 
 /**
@@ -100,7 +101,7 @@ final class FileTarget extends AbstractTarget
             static function (array $matches) {
                 switch ($matches[0]) {
                     case '{ts}':
-                        return time();
+                        return (string) time();
                     case '{date}':
                         return gmdate('ymd');
                     case '{time}':
