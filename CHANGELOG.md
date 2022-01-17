@@ -1,5 +1,9 @@
 # Profiler Change Log
 
+## 1.0.3 under development
+
+- no changes in this release.
+
 ## 1.0.2 January 17, 2022
 
 - Bug #42: Forbid passing context with "beginMemory" or "beginTime" keys to `Profiler::end()` (vjik)
