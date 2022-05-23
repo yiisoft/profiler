@@ -1,5 +1,9 @@
 # Profiler Change Log
 
+## 1.0.4 under development
+
+- no changes in this release.
+
 ## 1.0.3 May 23, 2022
 
 - Bug #44: Add support for `psr/log` in versions 2 and 3 (PHP 8) (tomaszkane)
