@@ -2,7 +2,7 @@
 
 ## 1.0.3 under development
 
-- no changes in this release.
+- Bug #44: Add support for `psr/log` in versions 2 and 3 (PHP 8) (tomaszkane)
 
 ## 1.0.2 January 17, 2022
 
