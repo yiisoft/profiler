@@ -69,9 +69,13 @@ final class AbstractTargetTest extends TestCase
     public function testFilterMessages(array $messages, array $categories, array $except, array $expected): void
     {
         /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(AbstractTarget::class)->getMockForAbstractClass();
+        $target = $this
+            ->getMockBuilder(AbstractTarget::class)
+            ->getMockForAbstractClass();
 
-        $target = $target->include($categories)->exclude($except);
+        $target = $target
+            ->include($categories)
+            ->exclude($except);
 
         $this->assertEquals($expected, $this->invokeMethod($target, 'filterMessages', [$messages]));
     }
@@ -79,9 +83,15 @@ final class AbstractTargetTest extends TestCase
     public function testInclude(): void
     {
         /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(AbstractTarget::class)->onlyMethods(['include'])->getMockForAbstractClass();
+        $target = $this
+            ->getMockBuilder(AbstractTarget::class)
+            ->onlyMethods(['include'])
+            ->getMockForAbstractClass();
 
-        $target->expects($this->once())->method('include')->willReturnSelf();
+        $target
+            ->expects($this->once())
+            ->method('include')
+            ->willReturnSelf();
 
         $this->assertEquals($target, $target->include(['test']));
     }
@@ -89,9 +99,15 @@ final class AbstractTargetTest extends TestCase
     public function testExclude(): void
     {
         /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(AbstractTarget::class)->onlyMethods(['exclude'])->getMockForAbstractClass();
+        $target = $this
+            ->getMockBuilder(AbstractTarget::class)
+            ->onlyMethods(['exclude'])
+            ->getMockForAbstractClass();
 
-        $target->expects($this->once())->method('exclude')->willReturnSelf();
+        $target
+            ->expects($this->once())
+            ->method('exclude')
+            ->willReturnSelf();
 
         $this->assertEquals($target, $target->exclude(['test']));
     }
@@ -99,9 +115,14 @@ final class AbstractTargetTest extends TestCase
     public function testEnable(): void
     {
         /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(AbstractTarget::class)->onlyMethods(['enable'])->getMockForAbstractClass();
+        $target = $this
+            ->getMockBuilder(AbstractTarget::class)
+            ->onlyMethods(['enable'])
+            ->getMockForAbstractClass();
 
-        $target->expects($this->once())->method('enable');
+        $target
+            ->expects($this->once())
+            ->method('enable');
 
         $target->enable();
     }
@@ -109,11 +130,14 @@ final class AbstractTargetTest extends TestCase
     public function testEnabled(): void
     {
         /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(AbstractTarget::class)
+        $target = $this
+            ->getMockBuilder(AbstractTarget::class)
             ->onlyMethods(['export'])
             ->getMock();
 
-        $target->expects($this->once())->method('export');
+        $target
+            ->expects($this->once())
+            ->method('export');
 
         $target->enable();
 
@@ -125,11 +149,14 @@ final class AbstractTargetTest extends TestCase
     public function testDisabled(): void
     {
         /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */
-        $target = $this->getMockBuilder(AbstractTarget::class)
+        $target = $this
+            ->getMockBuilder(AbstractTarget::class)
             ->onlyMethods(['export'])
             ->getMock();
 
-        $target->expects($this->exactly(0))->method('export');
+        $target
+            ->expects($this->exactly(0))
+            ->method('export');
 
         $target->enable(false);
 
