@@ -20,6 +20,7 @@ The package provides an ability to record performance profiles.
 ## Requirements
 
 - PHP 7.4 or higher.
+- If in `yiisoft/aliases` configuration will be no alias `@runtime`, then application throws error `Invalid path alias: @runtime/profiling/{date}-{time}.txt`
 
 ## Installation
 
