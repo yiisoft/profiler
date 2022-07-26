@@ -1,6 +1,6 @@
 # Profiler Change Log
 
-## 1.0.4 under development
+## 1.0.4 July 26, 2022
 
 - Chg #40: Add support for `yiisoft/files` of version `^2.0` (@DplusG)
 
