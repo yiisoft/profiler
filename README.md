@@ -29,6 +29,25 @@ The package could be installed via composer:
 composer require --dev yiisoft/profiler --prefer-dist
 ```
 
+If there will be no `@runtime` alias in `yiisoft/aliases` configuration defined, application will throw "Invalid path alias" error.
+
+To solve it, install the following package `yiisoft/aliases` via composer:
+
+
+```shell
+composer require yiisoft/aliases --prefer-dist
+```
+And set alias `@runtime`:
+
+```php
+use Yiisoft\Aliases\Aliases;
+
+$aliases = new Aliases([
+    '@root' => __DIR__,
+]);
+$aliases->set('@runtime', '@root/runtime');
+```
+
 ## General usage
 
 ### Profiling
