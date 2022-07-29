@@ -29,7 +29,23 @@ The package could be installed via composer:
 composer require --dev yiisoft/profiler --prefer-dist
 ```
 
-- If in `yiisoft/aliases` configuration will be no alias `@runtime`, then application throws error `Invalid path alias: @runtime/profiling/{date}-{time}.txt`
+If in `yiisoft/aliases` configuration will be no alias `@runtime`, then application throws error `Invalid path alias: @runtime/profiling/{date}-{time}.txt`
+
+Than install the following package `yiisoft/aliases` via composer:
+
+```shell
+composer require yiisoft/aliases --prefer-dist
+```
+And set alias `@runtime`:
+
+```php
+use Yiisoft\Aliases\Aliases;
+
+$aliases = new Aliases([
+    '@root' => __DIR__,
+]);
+$aliases->set('@runtime', '@root/runtime');
+```
 
 ## General usage
 
