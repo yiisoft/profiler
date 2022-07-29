@@ -29,9 +29,10 @@ The package could be installed via composer:
 composer require --dev yiisoft/profiler --prefer-dist
 ```
 
-If in `yiisoft/aliases` configuration will be no alias `@runtime`, then application throws error `Invalid path alias: @runtime/profiling/{date}-{time}.txt`
+If there will be no `@runtime` alias in `yiisoft/aliases` configuration defined, application will throw "Invalid path alias" error.
 
-Than install the following package `yiisoft/aliases` via composer:
+To solve it, install the following package `yiisoft/aliases` via composer:
+
 
 ```shell
 composer require yiisoft/aliases --prefer-dist
