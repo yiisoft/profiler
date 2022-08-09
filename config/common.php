@@ -15,38 +15,38 @@ use Yiisoft\Profiler\Target\LogTarget;
  */
 return [
     ProfilerInterface::class => static function (ContainerInterface $container, LoggerInterface $logger) use ($params) {
-        $params = $params['yiisoft/profiler'];
+        $parameters = $params['yiisoft/profiler'];
         $targets = [];
-        foreach ($params['targets'] as $target => $targetParams) {
+        foreach ($parameters['targets'] as $target => $targetParams) {
             $targets[] = $container->get($target);
         }
         return new Profiler($logger, $targets);
     },
     LogTarget::class => [
         'definition' => static function (LoggerInterface $logger) use ($params) {
-            $params = $params['yiisoft/profiler']['targets'][LogTarget::class];
-            $target = (new LogTarget($logger, $params['level']))
-                ->include($params['include'])
-                ->exclude($params['exclude']);
-            $target->enable((bool)$params['enabled']);
+            $parameters = $params['yiisoft/profiler']['targets'][LogTarget::class];
+            $target = (new LogTarget($logger, $parameters['level']))
+                ->include($parameters['include'])
+                ->exclude($parameters['exclude']);
+            $target->enable((bool)$parameters['enabled']);
             return $target;
         },
         'reset' => function () use ($params) {
-            $this->enable((bool)$params['enabled']);
+            $this->enable((bool)$params['yiisoft/profiler']['targets'][LogTarget::class]['enabled']);
         },
     ],
     FileTarget::class => [
         'definition' => static function (Aliases $aliases) use ($params) {
-            $params = $params['yiisoft/profiler']['targets'][FileTarget::class];
-            $target = (new FileTarget($aliases->get($params['filename']), $params['requestBeginTime'], $params['directoryMode']))
-                ->include($params['include'])
-                ->exclude($params['exclude']);
+            $parameters = $params['yiisoft/profiler']['targets'][FileTarget::class];
+            $target = (new FileTarget($aliases->get($parameters['filename']), $parameters['requestBeginTime'], $parameters['directoryMode']))
+                ->include($parameters['include'])
+                ->exclude($parameters['exclude']);
 
-            $target->enable((bool)$params['enabled']);
+            $target->enable((bool)$parameters['enabled']);
             return $target;
         },
         'reset' => function () use ($params) {
-            $this->enable((bool)$params['enabled']);
+            $this->enable((bool)$params['yiisoft/profiler']['targets'][FileTarget::class]['enabled']);
         },
     ],
 ];
