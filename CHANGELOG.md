@@ -2,7 +2,7 @@
 
 ## 1.0.5 under development
 
-- no changes in this release.
+- Enh #54: Implement `ProfilerAwareTrait` for `ProfilerAwareInterface`.
 
 ## 1.0.4 July 26, 2022
 
