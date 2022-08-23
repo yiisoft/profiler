@@ -2,7 +2,7 @@
 
 ## 1.0.5 under development
 
-- Enh #54: Implement `ProfilerAwareTrait` for `ProfilerAwareInterface`.
+- Enh #54: Implement `ProfilerAwareTrait` for `ProfilerAwareInterface` (@terabytesoftw)
 
 ## 1.0.4 July 26, 2022
 
