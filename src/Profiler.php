@@ -11,9 +11,6 @@ use RuntimeException;
 use Yiisoft\Profiler\Target\TargetInterface;
 
 use function array_key_exists;
-use function get_class;
-use function gettype;
-use function is_object;
 use function is_string;
 
 /**
@@ -34,11 +31,6 @@ final class Profiler implements ProfilerInterface
      * @see TargetInterface::collect()
      */
     private array $messages = [];
-
-    /**
-     * @var LoggerInterface Logger to be used for message export.
-     */
-    private LoggerInterface $logger;
 
     /**
      * @var array Pending profiling messages, e.g. the ones which have begun but not ended yet.
@@ -64,9 +56,8 @@ final class Profiler implements ProfilerInterface
      * @param LoggerInterface $logger Logger to use.
      * @param array $targets Profiling targets to use.
      */
-    public function __construct(LoggerInterface $logger, array $targets = [])
+    public function __construct(private LoggerInterface $logger, array $targets = [])
     {
-        $this->logger = $logger;
         $this->setTargets($targets);
         register_shutdown_function([$this, 'flush']);
     }
@@ -125,7 +116,7 @@ final class Profiler implements ProfilerInterface
                         'Target "%s" should be an instance of %s, "%s" given.',
                         $name,
                         TargetInterface::class,
-                        $this->getDebugType($target)
+                        get_debug_type($target)
                     )
                 );
             }
@@ -297,19 +288,11 @@ final class Profiler implements ProfilerInterface
             throw new InvalidArgumentException(
                 sprintf(
                     'Category should be a string, "%s" given.',
-                    $this->getDebugType($category)
+                    get_debug_type($category)
                 )
             );
         }
 
         return $category;
-    }
-
-    /**
-     * @param mixed $variable
-     */
-    private function getDebugType($variable): string
-    {
-        return is_object($variable) ? get_class($variable) : gettype($variable);
     }
 }
