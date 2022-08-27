@@ -2,6 +2,7 @@
 
 ## 1.0.5 under development
 
+- Bug #52: Fix definition resetter config (@alamagus)
 - Enh #54: Implement `ProfilerAwareTrait` for `ProfilerAwareInterface` (@terabytesoftw)
 
 ## 1.0.4 July 26, 2022
