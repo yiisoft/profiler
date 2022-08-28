@@ -1,5 +1,9 @@
 # Profiler Change Log
 
+## 1.0.6 under development
+
+- no changes in this release.
+
 ## 1.0.5 August 28, 2022
 
 - Enh #54: Implement `ProfilerAwareTrait` for `ProfilerAwareInterface` (@terabytesoftw)
