@@ -1,9 +1,9 @@
 # Profiler Change Log
 
-## 1.0.5 under development
+## 1.0.5 August 28, 2022
 
-- Bug #52: Fix definition resetter config (@alamagus)
 - Enh #54: Implement `ProfilerAwareTrait` for `ProfilerAwareInterface` (@terabytesoftw)
+- Bug #52: Fix definition resetter config (@alamagus)
 
 ## 1.0.4 July 26, 2022
 
