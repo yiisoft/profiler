@@ -193,7 +193,7 @@ final class ProfilerTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectErrorMessage(
-            'Category should be a string, "integer" given.'
+            'Category should be a string, "int" given.'
         );
         $profiler->end('begin', ['category' => 42]);
     }

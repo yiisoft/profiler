@@ -22,9 +22,8 @@ interface TargetInterface
      *
      * Each message has the following keys:
      *
-     * - message: string, profiling token.
-     * - category: string, message category.
-     * - nestedLevel: int, profiling message nested level.
+     * - token: string, profiling token.
+     * - level: string, message category.
      * - beginTime: float, profiling begin timestamp obtained by `microtime(true)`.
      * - endTime: float, profiling end timestamp obtained by `microtime(true)`.
      * - duration: float, profiling block duration in milliseconds.

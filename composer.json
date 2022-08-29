@@ -17,9 +17,9 @@
         "source": "https://github.com/yiisoft/profiler"
     },
     "require": {
-        "php": "^7.4 || ^8.0",
-        "psr/log": "^1.1 || ^2.0 || ^3.0",
-        "yiisoft/files": "^1.0|^2.0",
+        "php": "^8.0",
+        "psr/log": "^2.0|^3.0",
+        "yiisoft/files": "^2.0",
         "yiisoft/strings": "^2.0"
     },
     "require-dev": {
