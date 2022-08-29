@@ -2,8 +2,12 @@
 
 ## 2.0.0 under development
 
-- Enh #54: Implement `ProfilerAwareTrait` for `ProfilerAwareInterface` (@terabytesoftw)
 - Chg #55: Raise the minimum version of PHP to 8 (@rustamwin)
+
+## 1.0.5 August 28, 2022
+
+- Enh #54: Implement `ProfilerAwareTrait` for `ProfilerAwareInterface` (@terabytesoftw)
+- Bug #52: Fix definition resetter config (@alamagus)
 
 ## 1.0.4 July 26, 2022
 
