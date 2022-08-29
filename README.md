@@ -19,7 +19,7 @@ The package provides an ability to record performance profiles.
 
 ## Requirements
 
-- PHP 7.4 or higher.
+- PHP 8.0 or higher.
 
 ## Installation
 
