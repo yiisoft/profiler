@@ -1,6 +1,6 @@
 # Profiler Change Log
 
-## 2.0.0 under development
+## 2.0.0 September 03, 2022
 
 - Chg #55: Raise the minimum version of PHP to 8 (@rustamwin)
 
