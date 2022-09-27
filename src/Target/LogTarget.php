@@ -21,8 +21,7 @@ final class LogTarget extends AbstractTarget
          * @var string Log level to be used for messages export.
          */
         private string $logLevel = LogLevel::DEBUG
-    )
-    {
+    ) {
     }
 
     public function export(array $messages): void

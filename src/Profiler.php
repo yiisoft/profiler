@@ -216,7 +216,7 @@ final class Profiler implements ProfilerInterface
     public function findMessages(string $token): array
     {
         $messages = $this->messages;
-        return array_filter($messages, static fn(Message $message) => $message->token() === $token);
+        return array_filter($messages, static fn (Message $message) => $message->token() === $token);
     }
 
     public function flush(): void
@@ -253,7 +253,6 @@ final class Profiler implements ProfilerInterface
     }
 
     /**
-     *
      * @psalm-param array<string,list<Message>> $categoryMessages
      */
     private function logCategoryMessages(string $category, array $categoryMessages): void
