@@ -12,20 +12,17 @@ use Psr\Log\LogLevel;
  */
 final class LogTarget extends AbstractTarget
 {
-    /**
-     * @var LoggerInterface Logger to be used for message export.
-     */
-    private LoggerInterface $logger;
-
-    /**
-     * @var string Log level to be used for messages export.
-     */
-    private string $logLevel;
-
-    public function __construct(LoggerInterface $logger, string $logLevel = LogLevel::DEBUG)
+    public function __construct(
+        /**
+         * @var LoggerInterface Logger to be used for message export.
+         */
+        private LoggerInterface $logger,
+        /**
+         * @var string Log level to be used for messages export.
+         */
+        private string $logLevel = LogLevel::DEBUG
+    )
     {
-        $this->logger = $logger;
-        $this->logLevel = $logLevel;
     }
 
     public function export(array $messages): void
