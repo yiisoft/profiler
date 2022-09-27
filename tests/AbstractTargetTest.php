@@ -60,11 +60,6 @@ final class AbstractTargetTest extends TestCase
      * @covers \Yiisoft\Profiler\Target\AbstractTarget::isCategoryMatched()
      * @covers \Yiisoft\Profiler\Target\AbstractTarget::include()
      * @covers \Yiisoft\Profiler\Target\AbstractTarget::exclude()
-     *
-     * @param array $messages
-     * @param array $categories
-     * @param array $except
-     * @param array $expected
      */
     public function testFilterMessages(array $messages, array $categories, array $except, array $expected): void
     {
