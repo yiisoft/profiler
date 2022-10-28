@@ -71,13 +71,11 @@ final class FileTarget extends AbstractTarget
     {
         return preg_replace_callback(
             '/{\\w+}/',
-            static function (array $matches) {
-                return match ($matches[0]) {
-                    '{ts}' => (string)time(),
-                    '{date}' => gmdate('ymd'),
-                    '{time}' => gmdate('His'),
-                    default => $matches[0],
-                };
+            static fn (array $matches) => match ($matches[0]) {
+                '{ts}' => (string)time(),
+                '{date}' => gmdate('ymd'),
+                '{time}' => gmdate('His'),
+                default => $matches[0],
             },
             $this->filePath
         );
