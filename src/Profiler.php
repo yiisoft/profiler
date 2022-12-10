@@ -172,7 +172,11 @@ final class Profiler implements ProfilerInterface
         }
 
         $message = array_pop($this->pendingMessages[$category][$token]);
-        /** @psalm-suppress DocblockTypeContradiction See {@link https://github.com/vimeo/psalm/issues/7376} */
+        /**
+         * @psalm-suppress TypeDoesNotContainType, DocblockTypeContradiction
+         *
+         * @link https://github.com/vimeo/psalm/issues/7376
+         */
         if (empty($this->pendingMessages[$category][$token])) {
             unset($this->pendingMessages[$category][$token]);
 
