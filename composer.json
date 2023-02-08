@@ -28,7 +28,9 @@
         "rector/rector": "^0.15.0",
         "roave/infection-static-analysis-plugin": "^1.25",
         "spatie/phpunit-watcher": "^1.23",
-        "vimeo/psalm": "^4.30|^5.1"
+        "vimeo/psalm": "^4.30|^5.1",
+        "yiisoft/aliases": "^2.0",
+        "yiisoft/di": "^1.2"
     },
     "autoload": {
         "psr-4": {
@@ -45,7 +47,7 @@
             "source-directory": "config"
         },
         "config-plugin": {
-            "common": "common.php",
+            "di": "di.php",
             "events-web": "events-web.php",
             "params": "params.php"
         }
