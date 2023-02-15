@@ -26,7 +26,7 @@ The package provides an ability to record performance profiles.
 The package could be installed via composer:
 
 ```shell
-composer require --dev yiisoft/profiler --prefer-dist
+composer require --dev yiisoft/profiler
 ```
 
 If you use this package with [Yii Config](https://github.com/yiisoft/config) and there will be no `@runtime` alias in `yiisoft/aliases` configuration defined, application will throw "Invalid path alias" error.
