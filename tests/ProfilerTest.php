@@ -157,8 +157,10 @@ final class ProfilerTest extends TestCase
         $profiler = new Profiler($this->logger);
 
         $this->expectException(RuntimeException::class);
-        $this->expectErrorMessage(
-            'Unexpected ' . Profiler::class . '::end() call for category "application" token "test". A matching begin() was not found.'
+        $this->expectExceptionMessage(
+            'Unexpected ' .
+            Profiler::class .
+            '::end() call for category "application" token "test". A matching begin() was not found.'
         );
         $profiler->end('test');
     }
@@ -169,9 +171,7 @@ final class ProfilerTest extends TestCase
         $profiler->begin('test');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage(
-            'It is forbidden to override "beginTime" in context.'
-        );
+        $this->expectExceptionMessage('It is forbidden to override "beginTime" in context.');
         $profiler->end('test', ['beginTime' => 42.15]);
     }
 
@@ -181,9 +181,7 @@ final class ProfilerTest extends TestCase
         $profiler->begin('test');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage(
-            'It is forbidden to override "beginMemory" in context.'
-        );
+        $this->expectExceptionMessage('It is forbidden to override "beginMemory" in context.');
         $profiler->end('test', ['beginMemory' => 42]);
     }
 
@@ -192,9 +190,7 @@ final class ProfilerTest extends TestCase
         $profiler = new Profiler($this->logger);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectErrorMessage(
-            'Category should be a string, "int" given.'
-        );
+        $this->expectExceptionMessage('Category should be a string, "int" given.');
         $profiler->end('begin', ['category' => 42]);
     }
 
