@@ -35,8 +35,6 @@ interface TargetInterface
 
     /**
      * Enable or disable target.
-     *
-     * @param bool $value
      */
     public function enable(bool $value = true): void;
 }
