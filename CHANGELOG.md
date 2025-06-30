@@ -2,7 +2,7 @@
 
 ## 3.0.1 under development
 
-- Bug: Fix the nullable parameter declarations for compatibility with PHP 8.4 (@tomaszkane)
+- Bug #81: Fix the nullable parameter declarations for compatibility with PHP 8.4 (@tomaszkane)
 
 ## 3.0.0 February 15, 2023
 
