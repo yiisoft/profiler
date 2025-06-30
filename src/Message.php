@@ -62,7 +62,7 @@ final class Message
      *
      * @psalm-return ($name is null ? array : mixed|null)
      */
-    public function context(string $name = null, mixed $default = null): mixed
+    public function context(?string $name = null, mixed $default = null): mixed
     {
         if ($name === null) {
             return $this->context;
