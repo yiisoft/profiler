@@ -32,9 +32,9 @@ final class FileTarget extends AbstractTarget
      * but read-only for other users.
      */
     public function __construct(
-        private string $filePath,
-        private float $requestBeginTime,
-        private int $directoryMode = 0775
+        private readonly string $filePath,
+        private readonly float $requestBeginTime,
+        private readonly int $directoryMode = 0775
     ) {
     }
 

@@ -56,7 +56,10 @@ final class Profiler implements ProfilerInterface
      * @param LoggerInterface $logger Logger to use.
      * @param array $targets Profiling targets to use.
      */
-    public function __construct(private LoggerInterface $logger, array $targets = [])
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        array $targets = [],
+    )
     {
         $this->setTargets($targets);
         register_shutdown_function([$this, 'flush']);
