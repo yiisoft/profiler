@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yiisoft\Profiler\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Yiisoft\Profiler\Message;
 use Yiisoft\Profiler\Target\AbstractTarget;
 
@@ -17,7 +18,7 @@ final class AbstractTargetTest extends TestCase
      *
      * @return array test data
      */
-    public function dataProviderFilterMessages(): array
+    public static function dataProviderFilterMessages(): array
     {
         return [
             [
@@ -54,13 +55,12 @@ final class AbstractTargetTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProviderFilterMessages
-     *
      * @covers \Yiisoft\Profiler\Target\AbstractTarget::filterMessages()
      * @covers \Yiisoft\Profiler\Target\AbstractTarget::isCategoryMatched()
      * @covers \Yiisoft\Profiler\Target\AbstractTarget::include()
      * @covers \Yiisoft\Profiler\Target\AbstractTarget::exclude()
      */
+    #[DataProvider('dataProviderFilterMessages')]
     public function testFilterMessages(array $messages, array $categories, array $except, array $expected): void
     {
         /* @var $target AbstractTarget|\PHPUnit\Framework\MockObject\MockObject */

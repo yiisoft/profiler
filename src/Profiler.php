@@ -35,7 +35,7 @@ final class Profiler implements ProfilerInterface
     /**
      * @var array Pending profiling messages, e.g. the ones which have begun but not ended yet.
      *
-     * @psalm-var array<string,array<string,list<Message>>>
+     * @psalm-var array<string, array<string, non-empty-list<Message>>>
      */
     private array $pendingMessages = [];
 

@@ -1,14 +1,18 @@
-<phpunit bootstrap="vendor/autoload.php"
-         colors="true"
-         verbose="true"
-         failOnRisky="true"
-         failOnWarning="true"
-         stopOnFailure="false"
-         executionOrder="random"
-         resolveDependencies="true">
-
+<?xml version="1.0"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    bootstrap="vendor/autoload.php"
+    colors="true"
+    failOnRisky="true"
+    failOnWarning="true"
+    stopOnFailure="false"
+    executionOrder="random"
+    resolveDependencies="true"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+    cacheDirectory=".phpunit.cache"
+>
     <php>
-        <ini name="error_reporting" value="-1"/>
+        <ini name="error_reporting" value="-1" />
     </php>
 
     <testsuites>
@@ -17,9 +21,9 @@
         </testsuite>
     </testsuites>
 
-    <coverage>
+    <source>
         <include>
             <directory>./src</directory>
         </include>
-    </coverage>
+    </source>
 </phpunit>

@@ -27,20 +27,20 @@
         }
     ],
     "require": {
-        "php": "^8.0",
-        "psr/log": "^2.0|^3.0",
+        "php": "^8.1",
+        "psr/log": "^2.0 || ^3.0",
         "yiisoft/files": "^2.0",
         "yiisoft/strings": "^2.0"
     },
     "require-dev": {
-        "maglnet/composer-require-checker": "^4.2",
-        "phpunit/phpunit": "^9.5",
+        "maglnet/composer-require-checker": "^4.7.1",
+        "phpunit/phpunit": "^10.5.47",
         "rector/rector": "^2.1",
-        "roave/infection-static-analysis-plugin": "^1.25",
-        "spatie/phpunit-watcher": "^1.23",
-        "vimeo/psalm": "^4.30|^5.1",
+        "roave/infection-static-analysis-plugin": "^1.35",
+        "spatie/phpunit-watcher": "^1.24",
+        "vimeo/psalm": "^5.26.1 || ^6.12",
         "yiisoft/aliases": "^3.0",
-        "yiisoft/di": "^1.2"
+        "yiisoft/di": "^1.4"
     },
     "autoload": {
         "psr-4": {

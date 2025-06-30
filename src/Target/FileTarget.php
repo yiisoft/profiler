@@ -69,6 +69,9 @@ final class FileTarget extends AbstractTarget
      */
     private function resolveFilename(): string
     {
+        /**
+         * @var string We use the correct regular expression, so `preg_replace_callback` always returns a string.
+         */
         return preg_replace_callback(
             '/{\\w+}/',
             static fn (array $matches) => match ($matches[0]) {
