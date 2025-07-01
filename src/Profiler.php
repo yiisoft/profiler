@@ -35,7 +35,7 @@ final class Profiler implements ProfilerInterface
     /**
      * @var array Pending profiling messages, e.g. the ones which have begun but not ended yet.
      *
-     * @psalm-var array<string,array<string,list<Message>>>
+     * @psalm-var array<string, array<string, non-empty-list<Message>>>
      */
     private array $pendingMessages = [];
 
@@ -56,8 +56,10 @@ final class Profiler implements ProfilerInterface
      * @param LoggerInterface $logger Logger to use.
      * @param array $targets Profiling targets to use.
      */
-    public function __construct(private LoggerInterface $logger, array $targets = [])
-    {
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        array $targets = [],
+    ) {
         $this->setTargets($targets);
         register_shutdown_function([$this, 'flush']);
     }

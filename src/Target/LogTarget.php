@@ -16,11 +16,11 @@ final class LogTarget extends AbstractTarget
         /**
          * @var LoggerInterface Logger to be used for message export.
          */
-        private LoggerInterface $logger,
+        private readonly LoggerInterface $logger,
         /**
          * @var string Log level to be used for messages export.
          */
-        private string $logLevel = LogLevel::DEBUG
+        private readonly string $logLevel = LogLevel::DEBUG
     ) {
     }
 

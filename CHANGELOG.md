@@ -3,6 +3,8 @@
 ## 3.0.1 under development
 
 - Bug #81: Fix the nullable parameter declarations for compatibility with PHP 8.4 (@tomaszkane)
+- Chg #84: Change PHP constraint in composer.json to `8.1 - 8.4` (@vjik)
+- Enh #84: Raise the minimum version of PHP to 8.1 and refactor (@vjik)
 
 ## 3.0.0 February 15, 2023
 

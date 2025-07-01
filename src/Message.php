@@ -28,8 +28,11 @@ final class Message
      * @see LoggerTrait::log()
      * @see LogLevel
      */
-    public function __construct(private string $level, private string $token, private array $context = [])
-    {
+    public function __construct(
+        private readonly string $level,
+        private readonly string $token,
+        private readonly array $context = [],
+    ) {
     }
 
     /**
