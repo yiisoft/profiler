@@ -27,7 +27,7 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "8.1 - 8.4",
         "psr/log": "^2.0 || ^3.0",
         "yiisoft/files": "^2.0",
         "yiisoft/strings": "^2.0"
