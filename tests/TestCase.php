@@ -31,11 +31,9 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         $reflection = new \ReflectionObject($object);
         $method = $reflection->getMethod($method);
-        $method->setAccessible(true);
         $result = $method->invokeArgs($object, $args);
 
         if ($revoke) {
-            $method->setAccessible(false);
         }
 
         return $result;

@@ -45,7 +45,7 @@ final class FileTarget extends AbstractTarget
         $totalTime = microtime(true) - $this->requestBeginTime;
         $text = "Total processing time: $totalTime ms; Peak memory: $memoryPeakUsage B. \n\n";
 
-        $text .= implode("\n", array_map([$this, 'formatMessage'], $messages));
+        $text .= implode("\n", array_map($this->formatMessage(...), $messages));
 
         $filename = $this->resolveFilename();
 
