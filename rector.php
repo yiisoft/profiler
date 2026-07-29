@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\Config\RectorConfig;
+use Yiisoft\CodeStyle\Rector\SetList;
 
 return RectorConfig::configure()
     ->withPaths([
+        __DIR__ . '/config',
         __DIR__ . '/src',
         __DIR__ . '/tests',
     ])
     ->withPhpSets(php81: true)
-    ->withRules([
-        InlineConstructorDefaultToPropertyRector::class,
+    ->withSets([
+        SetList::YII_CORE,
     ]);

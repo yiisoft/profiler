@@ -32,8 +32,7 @@ final class Message
         private readonly string $level,
         private readonly string $token,
         private readonly array $context = [],
-    ) {
-    }
+    ) {}
 
     /**
      * Gets a message level.

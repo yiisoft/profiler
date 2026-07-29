@@ -13,8 +13,11 @@ use Yiisoft\Profiler\Profiler;
 use Yiisoft\Profiler\ProfilerInterface;
 use Yiisoft\Profiler\Target\FileTarget;
 use Yiisoft\Profiler\Target\LogTarget;
+use PHPUnit\Framework\TestCase;
 
-final class ConfigTest extends \PHPUnit\Framework\TestCase
+use function dirname;
+
+final class ConfigTest extends TestCase
 {
     public function testBase(): void
     {
@@ -34,8 +37,7 @@ final class ConfigTest extends \PHPUnit\Framework\TestCase
         return new Container(
             ContainerConfig::create()->withDefinitions(
                 $this->getDiConfig($params)
-                +
-                [
+                + [
                     LoggerInterface::class => NullLogger::class,
                     Aliases::class => [
                         '__construct()' => [
@@ -44,8 +46,8 @@ final class ConfigTest extends \PHPUnit\Framework\TestCase
                             ],
                         ],
                     ],
-                ]
-            )
+                ],
+            ),
         );
     }
 

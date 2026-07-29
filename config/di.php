@@ -28,11 +28,11 @@ return [
             $target = (new LogTarget($logger, $parameters['level']))
                 ->include($parameters['include'])
                 ->exclude($parameters['exclude']);
-            $target->enable((bool)$parameters['enabled']);
+            $target->enable((bool) $parameters['enabled']);
             return $target;
         },
         'reset' => function () use ($params) {
-            $this->enable((bool)$params['yiisoft/profiler']['targets'][LogTarget::class]['enabled']);
+            $this->enable((bool) $params['yiisoft/profiler']['targets'][LogTarget::class]['enabled']);
         },
     ],
     FileTarget::class => [
@@ -42,11 +42,11 @@ return [
                 ->include($parameters['include'])
                 ->exclude($parameters['exclude']);
 
-            $target->enable((bool)$parameters['enabled']);
+            $target->enable((bool) $parameters['enabled']);
             return $target;
         },
         'reset' => function () use ($params) {
-            $this->enable((bool)$params['yiisoft/profiler']['targets'][FileTarget::class]['enabled']);
+            $this->enable((bool) $params['yiisoft/profiler']['targets'][FileTarget::class]['enabled']);
         },
     ],
 ];

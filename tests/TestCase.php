@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Profiler\Tests;
 
 use Yiisoft\Profiler\Tests\Logger\ArrayLogger;
+use ReflectionObject;
 
 abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -29,7 +30,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function invokeMethod($object, $method, $args = [], $revoke = true)
     {
-        $reflection = new \ReflectionObject($object);
+        $reflection = new ReflectionObject($object);
         $method = $reflection->getMethod($method);
         $result = $method->invokeArgs($object, $args);
 
