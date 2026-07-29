@@ -34,9 +34,8 @@ final class FileTarget extends AbstractTarget
     public function __construct(
         private readonly string $filePath,
         private readonly float $requestBeginTime,
-        private readonly int $directoryMode = 0775
-    ) {
-    }
+        private readonly int $directoryMode = 0775,
+    ) {}
 
     public function export(array $messages): void
     {
@@ -74,13 +73,13 @@ final class FileTarget extends AbstractTarget
          */
         return preg_replace_callback(
             '/{\\w+}/',
-            static fn (array $matches) => match ($matches[0]) {
-                '{ts}' => (string)time(),
+            static fn(array $matches) => match ($matches[0]) {
+                '{ts}' => (string) time(),
                 '{date}' => gmdate('ymd'),
                 '{time}' => gmdate('His'),
                 default => $matches[0],
             },
-            $this->filePath
+            $this->filePath,
         );
     }
 
@@ -94,7 +93,7 @@ final class FileTarget extends AbstractTarget
      */
     private function formatMessage(Message $message): string
     {
-        return date('Y-m-d H:i:s', (int)$message->context('beginTime'))
+        return date('Y-m-d H:i:s', (int) $message->context('beginTime'))
             . " [{$message->context('duration')} ms][{$message->context('memoryDiff')} B][{$message->level()}] {$message->token()}";
     }
 }

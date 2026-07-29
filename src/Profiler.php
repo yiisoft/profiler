@@ -12,6 +12,7 @@ use Yiisoft\Profiler\Target\TargetInterface;
 
 use function array_key_exists;
 use function is_string;
+use function sprintf;
 
 /**
  * Profiler provides profiling support. It stores profiling messages in the memory and sends them to different targets
@@ -105,29 +106,6 @@ final class Profiler implements ProfilerInterface
         return $this->targets;
     }
 
-    /**
-     * @param array $targets Profiling targets. Each array element represents
-     * a single {@see TargetInterface} instance.
-     */
-    private function setTargets(array $targets): void
-    {
-        foreach ($targets as $name => $target) {
-            if (!($target instanceof TargetInterface)) {
-                throw new InvalidArgumentException(
-                    sprintf(
-                        'Target "%s" should be an instance of %s, "%s" given.',
-                        $name,
-                        TargetInterface::class,
-                        get_debug_type($target)
-                    )
-                );
-            }
-        }
-
-        /** @var TargetInterface[] $targets */
-        $this->targets = $targets;
-    }
-
     public function begin(string $token, array $context = []): void
     {
         if (!$this->enabled) {
@@ -145,7 +123,7 @@ final class Profiler implements ProfilerInterface
                 'time' => microtime(true),
                 'beginTime' => microtime(true),
                 'beginMemory' => memory_get_usage(),
-            ]
+            ],
         );
 
         $message = new Message($category, $token, $context);
@@ -168,8 +146,8 @@ final class Profiler implements ProfilerInterface
                     'Unexpected %s::end() call for category "%s" token "%s". A matching begin() was not found.',
                     self::class,
                     $category,
-                    $token
-                )
+                    $token,
+                ),
             );
         }
 
@@ -201,7 +179,7 @@ final class Profiler implements ProfilerInterface
             [
                 'endTime' => microtime(true),
                 'endMemory' => memory_get_usage(),
-            ]
+            ],
         );
         /**
          * @psalm-var array&array{
@@ -222,7 +200,7 @@ final class Profiler implements ProfilerInterface
     public function findMessages(string $token): array
     {
         $messages = $this->messages;
-        return array_filter($messages, static fn (Message $message) => $message->token() === $token);
+        return array_filter($messages, static fn(Message $message) => $message->token() === $token);
     }
 
     public function flush(): void
@@ -244,6 +222,29 @@ final class Profiler implements ProfilerInterface
         $this->messages = [];
 
         $this->dispatch($messages);
+    }
+
+    /**
+     * @param array $targets Profiling targets. Each array element represents
+     * a single {@see TargetInterface} instance.
+     */
+    private function setTargets(array $targets): void
+    {
+        foreach ($targets as $name => $target) {
+            if (!($target instanceof TargetInterface)) {
+                throw new InvalidArgumentException(
+                    sprintf(
+                        'Target "%s" should be an instance of %s, "%s" given.',
+                        $name,
+                        TargetInterface::class,
+                        get_debug_type($target),
+                    ),
+                );
+            }
+        }
+
+        /** @var TargetInterface[] $targets */
+        $this->targets = $targets;
     }
 
     /**
@@ -271,8 +272,8 @@ final class Profiler implements ProfilerInterface
                         'Unclosed profiling entry detected: category "%s" token "%s" %s',
                         $category,
                         $token,
-                        __METHOD__
-                    )
+                        __METHOD__,
+                    ),
                 );
             }
         }
@@ -289,8 +290,8 @@ final class Profiler implements ProfilerInterface
             throw new InvalidArgumentException(
                 sprintf(
                     'Category should be a string, "%s" given.',
-                    get_debug_type($category)
-                )
+                    get_debug_type($category),
+                ),
             );
         }
 

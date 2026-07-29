@@ -18,7 +18,7 @@ final class ProfilerAwareTraitTest extends TestCase
     {
         $target = new LogTarget(new NullLogger());
         $profiler = new Profiler(new ArrayLogger(), [$target]);
-        $class = new class () implements ProfilerAwareInterface {
+        $class = new class implements ProfilerAwareInterface {
             use ProfilerAwareTrait;
 
             public function getProfiler(): ?Profiler

@@ -11,6 +11,8 @@ use Yiisoft\Profiler\Profiler;
 
 use function dirname;
 
+use const DIRECTORY_SEPARATOR;
+
 final class FileTargetTest extends TestCase
 {
     protected string $testFilePath;
