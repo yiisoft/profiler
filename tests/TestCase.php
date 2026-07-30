@@ -19,24 +19,12 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * Invokes a inaccessible method.
-     *
-     * @param object $object
-     * @param string $method
-     * @param array $args
-     * @param bool $revoke whether to make method inaccessible after execution
-     *
-     * @return mixed
+     * Invokes an inaccessible method.
      */
-    protected function invokeMethod($object, $method, $args = [], $revoke = true)
+    protected function invokeMethod(object $object, string $method, array $args = []): mixed
     {
         $reflection = new ReflectionObject($object);
         $method = $reflection->getMethod($method);
-        $result = $method->invokeArgs($object, $args);
-
-        if ($revoke) {
-        }
-
-        return $result;
+        return $method->invokeArgs($object, $args);
     }
 }
