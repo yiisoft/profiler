@@ -14,4 +14,5 @@ return (new Configuration())
     // config/events-web.php references an event class from yiisoft/yii-http purely as an
     // optional integration hook (array key); it's not a real dependency of this package.
     ->ignoreUnknownClasses(['Yiisoft\Yii\Http\Event\AfterEmit'])
-    ->ignoreErrorsOnPackages(['yiisoft/aliases'], [ErrorType::DEV_DEPENDENCY_IN_PROD]);
+    ->ignoreErrorsOnPackages(['yiisoft/aliases'], [ErrorType::DEV_DEPENDENCY_IN_PROD])
+    ->ignoreErrorsOnPackageAndPath('psr/container', __DIR__ . '/config/di.php', [ErrorType::SHADOW_DEPENDENCY]);
